@@ -852,31 +852,6 @@
   .stat-block h3 span { color: var(--accent); font-size: 16px; }
 
   /* Donut chart */
-  .donut-wrap {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-  }
-  .donut-svg { flex-shrink: 0; }
-  .donut-legend { flex: 1; }
-  .donut-legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-    font-size: 13px;
-  }
-  .donut-legend-item .dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .donut-legend-item .leg-val {
-    margin-left: auto;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-  }
 
   /* Bar chart */
   .bar-chart { width: 100%; }
@@ -1143,7 +1118,6 @@
   @media (max-width: 500px) {
     .kpi-card .kpi-val { font-size: 22px; }
     .heatmap-grid { grid-template-columns: repeat(2,1fr); }
-    .donut-wrap { flex-direction: column; }
   }
 
   @media (max-width: 560px) {
@@ -1374,16 +1348,6 @@
       <h3>Taux de réussite par fiche <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(5 dernières sessions)</span></h3>
       <button class="info-btn" onclick="showInfoModal('taux-par-fiche')" aria-label="Explication">ℹ</button>
       <div class="bar-chart" id="bar-fiche-rate"></div>
-    </div>
-
-    <!-- Donut — type de sessions -->
-    <div class="stat-block" style="position:relative;">
-      <h3>Type de sessions</h3>
-      <button class="info-btn" onclick="showInfoModal('type-sessions')" aria-label="Explication">ℹ</button>
-      <div class="donut-wrap">
-        <svg class="donut-svg" viewBox="0 0 100 100" width="110" height="110" id="donut-svg"></svg>
-        <div class="donut-legend" id="donut-legend"></div>
-      </div>
     </div>
 
     <!-- Historique récent -->
@@ -1907,13 +1871,7 @@ const INFO_TEXTS = {
            <p>La couleur indique le niveau : <strong style="color:#3ecf7a">vert</strong> ≥ 70%, <strong style="color:#f5c842">jaune</strong> entre 50% et 70%, <strong style="color:#f0566e">rouge</strong> en dessous de 50%.</p>
            <p style="color:var(--muted);font-size:12px;">Les fiches jamais jouées n'apparaissent pas.</p>`
   },
-  'type-sessions': {
-    title: 'Type de sessions',
-    body: `<p>Ce graphique en anneau montre la répartition entre vos deux types de sessions :</p>
-           <p>• <strong>Sessions par fiche</strong> : vous avez choisi et joué une fiche spécifique.<br>• <strong>Quiz aléatoire</strong> : les questions ont été piochées aléatoirement dans toutes les fiches.</p>
-           <p style="color:var(--muted);font-size:12px;">Le chiffre au centre indique le nombre total de sessions jouées.</p>`
-  },
-  'dernieres-sessions': {
+'dernieres-sessions': {
     title: 'Dernières sessions',
     body: `<p>Cette liste affiche le détail de vos 20 sessions les plus récentes.</p>
            <p>Pour chaque session, vous voyez : le type (fiche ou aléatoire), la date et l'heure, le score obtenu, ainsi qu'une ligne de pastilles indiquant question par question si la réponse était correcte (vert) ou incorrecte (rouge).</p>
@@ -1951,7 +1909,6 @@ function showStatsScreen() {
   renderHeatmap(s);
   renderMasteryHeatmap(s);
   renderBarFicheRate(s);
-  renderDonut(s);
   renderHistory(s);
 }
 
@@ -2168,65 +2125,6 @@ function renderBarFicheRate(s) {
   wrap.innerHTML = html;
 }
 
-function renderDonut(s) {
-  const svg = document.getElementById('donut-svg');
-  const legend = document.getElementById('donut-legend');
-  if (!svg || !legend) return;
-
-  // Count fiche sessions vs random sessions
-  const ficheTotal = Object.values(s.ficheCount).reduce((a,b)=>a+b,0);
-  const randomTotal = s.sessionHistory.filter(h=>h.mode==='random').length;
-  const total = ficheTotal + randomTotal;
-
-  if (total === 0) {
-    svg.innerHTML = '<text x="50" y="55" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#7a8099">Aucune donnée</text>';
-    legend.innerHTML = '';
-    return;
-  }
-
-  // Taux de réussite par type
-  const ficheCorrect = s.sessionHistory.filter(h => h.mode !== 'random').reduce((a,h) => a + h.score, 0);
-  const ficheQTotal  = s.sessionHistory.filter(h => h.mode !== 'random').reduce((a,h) => a + h.total, 0);
-  const randCorrect  = s.sessionHistory.filter(h => h.mode === 'random').reduce((a,h) => a + h.score, 0);
-  const randQTotal   = s.sessionHistory.filter(h => h.mode === 'random').reduce((a,h) => a + h.total, 0);
-  const ficheRate = ficheQTotal > 0 ? Math.round(ficheCorrect / ficheQTotal * 100) : null;
-  const randRate  = randQTotal  > 0 ? Math.round(randCorrect  / randQTotal  * 100) : null;
-
-  const segments = [
-    { label: 'Fiches', val: ficheTotal, rate: ficheRate, color: '#f5c842' },
-    { label: 'Aléatoire', val: randomTotal, rate: randRate, color: '#e8834a' },
-  ].filter(seg => seg.val > 0);
-
-  const R = 36, r = 22, cx = 50, cy = 50;
-  let startAngle = -Math.PI / 2;
-  let paths = '';
-
-  segments.forEach(seg => {
-    const angle = (seg.val / total) * 2 * Math.PI;
-    const endAngle = startAngle + angle;
-    const x1 = cx + R * Math.cos(startAngle), y1 = cy + R * Math.sin(startAngle);
-    const x2 = cx + R * Math.cos(endAngle),   y2 = cy + R * Math.sin(endAngle);
-    const xi1 = cx + r * Math.cos(startAngle), yi1 = cy + r * Math.sin(startAngle);
-    const xi2 = cx + r * Math.cos(endAngle),   yi2 = cy + r * Math.sin(endAngle);
-    const large = angle > Math.PI ? 1 : 0;
-    paths += `<path d="M${x1},${y1} A${R},${R} 0 ${large} 1 ${x2},${y2} L${xi2},${yi2} A${r},${r} 0 ${large} 0 ${xi1},${yi1} Z" fill="${seg.color}" opacity="0.9"/>`;
-    startAngle = endAngle;
-  });
-
-  svg.innerHTML = paths + `<text x="50" y="47" text-anchor="middle" dominant-baseline="central" font-family="Syne,sans-serif" font-size="11" font-weight="800" fill="#e8eaf0">${total}</text><text x="50" y="57" text-anchor="middle" dominant-baseline="central" font-family="DM Mono,monospace" font-size="6.5" fill="#7a8099">sessions</text>`;
-
-  legend.innerHTML = segments.map(seg => `
-    <div class="donut-legend-item">
-      <div class="dot" style="background:${seg.color}"></div>
-      <span>${seg.label}</span>
-      <span class="leg-val">${seg.val} session${seg.val > 1 ? 's' : ''} (${seg.rate !== null ? seg.rate + '%' : '—'})</span>
-    </div>`).join('') + `
-    <div class="donut-legend-item" style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px;">
-      <div class="dot" style="background:var(--green)"></div>
-      <span>Score moyen</span>
-      <span class="leg-val">${s.totalQuestions > 0 ? Math.round(s.totalCorrect/s.totalQuestions*100) : 0}%</span>
-    </div>`;
-}
 
 function renderHistory(s) {
   const list = document.getElementById('history-list');
