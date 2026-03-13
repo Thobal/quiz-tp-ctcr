@@ -1252,9 +1252,17 @@
 
     <!-- Historique scores sparkline -->
     <div class="stat-block">
-      <h3>Évolution des scores</h3>
+      <h3>Derniers scores</h3>
       <div class="sparkline-wrap">
         <svg id="sparkline-svg" viewBox="0 0 400 80" preserveAspectRatio="none"></svg>
+      </div>
+    </div>
+
+    <!-- Moyenne glissante -->
+    <div class="stat-block">
+      <h3>Moyenne glissante <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(10 dernières sessions)</span></h3>
+      <div class="sparkline-wrap">
+        <svg id="rolling-svg" viewBox="0 0 400 80" preserveAspectRatio="none"></svg>
       </div>
     </div>
 
@@ -1703,6 +1711,7 @@ function showStatsScreen() {
   renderKPIs(s);
   renderGauge(s);
   renderSparkline(s);
+  renderRollingAvg(s);
   renderHeatmap(s);
   renderMasteryHeatmap(s);
   renderBarFicheRate(s);
@@ -1738,18 +1747,18 @@ function renderSparkline(s) {
     svg.innerHTML = '<text x="200" y="45" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#7a8099">Pas encore assez de données</text>';
     return;
   }
-  const W = 400, H = 80, pad = 10;
-  const xStep = (W - pad*2) / (data.length - 1);
-  const pts = data.map((v, i) => [pad + i * xStep, H - pad - (v / 100) * (H - pad*2)]);
+  const W = 400, H = 80, padL = 22, padR = 10, padV = 10;
+  const xStep = (W - padL - padR) / (data.length - 1);
+  const pts = data.map((v, i) => [padL + i * xStep, H - padV - (v / 100) * (H - padV*2)]);
   const ptsStr = pts.map(p => p.join(',')).join(' ');
   // Area fill
-  const areaD = `M${pts[0][0]},${H-pad} ` + pts.map(p=>`L${p[0]},${p[1]}`).join(' ') + ` L${pts[pts.length-1][0]},${H-pad} Z`;
+  const areaD = `M${pts[0][0]},${H-padV} ` + pts.map(p=>`L${p[0]},${p[1]}`).join(' ') + ` L${pts[pts.length-1][0]},${H-padV} Z`;
   // Reference lines
   let lines = '';
   [25,50,75,100].forEach(y => {
-    const yp = H - pad - (y/100)*(H-pad*2);
-    lines += `<line x1="${pad}" y1="${yp}" x2="${W-pad}" y2="${yp}" stroke="#2a2f3f" stroke-width="1" stroke-dasharray="3,3"/>`;
-    lines += `<text x="${pad-2}" y="${yp+3}" text-anchor="end" font-family="DM Mono,monospace" font-size="7" fill="#7a8099">${y}</text>`;
+    const yp = H - padV - (y/100)*(H-padV*2);
+    lines += `<line x1="${padL}" y1="${yp}" x2="${W-padR}" y2="${yp}" stroke="#2a2f3f" stroke-width="1" stroke-dasharray="3,3"/>`;
+    lines += `<text x="${padL-3}" y="${yp+3}" text-anchor="end" font-family="DM Mono,monospace" font-size="7" fill="#7a8099">${y}</text>`;
   });
   // Dots
   const dots = pts.map((p,i) => {
@@ -1766,6 +1775,59 @@ function renderSparkline(s) {
     ${lines}
     <path d="${areaD}" fill="url(#sparkGrad)"/>
     <polyline points="${ptsStr}" fill="none" stroke="#f5c842" stroke-width="2" stroke-linejoin="round"/>
+    ${dots}
+  `;
+}
+
+function renderRollingAvg(s) {
+  const svg = document.getElementById('rolling-svg');
+  if (!svg) return;
+
+  // Historique chronologique (du plus ancien au plus récent)
+  const history = [...s.scoreHistory].reverse();
+  if (history.length < 2) {
+    svg.innerHTML = '<text x="200" y="45" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#7a8099">Pas encore assez de données</text>';
+    return;
+  }
+
+  // Calcul de la moyenne glissante sur les 10 dernières sessions
+  const WINDOW = 10;
+  const data = history.map((_, i) => {
+    const start = Math.max(0, i - WINDOW + 1);
+    const window = history.slice(start, i + 1);
+    return Math.round(window.reduce((a, b) => a + b, 0) / window.length);
+  });
+
+  const W = 400, H = 80, padL = 22, padR = 10, padV = 10;
+  const xStep = (W - padL - padR) / (data.length - 1);
+  const pts = data.map((v, i) => [padL + i * xStep, H - padV - (v / 100) * (H - padV * 2)]);
+  const ptsStr = pts.map(p => p.join(',')).join(' ');
+  const areaD = `M${pts[0][0]},${H - padV} ` + pts.map(p => `L${p[0]},${p[1]}`).join(' ') + ` L${pts[pts.length - 1][0]},${H - padV} Z`;
+
+  // Lignes de référence
+  let lines = '';
+  [25, 50, 75, 100].forEach(y => {
+    const yp = H - padV - (y / 100) * (H - padV * 2);
+    lines += `<line x1="${padL}" y1="${yp}" x2="${W - padR}" y2="${yp}" stroke="#2a2f3f" stroke-width="1" stroke-dasharray="3,3"/>`;
+    lines += `<text x="${padL - 3}" y="${yp + 3}" text-anchor="end" font-family="DM Mono,monospace" font-size="7" fill="#7a8099">${y}</text>`;
+  });
+
+  // Points colorés selon la valeur de la moyenne glissante
+  const dots = pts.map((p, i) => {
+    const col = data[i] >= 70 ? '#3ecf7a' : data[i] >= 50 ? '#f5c842' : '#f0566e';
+    return `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${col}" stroke="#0d0f14" stroke-width="1.5"/>`;
+  }).join('');
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="rollGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3ecf7a" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#3ecf7a" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    ${lines}
+    <path d="${areaD}" fill="url(#rollGrad)"/>
+    <polyline points="${ptsStr}" fill="none" stroke="#3ecf7a" stroke-width="2" stroke-linejoin="round"/>
     ${dots}
   `;
 }
