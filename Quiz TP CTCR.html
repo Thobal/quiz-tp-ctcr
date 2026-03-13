@@ -506,6 +506,14 @@
   }
 
   .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled {
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: default;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.6;
+  }
 
   /* FEEDBACK */
   .feedback {
