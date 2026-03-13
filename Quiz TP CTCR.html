@@ -1035,6 +1035,44 @@
   }
 
   /* Reset btn */
+  /* Bloc stockage local */
+  .storage-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .storage-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .storage-row-header {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .storage-row-header strong { color: var(--text); font-weight: 500; }
+  .storage-bar-track {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .storage-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 0.6s ease;
+  }
+  .storage-note {
+    font-size: 10.5px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    margin-top: 18px;
+    line-height: 1.6;
+  }
+
   .reset-stats-btn {
     width: 100%;
     margin-top: 8px;
@@ -1315,6 +1353,14 @@
     <div class="stat-block">
       <h3>Dernières sessions</h3>
       <div class="history-list" id="history-list"></div>
+    </div>
+
+    <!-- Stockage local -->
+    <div class="stat-block storage-block">
+      <h3>Stockage local</h3>
+      <div class="storage-rows" id="storage-info">
+        <span style="color:var(--muted);font-size:12px;font-family:'DM Mono',monospace">Chargement…</span>
+      </div>
     </div>
 
     <button class="reset-stats-btn" onclick="resetStats()">⚠ Réinitialiser toutes les statistiques</button>
@@ -1652,6 +1698,80 @@ let justAnswered = false;
 // INIT
 
 // ── STATS STORAGE ─────────────────────────────────────────────────
+function renderStorageInfo() {
+  const el = document.getElementById('storage-info');
+  if (!el) return;
+
+  // Taille de la clé quizStats (chaque caractère JS = 2 octets en UTF-16)
+  const raw = localStorage.getItem('quizStats') || '';
+  const quizBytes = raw.length * 2;
+
+  // Taille totale de tout le localStorage de l'origine
+  let totalBytes = 0;
+  for (const key of Object.keys(localStorage)) {
+    totalBytes += (key.length + (localStorage.getItem(key) || '').length) * 2;
+  }
+
+  const fmt = b => b < 1024 ? `${b} o` : b < 1024*1024 ? `${(b/1024).toFixed(1)} Ko` : `${(b/(1024*1024)).toFixed(2)} Mo`;
+
+  // Quota via navigator.storage.estimate() si disponible
+  const LS_TYPICAL = 5 * 1024 * 1024; // 5 Mo — limite typique des navigateurs
+
+  const buildRows = (quota) => {
+    const lsPct   = Math.min(100, (totalBytes / LS_TYPICAL) * 100);
+    const quizPct = Math.min(100, (quizBytes  / LS_TYPICAL) * 100);
+    const lsColor   = lsPct > 80 ? '#f0566e' : lsPct > 50 ? '#f5c842' : '#3ecf7a';
+    const quizColor = '#6ba4ab';
+
+    let quotaRow = '';
+    // N'afficher la ligne que si les valeurs sont fiables (non nulles)
+    // navigator.storage.estimate() retourne 0/0 pour les fichiers file:// dans certains navigateurs
+    if (quota && quota.quota > 0 && quota.usage > 0) {
+      const storagePct = Math.min(100, (quota.usage / quota.quota) * 100);
+      const stoColor = storagePct > 80 ? '#f0566e' : storagePct > 50 ? '#f5c842' : '#3ecf7a';
+      quotaRow = `
+        <div class="storage-row">
+          <div class="storage-row-header">
+            <span>Stockage total navigateur</span>
+            <strong>${fmt(quota.usage)} / ${fmt(quota.quota)} (${storagePct.toFixed(1)}%)</strong>
+          </div>
+          <div class="storage-bar-track">
+            <div class="storage-bar-fill" style="width:${storagePct}%;background:${stoColor}"></div>
+          </div>
+        </div>`;
+    }
+
+    el.innerHTML = `
+      <div class="storage-row">
+        <div class="storage-row-header">
+          <span>Stockage local pour cette application</span>
+          <strong>${fmt(totalBytes)} / ~5 Mo (${lsPct.toFixed(1)}%)</strong>
+        </div>
+        <div class="storage-bar-track">
+          <div class="storage-bar-fill" style="width:${lsPct}%;background:${lsColor}"></div>
+        </div>
+      </div>
+      <div class="storage-row">
+        <div class="storage-row-header">
+          <span>Données Quiz TP CTCR</span>
+          <strong>${fmt(quizBytes)}</strong>
+        </div>
+        <div class="storage-bar-track">
+          <div class="storage-bar-fill" style="width:${quizPct}%;background:${quizColor}"></div>
+        </div>
+      </div>
+      ${quotaRow}
+      <p class="storage-note">Vos statistiques sont enregistrées directement sur votre appareil, dans la mémoire de votre navigateur — un peu comme un carnet de notes que le navigateur conserve pour vous. Elles ne sont pas envoyées sur Internet et ne prennent que très peu de place.<br><br>⚠️ Ces données peuvent être effacées si vous videz le cache ou l'historique de votre navigateur, ou si vous utilisez un autre navigateur. Pensez à ne pas effacer les données de site si vous souhaitez conserver votre progression.</p>
+    `;
+  };
+
+  if (navigator.storage && navigator.storage.estimate) {
+    navigator.storage.estimate().then(buildRows).catch(() => buildRows(null));
+  } else {
+    buildRows(null);
+  }
+}
+
 function loadStats() {
   return JSON.parse(localStorage.getItem('quizStats') || JSON.stringify({
     totalSessions: 0,
@@ -1712,6 +1832,7 @@ function showStatsScreen() {
   renderGauge(s);
   renderSparkline(s);
   renderRollingAvg(s);
+  renderStorageInfo();
   renderHeatmap(s);
   renderMasteryHeatmap(s);
   renderBarFicheRate(s);
