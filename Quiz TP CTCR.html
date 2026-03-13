@@ -582,8 +582,8 @@
   }
 
   .score-ring {
-    width: 120px;
-    height: 120px;
+    width: 148px;
+    height: 148px;
     border-radius: 50%;
     background: conic-gradient(var(--accent) calc(var(--pct) * 1%), var(--surface2) 0);
     display: flex;
@@ -2448,7 +2448,9 @@ function showResults() {
   );
 
   document.getElementById('score-ring').style.setProperty('--pct', pct);
-  document.getElementById('score-num').textContent = `${score}/10`;
+  const scoreNum = document.getElementById('score-num');
+  scoreNum.textContent = `${score}/10`;
+  scoreNum.style.fontSize = score === 10 ? '22px' : '28px';
 
   const titles = ['À retravailler…', 'Courage !', 'Pas mal !', 'Bien !', 'Très bien !', 'Excellent !'];
   const ti = Math.floor(score / 2);
