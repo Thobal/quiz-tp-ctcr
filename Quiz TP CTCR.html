@@ -1346,7 +1346,7 @@
 
     <!-- Répartition bonne/mauvaise par fiche -->
     <div class="stat-block">
-      <h3>Taux de réussite par fiche</h3>
+      <h3>Taux de réussite par fiche <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(5 dernières sessions)</span></h3>
       <div class="bar-chart" id="bar-fiche-rate"></div>
     </div>
 
@@ -2044,14 +2044,15 @@ function renderMasteryHeatmap(s) {
 function renderBarFicheRate(s) {
   const wrap = document.getElementById('bar-fiche-rate');
   if (!wrap) return;
-  // Show all 20 fiches
+  const ficheHist = s.ficheHistory || {};
   let html = '';
   let hasData = false;
   for (let fn = 1; fn <= 20; fn++) {
-    const tot = s.ficheTotal[String(fn)] || 0;
-    if (!tot) continue;
+    const history = ficheHist[String(fn)] || [];
+    if (!history.length) continue;
     hasData = true;
-    const cor = s.ficheCorrect[String(fn)] || 0;
+    const tot = history.reduce((a, h) => a + h.total, 0);
+    const cor = history.reduce((a, h) => a + h.score, 0);
     const pct = Math.round(cor / tot * 100);
     const col = pct >= 70 ? '#3ecf7a' : pct >= 50 ? '#f5c842' : '#f0566e';
     html += `<div class="bar-row">
