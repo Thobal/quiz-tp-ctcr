@@ -1358,8 +1358,9 @@
     </div>
 
     <!-- Stockage local -->
-    <div class="stat-block storage-block">
+    <div class="stat-block storage-block" style="position:relative;">
       <h3>Stockage local</h3>
+      <button class="info-btn" onclick="showInfoModal('stockage-local')" aria-label="Explication">ℹ</button>
       <div class="storage-rows" id="storage-info">
         <span style="color:var(--muted);font-size:12px;font-family:'DM Mono',monospace">Chargement…</span>
       </div>
@@ -1771,7 +1772,6 @@ function renderStorageInfo() {
         </div>
       </div>
       ${quotaRow}
-      <p class="storage-note">Vos statistiques sont enregistrées directement sur votre appareil, dans la mémoire de votre navigateur — un peu comme un carnet de notes que le navigateur conserve pour vous. Elles ne sont pas envoyées sur Internet et ne prennent que très peu de place.<br><br>⚠️ Ces données peuvent être effacées si vous videz le cache ou l'historique de votre navigateur, ou si vous utilisez un autre navigateur. Pensez à ne pas effacer les données de site si vous souhaitez conserver votre progression.</p>
     `;
   };
 
@@ -1876,6 +1876,12 @@ const INFO_TEXTS = {
     body: `<p>Cette liste affiche le détail de vos 20 sessions les plus récentes.</p>
            <p>Pour chaque session, vous voyez : le type (fiche ou aléatoire), la date et l'heure, le score obtenu, ainsi qu'une ligne de pastilles indiquant question par question si la réponse était correcte (vert) ou incorrecte (rouge).</p>
            <p style="color:var(--muted);font-size:12px;">L'application conserve jusqu'à 50 sessions en mémoire, mais seules les 20 plus récentes sont affichées ici.</p>`
+  },
+  'stockage-local': {
+    title: 'Stockage local',
+    body: `<p>Vos statistiques sont enregistrées directement sur votre appareil, dans la mémoire de votre navigateur — un peu comme un carnet de notes que le navigateur conserve pour vous.</p>
+           <p>Elles ne sont <strong>pas envoyées sur Internet</strong> et ne prennent que très peu de place.</p>
+           <p>⚠️ Ces données peuvent être effacées si vous videz le cache ou l'historique de votre navigateur, ou si vous utilisez un autre navigateur. Pensez à ne pas effacer les données de site si vous souhaitez conserver votre progression.</p>`
   }
 };
 
