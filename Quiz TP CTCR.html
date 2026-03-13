@@ -1301,7 +1301,7 @@
     <!-- Gauge taux de réussite -->
     <div class="stat-block" style="position:relative;">
       <h3>Taux de réussite global <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(5 dernières sessions / fiche)</span></h3>
-      <button class="info-btn" onclick="showInfoModal()" aria-label="Explication du calcul">ℹ</button>
+      <button class="info-btn" onclick="showInfoModal('taux-global')" aria-label="Explication du calcul">ℹ</button>
       <div class="gauge-wrap">
         <svg id="gauge-svg" viewBox="0 0 200 110" width="200" height="110">
           <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#1e2230" stroke-width="18" stroke-linecap="round"/>
@@ -1320,24 +1320,27 @@
     </div>
 
     <!-- Historique scores sparkline -->
-    <div class="stat-block">
+    <div class="stat-block" style="position:relative;">
       <h3>Derniers scores</h3>
+      <button class="info-btn" onclick="showInfoModal('derniers-scores')" aria-label="Explication">ℹ</button>
       <div class="sparkline-wrap">
         <svg id="sparkline-svg" viewBox="0 0 400 80" preserveAspectRatio="none"></svg>
       </div>
     </div>
 
     <!-- Moyenne glissante -->
-    <div class="stat-block">
+    <div class="stat-block" style="position:relative;">
       <h3>Moyenne glissante <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(10 dernières sessions)</span></h3>
+      <button class="info-btn" onclick="showInfoModal('moyenne-glissante')" aria-label="Explication">ℹ</button>
       <div class="sparkline-wrap">
         <svg id="rolling-svg" viewBox="0 0 400 80" preserveAspectRatio="none"></svg>
       </div>
     </div>
 
     <!-- Heatmap fiches -->
-    <div class="stat-block">
+    <div class="stat-block" style="position:relative;">
       <h3>Fiches les plus travaillées</h3>
+      <button class="info-btn" onclick="showInfoModal('fiches-travaillees')" aria-label="Explication">ℹ</button>
       <div class="heatmap-grid" id="heatmap-grid"></div>
       <div style="display:flex;gap:6px;align-items:center;margin-top:8px;">
         <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Moins</span>
@@ -1351,8 +1354,9 @@
     </div>
 
     <!-- Heatmap fiches les moins maîtrisées -->
-    <div class="stat-block">
+    <div class="stat-block" style="position:relative;">
       <h3>Fiches les moins maîtrisées <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(5 dernières sessions)</span></h3>
+      <button class="info-btn" onclick="showInfoModal('fiches-maitrisees')" aria-label="Explication">ℹ</button>
       <div class="heatmap-grid" id="mastery-grid"></div>
       <div style="display:flex;gap:6px;align-items:center;margin-top:8px;">
         <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Maîtrisé</span>
@@ -1366,14 +1370,16 @@
     </div>
 
     <!-- Répartition bonne/mauvaise par fiche -->
-    <div class="stat-block">
+    <div class="stat-block" style="position:relative;">
       <h3>Taux de réussite par fiche <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(5 dernières sessions)</span></h3>
+      <button class="info-btn" onclick="showInfoModal('taux-par-fiche')" aria-label="Explication">ℹ</button>
       <div class="bar-chart" id="bar-fiche-rate"></div>
     </div>
 
     <!-- Donut — type de sessions -->
-    <div class="stat-block">
+    <div class="stat-block" style="position:relative;">
       <h3>Type de sessions</h3>
+      <button class="info-btn" onclick="showInfoModal('type-sessions')" aria-label="Explication">ℹ</button>
       <div class="donut-wrap">
         <svg class="donut-svg" viewBox="0 0 100 100" width="110" height="110" id="donut-svg"></svg>
         <div class="donut-legend" id="donut-legend"></div>
@@ -1381,8 +1387,9 @@
     </div>
 
     <!-- Historique récent -->
-    <div class="stat-block">
+    <div class="stat-block" style="position:relative;">
       <h3>Dernières sessions <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(20 dernières affichées)</span></h3>
+      <button class="info-btn" onclick="showInfoModal('dernieres-sessions')" aria-label="Explication">ℹ</button>
       <div class="history-list" id="history-list"></div>
     </div>
 
@@ -1401,11 +1408,8 @@
   <div id="info-modal" class="info-modal-overlay" onclick="hideInfoModal()">
     <div class="info-modal-box" onclick="event.stopPropagation()">
       <button class="info-modal-close" onclick="hideInfoModal()">✕</button>
-      <h4>Comment est calculé ce score ?</h4>
-      <p>Ce pourcentage représente votre niveau de maîtrise <strong>actuel</strong>, basé sur vos performances récentes.</p>
-      <p>Pour chacune des 20 fiches, l'application retient vos <strong>5 dernières sessions</strong>. Elle additionne toutes les bonnes réponses obtenues sur ces sessions, et les divise par le nombre total de questions auxquelles vous avez répondu.</p>
-      <p>Cela signifie que si vous progressez, votre score s'améliore rapidement. À l'inverse, les anciennes erreurs s'effacent au fil du temps.</p>
-      <p style="color:var(--muted);font-size:12px;">Les fiches que vous n'avez jamais jouées ne sont pas prises en compte dans ce calcul.</p>
+      <h4 id="info-modal-title"></h4>
+      <div id="info-modal-body"></div>
     </div>
   </div>
 
@@ -1863,7 +1867,64 @@ function recordSession(mode, score, total, results) {
 }
 
 
-function showInfoModal() {
+const INFO_TEXTS = {
+  'taux-global': {
+    title: 'Taux de réussite global',
+    body: `<p>Ce pourcentage représente votre niveau de maîtrise <strong>actuel</strong>, basé sur vos performances récentes.</p>
+           <p>Pour chacune des 20 fiches, l'application retient vos <strong>5 dernières sessions</strong>. Elle additionne toutes les bonnes réponses obtenues sur ces sessions et les divise par le nombre total de questions.</p>
+           <p>Si vous progressez, votre score s'améliore rapidement. Les anciennes erreurs s'effacent au fil du temps.</p>
+           <p style="color:var(--muted);font-size:12px;">Les fiches jamais jouées ne sont pas prises en compte.</p>`
+  },
+  'derniers-scores': {
+    title: 'Derniers scores',
+    body: `<p>Ce graphique affiche l'évolution de votre score session par session, dans l'ordre chronologique.</p>
+           <p>Chaque point représente le score obtenu lors d'une session (nombre de bonnes réponses sur 10), exprimé en pourcentage.</p>
+           <p style="color:var(--muted);font-size:12px;">Les 30 dernières sessions toutes fiches confondues sont affichées.</p>`
+  },
+  'moyenne-glissante': {
+    title: 'Moyenne glissante',
+    body: `<p>Ce graphique lisse vos performances en calculant, pour chaque point, la <strong>moyenne de vos 10 dernières sessions</strong> à ce moment-là.</p>
+           <p>Cela permet de visualiser votre tendance générale sans être perturbé par les variations d'une session à l'autre.</p>
+           <p style="color:var(--muted);font-size:12px;">Une courbe qui monte indique une progression réelle et durable.</p>`
+  },
+  'fiches-travaillees': {
+    title: 'Fiches les plus travaillées',
+    body: `<p>Cette grille colorée indique combien de fois vous avez joué chaque fiche, toutes sessions confondues.</p>
+           <p>Plus la cellule est jaune et brillante, plus vous avez pratiqué cette fiche. Les cellules sombres correspondent aux fiches peu ou pas travaillées.</p>
+           <p style="color:var(--muted);font-size:12px;">Cliquer sur une cellule lance directement la fiche correspondante.</p>`
+  },
+  'fiches-maitrisees': {
+    title: 'Fiches les moins maîtrisées',
+    body: `<p>Cette grille met en évidence les fiches sur lesquelles vous obtenez les moins bons résultats.</p>
+           <p>Le score de chaque fiche est calculé sur vos <strong>5 dernières sessions</strong> pour cette fiche. Plus une cellule est rouge, plus votre taux de bonnes réponses est faible sur cette fiche récemment.</p>
+           <p>Les fiches jamais jouées sont considérées comme non maîtrisées (score 0%).</p>
+           <p style="color:var(--muted);font-size:12px;">Cliquer sur une cellule lance directement la fiche correspondante.</p>`
+  },
+  'taux-par-fiche': {
+    title: 'Taux de réussite par fiche',
+    body: `<p>Ce graphique à barres affiche votre taux de bonnes réponses pour chaque fiche jouée.</p>
+           <p>Le calcul est basé sur vos <strong>5 dernières sessions</strong> par fiche, ce qui reflète votre niveau actuel plutôt que votre historique complet.</p>
+           <p>La couleur indique le niveau : <strong style="color:#3ecf7a">vert</strong> ≥ 70%, <strong style="color:#f5c842">jaune</strong> entre 50% et 70%, <strong style="color:#f0566e">rouge</strong> en dessous de 50%.</p>
+           <p style="color:var(--muted);font-size:12px;">Les fiches jamais jouées n'apparaissent pas.</p>`
+  },
+  'type-sessions': {
+    title: 'Type de sessions',
+    body: `<p>Ce graphique en anneau montre la répartition entre vos deux types de sessions :</p>
+           <p>• <strong>Sessions par fiche</strong> : vous avez choisi et joué une fiche spécifique.<br>• <strong>Quiz aléatoire</strong> : les questions ont été piochées aléatoirement dans toutes les fiches.</p>
+           <p style="color:var(--muted);font-size:12px;">Le chiffre au centre indique le nombre total de sessions jouées.</p>`
+  },
+  'dernieres-sessions': {
+    title: 'Dernières sessions',
+    body: `<p>Cette liste affiche le détail de vos 20 sessions les plus récentes.</p>
+           <p>Pour chaque session, vous voyez : le type (fiche ou aléatoire), la date et l'heure, le score obtenu, ainsi qu'une ligne de pastilles indiquant question par question si la réponse était correcte (vert) ou incorrecte (rouge).</p>
+           <p style="color:var(--muted);font-size:12px;">L'application conserve jusqu'à 50 sessions en mémoire, mais seules les 20 plus récentes sont affichées ici.</p>`
+  }
+};
+
+function showInfoModal(id) {
+  const data = INFO_TEXTS[id] || INFO_TEXTS['taux-global'];
+  document.getElementById('info-modal-title').textContent = data.title;
+  document.getElementById('info-modal-body').innerHTML = data.body;
   document.getElementById('info-modal').classList.add('open');
 }
 function hideInfoModal() {
