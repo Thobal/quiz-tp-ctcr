@@ -828,37 +828,6 @@
     flex: 1;
   }
 
-  /* KPI row */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 28px;
-  }
-  .kpi-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px 14px 14px;
-    text-align: center;
-  }
-  .kpi-card .kpi-val {
-    font-family: 'Syne', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .kpi-card .kpi-lbl {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .kpi-card.accent .kpi-val { color: var(--accent); }
-  .kpi-card.green  .kpi-val { color: var(--green); }
-  .kpi-card.orange .kpi-val { color: var(--accent2); }
 
   /* Stat blocks */
   .stat-block {
@@ -1104,7 +1073,6 @@
   }
 
   @media (max-width: 500px) {
-    .kpi-grid { grid-template-columns: repeat(3,1fr); gap: 8px; }
     .kpi-card .kpi-val { font-size: 22px; }
     .heatmap-grid { grid-template-columns: repeat(2,1fr); }
     .donut-wrap { flex-direction: column; }
@@ -1260,22 +1228,6 @@
     <div class="stats-header">
       <button class="back-btn" onclick="goHome()">← Accueil</button>
       <h2>Statistiques</h2>
-    </div>
-
-    <!-- KPIs -->
-    <div class="kpi-grid">
-      <div class="kpi-card accent">
-        <div class="kpi-val" id="st-sessions">—</div>
-        <div class="kpi-lbl">Sessions</div>
-      </div>
-      <div class="kpi-card green">
-        <div class="kpi-val" id="st-questions">—</div>
-        <div class="kpi-lbl">Questions</div>
-      </div>
-      <div class="kpi-card orange">
-        <div class="kpi-val" id="st-rate">—%</div>
-        <div class="kpi-lbl">Réussite</div>
-      </div>
     </div>
 
     <!-- Gauge taux de réussite -->
@@ -1844,7 +1796,6 @@ function resetStats() {
 function showStatsScreen() {
   showScreen('stats-screen');
   const s = loadStats();
-  renderKPIs(s);
   renderGauge(s);
   renderSparkline(s);
   renderRollingAvg(s);
@@ -1856,12 +1807,6 @@ function showStatsScreen() {
   renderHistory(s);
 }
 
-function renderKPIs(s) {
-  document.getElementById('st-sessions').textContent = s.totalSessions || 0;
-  document.getElementById('st-questions').textContent = s.totalQuestions || 0;
-  const rate = s.totalQuestions > 0 ? Math.round(s.totalCorrect / s.totalQuestions * 100) : 0;
-  document.getElementById('st-rate').textContent = rate + '%';
-}
 
 function renderGauge(s) {
   // Calcul basé sur les 5 dernières sessions par fiche (ficheHistory)
