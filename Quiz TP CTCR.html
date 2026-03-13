@@ -2444,7 +2444,7 @@ function showResults() {
     randomQuestions ? 'random' : currentFiche,
     score,
     10,
-    randomQuestions ? sessionResults.map((r,i) => ({...r, ficheNum: randomQuestions[i]?.ficheNum})) : null
+    sessionResults.map((r,i) => ({...r, ficheNum: randomQuestions ? randomQuestions[i]?.ficheNum : currentFiche}))
   );
 
   document.getElementById('score-ring').style.setProperty('--pct', pct);
