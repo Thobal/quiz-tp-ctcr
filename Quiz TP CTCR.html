@@ -1052,6 +1052,74 @@
     line-height: 1.6;
   }
 
+  /* Bouton info + modale */
+  .info-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .info-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .info-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .info-modal-overlay.open { display: flex; }
+  .info-modal-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px 22px 20px;
+    max-width: 360px;
+    width: 100%;
+    position: relative;
+  }
+  .info-modal-box h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 14px;
+    color: var(--accent);
+  }
+  .info-modal-box p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0 0 10px;
+  }
+  .info-modal-box p:last-child { margin-bottom: 0; }
+  .info-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 6px;
+  }
+  .info-modal-close:hover { color: var(--text); }
+
   .reset-stats-btn {
     width: 100%;
     margin-top: 8px;
@@ -1231,8 +1299,9 @@
     </div>
 
     <!-- Gauge taux de réussite -->
-    <div class="stat-block">
+    <div class="stat-block" style="position:relative;">
       <h3>Taux de réussite global <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(5 dernières sessions / fiche)</span></h3>
+      <button class="info-btn" onclick="showInfoModal()" aria-label="Explication du calcul">ℹ</button>
       <div class="gauge-wrap">
         <svg id="gauge-svg" viewBox="0 0 200 110" width="200" height="110">
           <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#1e2230" stroke-width="18" stroke-linecap="round"/>
@@ -1328,6 +1397,17 @@
     <button class="reset-stats-btn" onclick="resetStats()">⚠ Réinitialiser toutes les statistiques</button>
   </div>
 
+  <!-- Modale info calcul taux de réussite -->
+  <div id="info-modal" class="info-modal-overlay" onclick="hideInfoModal()">
+    <div class="info-modal-box" onclick="event.stopPropagation()">
+      <button class="info-modal-close" onclick="hideInfoModal()">✕</button>
+      <h4>Comment est calculé ce score ?</h4>
+      <p>Ce pourcentage représente votre niveau de maîtrise <strong>actuel</strong>, basé sur vos performances récentes.</p>
+      <p>Pour chacune des 20 fiches, l'application retient vos <strong>5 dernières sessions</strong>. Elle additionne toutes les bonnes réponses obtenues sur ces sessions, et les divise par le nombre total de questions auxquelles vous avez répondu.</p>
+      <p>Cela signifie que si vous progressez, votre score s'améliore rapidement. À l'inverse, les anciennes erreurs s'effacent au fil du temps.</p>
+      <p style="color:var(--muted);font-size:12px;">Les fiches que vous n'avez jamais jouées ne sont pas prises en compte dans ce calcul.</p>
+    </div>
+  </div>
 
   <!-- REVISION SCREEN -->
   <div id="revision-screen" class="screen hidden">
@@ -1782,6 +1862,13 @@ function recordSession(mode, score, total, results) {
   saveStats(s);
 }
 
+
+function showInfoModal() {
+  document.getElementById('info-modal').classList.add('open');
+}
+function hideInfoModal() {
+  document.getElementById('info-modal').classList.remove('open');
+}
 
 function resetStats() {
   if (!confirm('Réinitialiser toutes les statistiques ?')) return;
