@@ -1331,7 +1331,7 @@
 
     <!-- Heatmap fiches les moins maîtrisées -->
     <div class="stat-block">
-      <h3>Fiches les moins maîtrisées</h3>
+      <h3>Fiches les moins maîtrisées <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(5 dernières sessions)</span></h3>
       <div class="heatmap-grid" id="mastery-grid"></div>
       <div style="display:flex;gap:6px;align-items:center;margin-top:8px;">
         <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Maîtrisé</span>
@@ -1790,6 +1790,7 @@ function loadStats() {
     ficheCount: {},      // {ficheNum: times played}
     ficheCorrect: {},    // {ficheNum: total correct}
     ficheTotal: {},      // {ficheNum: total questions}
+    ficheHistory: {},    // {ficheNum: [{score, total}]} last 5 sessions per fiche
     sessionHistory: [],  // [{mode, score, total, ts}] last 50
     scoreHistory: []     // [score/10 * 100] last 30 sessions for sparkline
   }));
@@ -1811,6 +1812,10 @@ function recordSession(mode, score, total, results) {
     s.ficheCount[fn] = (s.ficheCount[fn] || 0) + 1;
     s.ficheCorrect[fn] = (s.ficheCorrect[fn] || 0) + score;
     s.ficheTotal[fn] = (s.ficheTotal[fn] || 0) + total;
+    if (!s.ficheHistory) s.ficheHistory = {};
+    if (!s.ficheHistory[fn]) s.ficheHistory[fn] = [];
+    s.ficheHistory[fn].unshift({ score, total });
+    if (s.ficheHistory[fn].length > 5) s.ficheHistory[fn].pop();
   }
 
   // History (keep last 50)
@@ -1996,19 +2001,22 @@ function renderMasteryHeatmap(s) {
   if (!grid) return;
   grid.innerHTML = '';
 
-  // Calcul du taux de réussite par fiche (uniquement les fiches jouées)
+  // Calcul du taux de réussite sur les 5 dernières sessions par fiche
+  const ficheHist = s.ficheHistory || {};
   const rates = [];
   for (let i = 1; i <= 20; i++) {
-    const tot = s.ficheTotal[String(i)] || 0;
-    const cor = s.ficheCorrect[String(i)] || 0;
-    rates.push({ num: i, tot, rate: tot > 0 ? cor / tot : null });
+    const history = ficheHist[String(i)] || [];
+    const tot = history.reduce((a, h) => a + h.total, 0);
+    const cor = history.reduce((a, h) => a + h.score, 0);
+    const sessions = history.length;
+    rates.push({ num: i, tot, sessions, rate: tot > 0 ? cor / tot : null });
   }
 
   // Les fiches non jouées sont traitées comme un score de 0%
   const effectiveRates = rates.map(r => r.rate !== null ? r.rate : 0);
   const worstRate = Math.min(...effectiveRates);
 
-  for (const { num, tot, rate } of rates) {
+  for (const { num, tot, sessions, rate } of rates) {
     const effective = rate !== null ? rate : 0;
     let cls = 'hm-ok';
     // Plus le score est bas, plus la cellule est rouge
@@ -2024,7 +2032,7 @@ function renderMasteryHeatmap(s) {
     const label = rate !== null ? `${Math.round(rate * 100)}%` : '—';
     cell.innerHTML = `<span class="hm-num">${num}</span><span class="hm-count">${label}</span>`;
     cell.title = rate !== null
-      ? `Fiche ${num} — score moyen ${Math.round(rate * 100)}% (${tot} questions)`
+      ? `Fiche ${num} — score moyen ${Math.round(rate * 100)}% sur ${sessions} dernière(s) session(s)`
       : `Fiche ${num} — pas encore jouée`;
     cell.style.cursor = 'pointer';
     cell.addEventListener('click', () => startFiche(num));
