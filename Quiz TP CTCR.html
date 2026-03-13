@@ -967,12 +967,20 @@
     font-weight: 500;
     opacity: 0.8;
   }
-  .hm-cell.hm-0  { background: #080a0e; color: #252830; border: 1px solid #151820; }
-  .hm-cell.hm-1  { background: rgba(245,200,66,0.06); color: #4a4010; }
-  .hm-cell.hm-2  { background: rgba(245,200,66,0.22); color: #a07820; }
+  .hm-cell.hm-0  { background: #080a0e; color: #4a5068; border: 1px solid #151820; }
+  .hm-cell.hm-1  { background: rgba(245,200,66,0.06); color: #7a6828; }
+  .hm-cell.hm-2  { background: rgba(245,200,66,0.22); color: #c89830; }
   .hm-cell.hm-3  { background: rgba(245,200,66,0.60); color: #0d0f14; }
   .hm-cell.hm-4  { background: rgba(245,200,66,0.88); color: #0a0800; font-weight: 800; }
   .hm-cell.hm-hi { background: #f5c842; color: #0d0f14; font-weight: 900; box-shadow: 0 0 24px rgba(245,200,66,0.75), 0 0 6px rgba(245,200,66,0.9); }
+
+  /* Heatmap maîtrise — palette rouge (pire score = plus rouge) */
+  .hm-cell.hm-ok   { background: #080a0e; color: #4a5068; border: 1px solid #151820; }
+  .hm-cell.hm-r1   { background: rgba(240,86,110,0.12); color: #c05070; }
+  .hm-cell.hm-r2   { background: rgba(240,86,110,0.30); color: #f07090; }
+  .hm-cell.hm-r3   { background: rgba(240,86,110,0.58); color: #fff; }
+  .hm-cell.hm-r4   { background: rgba(240,86,110,0.82); color: #fff; font-weight: 800; }
+  .hm-cell.hm-worst { background: #f0566e; color: #fff; font-weight: 900; box-shadow: 0 0 24px rgba(240,86,110,0.75), 0 0 6px rgba(240,86,110,0.9); }
 
   /* Sparkline */
   .sparkline-wrap { width: 100%; overflow-x: auto; }
@@ -1259,8 +1267,24 @@
         <div style="width:14px;height:14px;border-radius:4px;background:var(--surface2)"></div>
         <div style="width:14px;height:14px;border-radius:4px;background:rgba(245,200,66,0.22)"></div>
         <div style="width:14px;height:14px;border-radius:4px;background:rgba(245,200,66,0.52)"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:linear-gradient(135deg,#f5c842,#e8834a)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(245,200,66,0.82)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:#f5c842"></div>
         <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Plus</span>
+      </div>
+    </div>
+
+    <!-- Heatmap fiches les moins maîtrisées -->
+    <div class="stat-block">
+      <h3>Fiches les moins maîtrisées</h3>
+      <div class="heatmap-grid" id="mastery-grid"></div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:8px;">
+        <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Maîtrisé</span>
+        <div style="width:14px;height:14px;border-radius:4px;background:var(--surface2)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(240,86,110,0.22)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(240,86,110,0.52)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(240,86,110,0.82)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:#f0566e"></div>
+        <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">À travailler</span>
       </div>
     </div>
 
@@ -1680,6 +1704,7 @@ function showStatsScreen() {
   renderGauge(s);
   renderSparkline(s);
   renderHeatmap(s);
+  renderMasteryHeatmap(s);
   renderBarFicheRate(s);
   renderDonut(s);
   renderHistory(s);
@@ -1757,10 +1782,10 @@ function renderHeatmap(s) {
     if (maxCount > 0) {
       const ratio = cnt / maxCount;
       if (ratio === 1 && cnt > 0) cls = 'hm-hi';
-      else if (ratio > 0.6) cls = 'hm-4';
-      else if (ratio > 0.35) cls = 'hm-3';
-      else if (ratio > 0.1) cls = 'hm-2';
-      else if (cnt > 0) cls = 'hm-1';
+      else if (ratio > 0.75) cls = 'hm-4';
+      else if (ratio > 0.5)  cls = 'hm-3';
+      else if (ratio > 0.25) cls = 'hm-2';
+      else if (cnt > 0)      cls = 'hm-1';
     }
     const cell = document.createElement('div');
     cell.className = `hm-cell ${cls}`;
@@ -1772,6 +1797,47 @@ function renderHeatmap(s) {
   }
 }
 
+
+function renderMasteryHeatmap(s) {
+  const grid = document.getElementById('mastery-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  // Calcul du taux de réussite par fiche (uniquement les fiches jouées)
+  const rates = [];
+  for (let i = 1; i <= 20; i++) {
+    const tot = s.ficheTotal[String(i)] || 0;
+    const cor = s.ficheCorrect[String(i)] || 0;
+    rates.push({ num: i, tot, rate: tot > 0 ? cor / tot : null });
+  }
+
+  // Les fiches non jouées sont traitées comme un score de 0%
+  const effectiveRates = rates.map(r => r.rate !== null ? r.rate : 0);
+  const worstRate = Math.min(...effectiveRates);
+
+  for (const { num, tot, rate } of rates) {
+    const effective = rate !== null ? rate : 0;
+    let cls = 'hm-ok';
+    // Plus le score est bas, plus la cellule est rouge
+    if (effective === worstRate) cls = 'hm-worst';
+    else if (effective < 0.40) cls = 'hm-r4';
+    else if (effective < 0.55) cls = 'hm-r3';
+    else if (effective < 0.70) cls = 'hm-r2';
+    else if (effective < 0.85) cls = 'hm-r1';
+    // ≥ 85% → hm-ok (neutre, bien maîtrisé)
+
+    const cell = document.createElement('div');
+    cell.className = `hm-cell ${cls}`;
+    const label = rate !== null ? `${Math.round(rate * 100)}%` : '—';
+    cell.innerHTML = `<span class="hm-num">${num}</span><span class="hm-count">${label}</span>`;
+    cell.title = rate !== null
+      ? `Fiche ${num} — score moyen ${Math.round(rate * 100)}% (${tot} questions)`
+      : `Fiche ${num} — pas encore jouée`;
+    cell.style.cursor = 'pointer';
+    cell.addEventListener('click', () => startFiche(num));
+    grid.appendChild(cell);
+  }
+}
 
 function renderBarFicheRate(s) {
   const wrap = document.getElementById('bar-fiche-rate');
