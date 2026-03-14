@@ -2401,9 +2401,12 @@ function renderBarFicheRate(s) {
     const cor = history.reduce((a, h) => a + h.score, 0);
     const pct = Math.round(cor / tot * 100);
     const col = gradColor(pct);
+    const fillStyle = pct === 0
+      ? `min-width:14px;width:0%;background:${col}`
+      : `width:${pct}%;background:${col}`;
     html += `<div class="bar-row">
       <span class="bar-lbl">Fiche ${fn}</span>
-      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"></div></div>
+      <div class="bar-track"><div class="bar-fill" style="${fillStyle}"></div></div>
       <span class="bar-val" style="color:${col}">${pct}%</span>
     </div>`;
   }
