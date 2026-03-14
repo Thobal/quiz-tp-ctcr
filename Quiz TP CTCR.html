@@ -2720,7 +2720,7 @@ function toggleThematicPanel() {
     return;
   }
   // Build the panel content
-  inner.innerHTML = Object.entries(THEMES).map(([key, theme]) => {
+  inner.innerHTML = Object.entries(THEMES).sort((a, b) => a[1].name.localeCompare(b[1].name, 'fr')).map(([key, theme]) => {
     const total = theme.questions.length;
     const displayed = total > 10 ? '10 / ' + total : total;
     return `<div class="thematic-theme-row" onclick="startThematic('${key}')">
