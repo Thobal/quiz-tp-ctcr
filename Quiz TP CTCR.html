@@ -2347,7 +2347,7 @@ function generateStatsPDF() {
   y += 2;
   line(`Fiches étudiées : ${ficheTotalSessions}`);
   line(`Questions répondues : ${ficheTotalTot}`);
-  line(`Taux de réussite global : ${ficheTotalCor} / ${ficheTotalTot} (${pct} %)`);
+  line(`Taux de réussite global : ${pct} % (${ficheTotalCor} / ${ficheTotalTot})`);
   separator();
 
   // ── Progression par fiche ──
