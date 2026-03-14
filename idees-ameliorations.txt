@@ -33,28 +33,18 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
 
 ── AMÉLIORER L'EXPÉRIENCE ─────────────────────────────────────────────────────
 
-6. Personnalisation du quiz aléatoire
-   Permettre de choisir le nombre de questions (5, 10, 15, 20) et éventuellement
-   de sélectionner les fiches sources du tirage aléatoire — utile pour réviser
-   plusieurs fiches en même temps sans les faire séparément.
-
-7. Mode examen blanc
-   Un mode spécial simulant les conditions réelles de l'examen : nombre de questions
-   fixé, pas de feedback immédiat, résultats seulement à la fin, avec un seuil de
-   réussite affiché (ex: 7/10 pour valider).
-
-8. Export / partage des statistiques
+6. Export / partage des statistiques
    Un bouton pour exporter les stats en JSON ou PDF — pratique si tu changes
    d'appareil ou veux garder une trace de ta progression.
 
-9. Réinitialisation sélective
-    Actuellement, la réinitialisation efface tout. Permettre de remettre à zéro
-    une fiche spécifique sans perdre l'historique des autres.
+7. Réinitialisation sélective
+   Actuellement, la réinitialisation efface tout. Permettre de remettre à zéro
+   une fiche spécifique sans perdre l'historique des autres.
 
 
 ── CONTENU ─────────────────────────────────────────────────────────────────────
 
-10. Signaler une erreur
-    Un bouton sur chaque question pour signaler une imprécision ou une erreur dans
-    la question ou l'explication — avec un message copié dans le presse-papier pour
-    faciliter le retour.
+8. Signaler une erreur
+   Un bouton sur chaque question pour signaler une imprécision ou une erreur dans
+   la question ou l'explication — avec un message copié dans le presse-papier pour
+   faciliter le retour.
