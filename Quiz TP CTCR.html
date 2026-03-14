@@ -1042,6 +1042,20 @@
     line-height: 1.6;
   }
 
+  .storage-inline-info {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .storage-inline-info p { margin-bottom: 10px; }
+  .storage-inline-info ul { padding-left: 18px; }
+  .storage-inline-info li { margin-bottom: 6px; }
+  .storage-inline-info.hidden { display: none; }
+  #storage-info-btn.active { background: var(--accent); color: #000; }
+
   /* Bouton info + modale */
   .info-btn {
     position: absolute;
@@ -1462,9 +1476,20 @@
     <!-- Stockage local -->
     <div class="stat-block storage-block" style="position:relative;">
       <h3>Stockage local</h3>
-      <button class="info-btn" onclick="showInfoModal('stockage-local')" aria-label="Explication">ℹ</button>
+      <button class="info-btn" id="storage-info-btn" onclick="toggleStorageInfo()" aria-label="Explication">ℹ</button>
       <div class="storage-rows" id="storage-info">
         <span style="color:var(--muted);font-size:12px;font-family:'DM Mono',monospace">Chargement…</span>
+      </div>
+      <div class="storage-inline-info hidden" id="storage-inline-info">
+        <p>Cette application ne nécessite aucun compte utilisateur et peut fonctionner entièrement hors ligne. Elle peut être utilisée de deux façons : soit en ouvrant directement le fichier HTML enregistré sur votre ordinateur, soit en accédant à une adresse internet (URL) sur laquelle elle a été mise en ligne. Dans les deux cas, vos statistiques sont automatiquement sauvegardées dans la mémoire locale de votre navigateur. On appelle cela le "stockage local" ou <em>localStorage</em>.</p>
+        <p><strong>Pour que vos statistiques soient conservées entre chaque utilisation :</strong> l'application doit toujours être accédée depuis le même endroit — toujours la même adresse internet, ou toujours le même fichier au même emplacement sur votre disque. Si vous alternez entre les deux, vous aurez deux historiques séparés.</p>
+        <p>⚠️ <strong>Attention : si vous avez reçu le fichier HTML de cette application par email,</strong> ne cliquez pas directement sur la pièce jointe pour l'ouvrir. Les navigateurs ouvrent alors le fichier depuis un dossier temporaire dont le nom change à chaque ouverture. L'application fonctionnera normalement mais vos statistiques seront perdues à chaque fermeture. Pour conserver votre progression, enregistrez d'abord le fichier sur votre ordinateur, puis ouvrez-le depuis cet endroit à chaque utilisation.</p>
+        <ul>
+          <li>Vos données ne quittent jamais votre ordinateur.</li>
+          <li>Chaque navigateur a son propre stockage — Chrome et Safari ne partagent pas les données.</li>
+          <li>Vider le cache de votre navigateur effacera vos statistiques.</li>
+          <li>Capacité disponible : environ 5 Mo, largement suffisant pour des années d'utilisation.</li>
+        </ul>
       </div>
     </div>
 
@@ -2113,6 +2138,14 @@ const INFO_TEXTS = {
            </ul>`
   }
 };
+
+function toggleStorageInfo() {
+  const panel = document.getElementById('storage-inline-info');
+  const btn = document.getElementById('storage-info-btn');
+  const isHidden = panel.classList.contains('hidden');
+  panel.classList.toggle('hidden', !isHidden);
+  btn.classList.toggle('active', isHidden);
+}
 
 function showInfoModal(id) {
   const data = INFO_TEXTS[id] || INFO_TEXTS['taux-global'];
