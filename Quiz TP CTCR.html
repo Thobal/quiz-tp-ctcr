@@ -1477,9 +1477,6 @@
     <div class="stat-block storage-block" style="position:relative;">
       <h3>Stockage local</h3>
       <button class="info-btn" id="storage-info-btn" onclick="toggleStorageInfo()" aria-label="Explication">ℹ</button>
-      <div class="storage-rows" id="storage-info">
-        <span style="color:var(--muted);font-size:12px;font-family:'DM Mono',monospace">Chargement…</span>
-      </div>
       <div class="storage-inline-info hidden" id="storage-inline-info">
         <p>Vos statistiques (scores, progression, historique des sessions) sont automatiquement sauvegardées dans la mémoire locale de votre navigateur. On appelle cela le "stockage local" ou <em>localStorage</em>. Aucune information n'est envoyée sur internet et aucun compte utilisateur n'est nécessaire.</p>
         <p><strong>Pour que vos statistiques soient conservées entre chaque utilisation, l'application doit toujours être accédée depuis le même endroit. Voici les trois cas de figure possibles :</strong></p>
@@ -1495,6 +1492,9 @@
           <li>Si vous videz le cache ou les données de navigation de votre navigateur, vos statistiques seront effacées.</li>
           <li>La capacité de stockage disponible est d'environ 5 Mo, ce qui est largement suffisant pour des années d'utilisation de cette application.</li>
         </ul>
+      </div>
+      <div class="storage-rows" id="storage-info">
+        <span style="color:var(--muted);font-size:12px;font-family:'DM Mono',monospace">Chargement…</span>
       </div>
     </div>
 
