@@ -1691,6 +1691,7 @@ const GLOSSAIRE = [
 
 
 function showGlossaireScreen() {
+  closeThematicPanel();
   showScreen('glossaire-screen');
   renderGlossaire(GLOSSAIRE);
   const input = document.getElementById('glossaire-search');
@@ -2245,6 +2246,7 @@ function resetStats() {
 
 // ── STATS RENDERING ────────────────────────────────────────────────
 function showStatsScreen() {
+  closeThematicPanel();
   showScreen('stats-screen');
   const s = loadStats();
   renderGauge(s);
@@ -2505,6 +2507,7 @@ function renderHistory(s) {
 
 // ── REVISION ───────────────────────────────────────────────────────────────
 function showRevisionScreen() {
+  closeThematicPanel();
   showScreen('revision-screen');
   // Build fiche grid
   const grid = document.getElementById('revision-fiche-grid');
@@ -2633,7 +2636,12 @@ function init() {
   });
 }
 
+function closeThematicPanel() {
+  document.getElementById('thematic-panel').classList.remove('open');
+}
+
 function startFiche(n) {
+  closeThematicPanel();
   currentFiche = n;
   currentQIndex = 0;
   sessionResults = [];
@@ -2643,6 +2651,7 @@ function startFiche(n) {
 }
 
 function startRandom() {
+  closeThematicPanel();
   currentFiche = 'aléatoire';
   currentQIndex = 0;
   sessionResults = [];
