@@ -2173,14 +2173,14 @@ const INFO_TEXTS = {
     title: 'Fiches les plus travaillées',
     body: `<p>Cette grille colorée indique combien de fois vous avez joué chaque fiche, toutes sessions confondues.</p>
            <p>Plus la cellule est jaune et brillante, plus vous avez pratiqué cette fiche. Les cellules sombres correspondent aux fiches peu ou pas travaillées.</p>
-           <p style="color:var(--muted);font-size:12px;">Cliquer sur une cellule lance directement la fiche correspondante.</p>`
+           <p>💡 <strong>Chaque cellule est cliquable</strong> : appuyez dessus pour lancer directement le quiz de la fiche correspondante.</p>`
   },
   'fiches-maitrisees': {
     title: 'Fiches les moins maîtrisées',
     body: `<p>Cette grille met en évidence les fiches sur lesquelles vous obtenez les moins bons résultats.</p>
            <p>Le score de chaque fiche est calculé sur vos <strong>5 dernières sessions</strong> pour cette fiche. Plus une cellule est rouge, plus votre taux de bonnes réponses est faible sur cette fiche récemment.</p>
            <p>Les fiches jamais jouées sont considérées comme non maîtrisées (score 0%).</p>
-           <p style="color:var(--muted);font-size:12px;">Cliquer sur une cellule lance directement la fiche correspondante.</p>`
+           <p>💡 <strong>Chaque cellule est cliquable</strong> : appuyez dessus pour lancer directement le quiz de la fiche correspondante.</p>`
   },
 'dernieres-sessions': {
     title: 'Dernières sessions',
@@ -2482,7 +2482,7 @@ function renderHistory(s) {
     const pct = Math.round(h.score / h.total * 100);
     const col = gradColor(pct);
     const isThematic = String(h.mode).startsWith('Thématique');
-    const modeLabel = h.mode === 'random' ? 'Aléat.' : isThematic ? String(h.mode).replace('Thématique · ', 'Thème : ') : `Fiche ${h.mode}`;
+    const modeLabel = h.mode === 'random' ? 'Aléatoire' : isThematic ? String(h.mode).replace('Thématique · ', 'Thème : ') : `Fiche ${h.mode}`;
     const pips = (h.pips || []).map(ok =>
       `<span style="background:${ok ? gradColor(100) : gradColor(0)}"></span>`).join('');
     let clickAttr = '';
