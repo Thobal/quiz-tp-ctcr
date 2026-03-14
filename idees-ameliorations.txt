@@ -9,25 +9,23 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    qui lance un mini-quiz uniquement sur les questions où tu as échoué — comme les
    flashcards d'un système de répétition espacée.
 
-── ENRICHIR LES STATISTIQUES ──────────────────────────────────────────────────
-
-2. Graphique de progression par fiche
-   Sur la heatmap "fiches les moins maîtrisées", au clic sur une cellule, afficher
-   un mini-graphique montrant l'évolution du score sur les 5 dernières sessions de
-   cette fiche (tendance haussière ou baissière).
-
-3. Indicateur de régularité (streak)
-   Un KPI "Série en cours" qui compte le nombre de jours consécutifs où au moins
-   une session a été jouée — comme un streak Duolingo. Moteur de motivation.
-
 ── AMÉLIORER L'EXPÉRIENCE ─────────────────────────────────────────────────────
 
-4. Export / partage des statistiques
+2. Export / partage des statistiques
    Un bouton pour exporter les stats en JSON ou PDF — pratique si tu changes
    d'appareil ou veux garder une trace de ta progression.
 
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Graphique de progression par fiche
+   Sur la heatmap "fiches les moins maîtrisées", au clic sur une cellule, afficher
+   un mini-graphique montrant l'évolution du score sur les 5 dernières sessions de
+   cette fiche (tendance haussière ou baissière).
+
+[REJETÉ] Indicateur de régularité (streak)
+   Un KPI "Série en cours" qui compte le nombre de jours consécutifs où au moins
+   une session a été jouée — comme un streak Duolingo. Moteur de motivation.
 
 [REJETÉ] Meilleur score et score moyen par fiche
    Dans la section statistiques, afficher pour chaque fiche son record personnel
