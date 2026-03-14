@@ -2443,7 +2443,7 @@ function renderHistory(s) {
   list.innerHTML = s.sessionHistory.slice(0, 20).map(h => {
     const pct = Math.round(h.score / h.total * 100);
     const col = gradColor(pct);
-    const modeLabel = h.mode === 'random' ? '🎲 Aléat.' : `📋 Fiche ${h.mode}`;
+    const modeLabel = h.mode === 'random' ? 'Aléat.' : `Fiche ${h.mode}`;
     const pips = (h.pips || []).map(ok =>
       `<span style="background:${ok ? gradColor(100) : gradColor(0)}"></span>`).join('');
     const isClickable = h.mode !== 'random';
