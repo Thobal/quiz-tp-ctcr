@@ -2430,13 +2430,7 @@ class MiniPDF {
 
 // ── EXPORT PDF ─────────────────────────────────────────────────────
 function exportStatsPDF() {
-  const btn = document.querySelector('.export-stats-btn');
-  const orig = btn.textContent;
-  btn.textContent = '⏳ Génération…';
-  btn.disabled = true;
   generateStatsPDF();
-  btn.textContent = orig;
-  btn.disabled = false;
 }
 
 function generateStatsPDF() {
