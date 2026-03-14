@@ -935,11 +935,12 @@
   /* ── STATS SCREEN ── */
   .stats-btn-row {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     width: 100%;
   }
   .stats-btn {
-    flex: 1;
+    flex: 1 1 80px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1372,11 +1373,11 @@
       <div class="quiz-btns-row">
         <button class="random-btn" onclick="startRandom()">
           <span class="icon">🎲</span>
-          <span class="text">Quiz Aléatoire<small>10 questions · toutes fiches confondues</small></span>
+          <span class="text">Quiz Aléatoire<small>10 questions, toutes fiches confondues</small></span>
         </button>
         <button class="random-btn" id="thematic-btn" onclick="toggleThematicPanel()">
           <span class="icon">📚</span>
-          <span class="text">Quiz Thématique<small>10 questions · par thème</small></span>
+          <span class="text">Quiz Thématique<small>10 questions, par thème</small></span>
         </button>
       </div>
       <div class="thematic-panel" id="thematic-panel">
