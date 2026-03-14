@@ -1603,7 +1603,9 @@ function renderGlossaire(items) {
 }
 
 function toggleGlossaireCard(card) {
-  card.classList.toggle('open');
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.glossaire-card.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) card.classList.add('open');
 }
 
 const FICHES = {
