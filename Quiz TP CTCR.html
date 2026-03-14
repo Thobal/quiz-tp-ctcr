@@ -2381,23 +2381,44 @@ function renderMasteryHeatmap(s) {
   const effectiveRates = rates.map(r => r.rate !== null ? r.rate : 0);
   const worstRate = Math.min(...effectiveRates);
 
+  // Dégradé rouge : #f0566e (0%) → #0a0b0e (100%)
+  function gradRed(p) {
+    const t = Math.max(0, Math.min(100, p)) / 100;
+    const r = Math.round(0xf0 + (0x0a - 0xf0) * t);
+    const g = Math.round(0x56 + (0x0b - 0x56) * t);
+    const b = Math.round(0x6e + (0x0e - 0x6e) * t);
+    return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+  }
+
   for (const { num, tot, sessions, rate } of rates) {
     const effective = rate !== null ? rate : 0;
-    let cls = 'hm-ok';
-    // Plus le score est bas, plus la cellule est rouge
-    if (effective === worstRate) cls = 'hm-worst';
-    else if (effective < 0.40) cls = 'hm-r4';
-    else if (effective < 0.55) cls = 'hm-r3';
-    else if (effective < 0.70) cls = 'hm-r2';
-    else if (effective < 0.85) cls = 'hm-r1';
-    // ≥ 85% → hm-ok (neutre, bien maîtrisé)
+    const pct = Math.round(effective * 100);
+    const col = gradRed(pct);
+
+    // Texte : blanc sur rouge vif, rose clair sur rouge moyen, rose muted sur rouge sombre
+    let textColor;
+    if      (pct < 25) textColor = '#ffffff';   // blanc sur rouge vif
+    else if (pct < 50) textColor = '#ffe0e6';   // rose très clair sur rouge moyen
+    else if (pct < 75) textColor = '#d08090';   // rose sur rouge sombre
+    else               textColor = '#4a5068';   // gris muted (même que fiches non travaillées)
+
+    // Halo rouge proportionnel à la gravité, supprimé dès 75%
+    const haloT = Math.max(0, (1 - pct / 75));
+    const haloOuter = (haloT * 0.75).toFixed(2);
+    const haloInner = (haloT * 0.90).toFixed(2);
+    const shadow = haloT > 0
+      ? `0 0 14px rgba(240,86,110,${haloOuter}), 0 0 4px rgba(240,86,110,${haloInner})`
+      : 'none';
 
     const cell = document.createElement('div');
-    cell.className = `hm-cell ${cls}`;
-    const label = rate !== null ? `${Math.round(rate * 100)}%` : '—';
+    cell.className = 'hm-cell';
+    cell.style.background = col;
+    cell.style.color = textColor;
+    cell.style.boxShadow = shadow;
+    const label = rate !== null ? `${pct}%` : '—';
     cell.innerHTML = `<span class="hm-num">${num}</span><span class="hm-count">${label}</span>`;
     cell.title = rate !== null
-      ? `Fiche ${num} — score moyen ${Math.round(rate * 100)}% sur ${sessions} dernière(s) session(s)`
+      ? `Fiche ${num} — score moyen ${pct}% sur ${sessions} dernière(s) session(s)`
       : `Fiche ${num} — pas encore jouée`;
     cell.style.cursor = 'pointer';
     cell.addEventListener('click', () => startFiche(num));
