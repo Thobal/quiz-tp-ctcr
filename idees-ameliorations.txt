@@ -15,6 +15,13 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    Un bouton pour exporter les stats en JSON ou PDF — pratique si tu changes
    d'appareil ou veux garder une trace de ta progression.
 
+3. Heatmap "fiches non travaillées depuis longtemps"
+   Sur l'écran de statistiques, une troisième heatmap mettant en lumière les
+   fiches que l'utilisateur n'a pas travaillées depuis longtemps, afin qu'il
+   puisse les refaire pour s'assurer qu'il ne les a pas oubliées. Les cellules
+   pourraient être colorées selon l'ancienneté de la dernière session (ex :
+   vert = récent, orange = quelques semaines, rouge = plus d'un mois ou jamais).
+
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
 
