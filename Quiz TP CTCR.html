@@ -1553,11 +1553,11 @@
       <div class="heatmap-grid" id="staleness-grid"></div>
       <div style="display:flex;gap:6px;align-items:center;margin-top:8px;">
         <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Récent</span>
-        <div style="width:14px;height:14px;border-radius:4px;background:#080c1a"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:rgba(42,100,248,0.30)"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:rgba(42,100,248,0.60)"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:rgba(42,100,248,0.85)"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:#2a64f8"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:#060d11"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(0,180,216,0.30)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(0,180,216,0.60)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(0,180,216,0.85)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:#00b4d8"></div>
         <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Ancien</span>
       </div>
     </div>
@@ -2811,9 +2811,9 @@ function renderStalenessHeatmap(s) {
   // Dégradé bleu : t=0 (récent) → sombre  |  t=1 (ancien/jamais) → bleu vif
   function gradBlue(t) {
     const v = Math.max(0, Math.min(1, t));
-    const r = Math.round(0x08 + (0x2a - 0x08) * v);
-    const g = Math.round(0x0c + (0x64 - 0x0c) * v);
-    const b = Math.round(0x1a + (0xf8 - 0x1a) * v);
+    const r = Math.round(0x06 + (0x00 - 0x06) * v);
+    const g = Math.round(0x0d + (0xb4 - 0x0d) * v);
+    const b = Math.round(0x11 + (0xd8 - 0x11) * v);
     return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
   }
 
@@ -2835,14 +2835,14 @@ function renderStalenessHeatmap(s) {
     // Couleur du texte selon la luminosité du fond
     let textColor;
     if      (staleness > 0.75) textColor = '#ffffff';
-    else if (staleness > 0.50) textColor = '#c0d4ff';
-    else if (staleness > 0.25) textColor = '#6080b0';
+    else if (staleness > 0.50) textColor = '#b0e8f8';
+    else if (staleness > 0.25) textColor = '#407080';
     else                       textColor = '#4a5068';
 
-    // Halo bleu proportionnel à l'ancienneté
+    // Halo cyan proportionnel à l'ancienneté
     const haloT = Math.max(0, (staleness - 0.5) * 2);
     const shadow = haloT > 0
-      ? `0 0 14px rgba(42,100,248,${(haloT * 0.70).toFixed(2)}), 0 0 4px rgba(42,100,248,${(haloT * 0.85).toFixed(2)})`
+      ? `0 0 14px rgba(0,180,216,${(haloT * 0.70).toFixed(2)}), 0 0 4px rgba(0,180,216,${(haloT * 0.85).toFixed(2)})`
       : 'none';
 
     // Affichage de la date
