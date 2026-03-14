@@ -876,6 +876,18 @@
     gap: 10px;
     margin-bottom: 7px;
     font-size: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 4px 6px;
+    margin-left: -6px;
+    margin-right: -6px;
+    transition: background 0.15s;
+  }
+  .bar-row:hover {
+    background: var(--surface2);
+  }
+  .bar-row:hover .bar-lbl {
+    color: var(--accent);
   }
   .bar-row .bar-lbl {
     font-family: 'DM Mono', monospace;
@@ -2404,7 +2416,7 @@ function renderBarFicheRate(s) {
     const fillStyle = pct === 0
       ? `min-width:14px;width:0%;background:${col}`
       : `width:${pct}%;background:${col}`;
-    html += `<div class="bar-row">
+    html += `<div class="bar-row" onclick="startFiche(${fn})" title="Démarrer la fiche ${fn}">
       <span class="bar-lbl">Fiche ${fn}</span>
       <div class="bar-track"><div class="bar-fill" style="${fillStyle}"></div></div>
       <span class="bar-val">${pct}%</span>
