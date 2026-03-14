@@ -20,19 +20,18 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    Un KPI "Série en cours" qui compte le nombre de jours consécutifs où au moins
    une session a été jouée — comme un streak Duolingo. Moteur de motivation.
 
-4. Meilleur score et score moyen par fiche
-   Dans la section statistiques, afficher pour chaque fiche son record personnel
-   et sa moyenne globale (pas seulement les 5 dernières sessions).
-
-
 ── AMÉLIORER L'EXPÉRIENCE ─────────────────────────────────────────────────────
 
-5. Export / partage des statistiques
+4. Export / partage des statistiques
    Un bouton pour exporter les stats en JSON ou PDF — pratique si tu changes
    d'appareil ou veux garder une trace de ta progression.
 
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Meilleur score et score moyen par fiche
+   Dans la section statistiques, afficher pour chaque fiche son record personnel
+   et sa moyenne globale (pas seulement les 5 dernières sessions).
 
 [REJETÉ] Réinitialisation sélective
    Actuellement, la réinitialisation efface tout. Permettre de remettre à zéro
