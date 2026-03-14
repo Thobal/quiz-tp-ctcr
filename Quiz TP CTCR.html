@@ -2199,7 +2199,7 @@ function recordWrongAnswer(q, userAns, prettyAnswers) {
   // Supprimer doublon éventuel (même question)
   s.wrongHistory = s.wrongHistory.filter(e => e.q !== q.q);
   // Ajouter en tête
-  s.wrongHistory.unshift({ q: q.q, userAns, correct: prettyAnswers, fiche: ficheNum, qNum, panel: q.panel || null, ts });
+  s.wrongHistory.unshift({ q: q.q, userAns, correct: prettyAnswers, fiche: ficheNum, qNum, panel: q.panel || null, ts, source: currentFiche });
   // Garder les 20 dernières
   if (s.wrongHistory.length > 20) s.wrongHistory = s.wrongHistory.slice(0, 20);
   saveStats(s);
@@ -2559,10 +2559,14 @@ function renderWrongHistory() {
     const panelHtml = e.panel && PANEL_SVGS[e.panel]
       ? `<div class="qa-panel">${PANEL_SVGS[e.panel]}</div>`
       : '';
-    const ficheLabel = e.fiche === 'aléatoire' ? 'Quiz aléatoire' : `Fiche ${e.fiche}`;
+    const src = e.source !== undefined ? String(e.source) : String(e.fiche);
+    const ficheLabel = src === 'aléatoire' ? 'Quiz aléatoire'
+      : src.startsWith('Thématique') ? src.replace('Thématique · ', 'Thème : ')
+      : `Fiche ${e.fiche}`;
+    const ficheDetail = (src === 'aléatoire' || src.startsWith('Thématique')) ? ` · Fiche ${e.fiche}` : '';
     return `
       <div class="wrong-card">
-        <div class="wrong-card-meta">${ficheLabel} · Question ${e.qNum} · ${e.ts}</div>
+        <div class="wrong-card-meta">${ficheLabel}${ficheDetail} · Question ${e.qNum} · ${e.ts}</div>
         ${panelHtml}
         <div class="wrong-card-q">${e.q}</div>
         <div class="wrong-card-ans">
