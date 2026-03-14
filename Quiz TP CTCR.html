@@ -968,16 +968,22 @@
   .sparkline-wrap svg { display: block; width: 100%; height: 80px; }
 
   /* Timeline list */
-  .history-list { max-height: 220px; overflow-y: auto; padding-right: 10px; }
+  .history-list { max-height: 220px; overflow-y: auto; padding-left: 6px; padding-right: 10px; }
   .history-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 9px 0;
+    padding: 9px 6px;
     border-bottom: 1px solid rgba(42,47,63,0.6);
     font-size: 13px;
+    border-radius: 8px;
+    margin: 0 -6px;
+    transition: background 0.15s;
   }
   .history-item:last-child { border-bottom: none; }
+  .history-item.clickable { cursor: pointer; }
+  .history-item.clickable:hover { background: var(--surface2); }
+  .history-item.clickable:hover .hi-mode { color: var(--accent); }
   .history-item .hi-mode {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -2440,7 +2446,9 @@ function renderHistory(s) {
     const modeLabel = h.mode === 'random' ? '🎲 Aléat.' : `📋 Fiche ${h.mode}`;
     const pips = (h.pips || []).map(ok =>
       `<span style="background:${ok ? gradColor(100) : gradColor(0)}"></span>`).join('');
-    return `<div class="history-item">
+    const isClickable = h.mode !== 'random';
+    const clickAttr = isClickable ? `onclick="startFiche(${h.mode})" title="Relancer la fiche ${h.mode}"` : '';
+    return `<div class="history-item${isClickable ? ' clickable' : ''}" ${clickAttr}>
       <span class="hi-mode">${modeLabel}</span>
       <span class="hi-pips">${pips}</span>
       <span class="hi-score" style="color:${col}">${h.score}/${h.total}</span>
