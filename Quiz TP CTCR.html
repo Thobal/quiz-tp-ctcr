@@ -1230,17 +1230,39 @@
     transition: border-color 0.2s;
   }
   .glossaire-card:hover { border-color: var(--accent); }
+  .glossaire-card.open { border-color: var(--accent); }
   .glossaire-card .glo-term {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     font-family: 'Syne', sans-serif;
     font-size: 14px;
     font-weight: 700;
     color: var(--accent);
     margin-bottom: 8px;
+    gap: 8px;
   }
+  .glossaire-card .glo-chevron {
+    font-size: 11px;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+    line-height: 1;
+  }
+  .glossaire-card.open .glo-chevron { transform: rotate(180deg); }
   .glossaire-card .glo-def {
     font-size: 13.5px;
     line-height: 1.6;
     color: var(--muted);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    transition: none;
+  }
+  .glossaire-card.open .glo-def {
+    display: block;
+    -webkit-line-clamp: unset;
   }
 
 </style>
@@ -1570,11 +1592,18 @@ function renderGlossaire(items) {
   const count = document.getElementById('glossaire-count');
   count.textContent = items.length + ' terme' + (items.length > 1 ? 's' : '');
   list.innerHTML = items.map(g => `
-    <div class="glossaire-card">
-      <div class="glo-term">${g.term}</div>
+    <div class="glossaire-card" onclick="toggleGlossaireCard(this)">
+      <div class="glo-term">
+        <span>${g.term}</span>
+        <span class="glo-chevron">▼</span>
+      </div>
       <div class="glo-def">${g.def}</div>
     </div>
   `).join('');
+}
+
+function toggleGlossaireCard(card) {
+  card.classList.toggle('open');
 }
 
 const FICHES = {
