@@ -1608,7 +1608,7 @@ function filterGlossaire(query) {
 function renderGlossaire(items) {
   const list = document.getElementById('glossaire-list');
   const count = document.getElementById('glossaire-count');
-  count.textContent = items.length + ' terme' + (items.length > 1 ? 's' : '');
+  count.textContent = items.length + ' définition' + (items.length > 1 ? 's' : '');
   list.innerHTML = items.map(g => `
     <div class="glossaire-card" onclick="toggleGlossaireCard(this)">
       <div class="glo-term">
