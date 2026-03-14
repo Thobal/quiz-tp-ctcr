@@ -31,13 +31,12 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    Un bouton pour exporter les stats en JSON ou PDF — pratique si tu changes
    d'appareil ou veux garder une trace de ta progression.
 
-6. Réinitialisation sélective
-   Actuellement, la réinitialisation efface tout. Permettre de remettre à zéro
-   une fiche spécifique sans perdre l'historique des autres.
-
-
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Réinitialisation sélective
+   Actuellement, la réinitialisation efface tout. Permettre de remettre à zéro
+   une fiche spécifique sans perdre l'historique des autres.
 
 [REJETÉ] Indices progressifs
    Sur les questions texte libre, un bouton "Indice" qui révèle le premier mot ou
