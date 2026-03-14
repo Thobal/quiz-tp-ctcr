@@ -907,13 +907,6 @@
   .hm-cell.hm-4  { background: rgba(245,200,66,0.88); color: #0a0800; font-weight: 800; }
   .hm-cell.hm-hi { background: #f5c842; color: #0d0f14; font-weight: 900; box-shadow: 0 0 24px rgba(245,200,66,0.75), 0 0 6px rgba(245,200,66,0.9); }
 
-  /* Heatmap maîtrise — palette rouge (pire score = plus rouge) */
-  .hm-cell.hm-ok   { background: #080a0e; color: #4a5068; border: 1px solid #151820; }
-  .hm-cell.hm-r1   { background: rgba(240,86,110,0.12); color: #c05070; }
-  .hm-cell.hm-r2   { background: rgba(240,86,110,0.30); color: #f07090; }
-  .hm-cell.hm-r3   { background: rgba(240,86,110,0.58); color: #fff; }
-  .hm-cell.hm-r4   { background: rgba(240,86,110,0.82); color: #fff; font-weight: 800; }
-  .hm-cell.hm-worst { background: #f0566e; color: #fff; font-weight: 900; box-shadow: 0 0 24px rgba(240,86,110,0.75), 0 0 6px rgba(240,86,110,0.9); }
 
   /* Sparkline */
   .sparkline-wrap { width: 100%; overflow-x: auto; }
@@ -1116,7 +1109,6 @@
   }
 
   @media (max-width: 500px) {
-    .kpi-card .kpi-val { font-size: 22px; }
     .heatmap-grid { grid-template-columns: repeat(2,1fr); }
   }
 
@@ -1136,53 +1128,6 @@
     .submit-btn { width: 100%; }
   }
 
-
-  /* Variante 1 : Bus blanc sur fond sombre */
-  .bus-strip-v1 {
-    height: 155px; background: #12131c; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .bus-strip-v1 svg {
-    width: 100%; height: auto; display: block;
-    filter: invert(1); opacity: 0.88;
-    transform: translateY(-10%);
-  }
-  /* Variante 2 : Bus doré sur fond chaud */
-  .bus-strip-v2 {
-    height: 155px;
-    background: linear-gradient(160deg, #1b1508 0%, #15161e 60%);
-    overflow: hidden; display: flex; align-items: center;
-  }
-  .bus-strip-v2 svg {
-    width: 100%; height: auto; display: block;
-    filter: invert(1) sepia(1) saturate(5) hue-rotate(3deg) brightness(1.05);
-    opacity: 0.92; transform: translateY(-10%);
-  }
-  /* Variante 3 : Filigrane discret + texte centré */
-  .bus-strip-v3 {
-    height: 155px; background: #12131c;
-    position: relative; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .bus-strip-v3 svg {
-    position: absolute; width: 115%; left: -7.5%;
-    top: 50%; transform: translateY(-55%);
-    opacity: 0.09;
-  }
-  .bus-strip-v3 .v3-overlay {
-    position: relative; z-index: 1; text-align: center;
-  }
-  .bus-strip-v3 .v3-overlay span {
-    display: block; font-family: 'Syne', sans-serif;
-    font-size: 13px; font-weight: 700; color: var(--muted);
-    letter-spacing: 0.18em; text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .bus-strip-v3 .v3-overlay strong {
-    display: block; font-family: 'Syne', sans-serif;
-    font-size: 26px; font-weight: 900; color: var(--text);
-    letter-spacing: 0.05em;
-  }
 
 
 
