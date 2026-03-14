@@ -1,0 +1,70 @@
+IDÉES D'AMÉLIORATION — Quiz TP CTCR
+=====================================
+
+
+── AMÉLIORER L'APPRENTISSAGE ──────────────────────────────────────────────────
+
+1. Mode révision ciblée des erreurs
+   Depuis "Mes 20 dernières erreurs", un bouton "Se faire interroger sur mes erreurs"
+   qui lance un mini-quiz uniquement sur les questions où tu as échoué — comme les
+   flashcards d'un système de répétition espacée.
+
+2. Indices progressifs
+   Sur les questions texte libre, un bouton "Indice" qui révèle le premier mot ou
+   le nombre de caractères de la réponse. Utile quand on bloque sans vouloir
+   directement voir la réponse.
+
+3. Affichage de la difficulté par question
+   Calculer automatiquement un taux d'échec par question (basé sur l'historique)
+   et l'afficher dans la révision avec un indicateur rouge/jaune/vert. Permet de
+   savoir quelles questions sont objectivement les plus difficiles.
+
+
+── ENRICHIR LES STATISTIQUES ──────────────────────────────────────────────────
+
+4. Graphique de progression par fiche
+   Sur la heatmap "fiches les moins maîtrisées", au clic sur une cellule, afficher
+   un mini-graphique montrant l'évolution du score sur les 5 dernières sessions de
+   cette fiche (tendance haussière ou baissière).
+
+5. Indicateur de régularité (streak)
+   Un KPI "Série en cours" qui compte le nombre de jours consécutifs où au moins
+   une session a été jouée — comme un streak Duolingo. Moteur de motivation.
+
+6. Meilleur score et score moyen par fiche
+   Dans la section statistiques, afficher pour chaque fiche son record personnel
+   et sa moyenne globale (pas seulement les 5 dernières sessions).
+
+
+── AMÉLIORER L'EXPÉRIENCE ─────────────────────────────────────────────────────
+
+7. Personnalisation du quiz aléatoire
+   Permettre de choisir le nombre de questions (5, 10, 15, 20) et éventuellement
+   de sélectionner les fiches sources du tirage aléatoire — utile pour réviser
+   plusieurs fiches en même temps sans les faire séparément.
+
+8. Mode examen blanc
+   Un mode spécial simulant les conditions réelles de l'examen : nombre de questions
+   fixé, pas de feedback immédiat, résultats seulement à la fin, avec un seuil de
+   réussite affiché (ex: 7/10 pour valider).
+
+9. Export / partage des statistiques
+   Un bouton pour exporter les stats en JSON ou PDF — pratique si tu changes
+   d'appareil ou veux garder une trace de ta progression.
+
+10. Réinitialisation sélective
+    Actuellement, la réinitialisation efface tout. Permettre de remettre à zéro
+    une fiche spécifique sans perdre l'historique des autres.
+
+
+── CONTENU ─────────────────────────────────────────────────────────────────────
+
+11. Filtre par thème dans le quiz aléatoire
+    Les questions couvrent des thèmes variés (réglementation sociale, mécanique,
+    signalisation…). Permettre de filtrer par thème pour travailler une compétence
+    précise.
+
+12. Signaler une erreur
+    Un bouton sur chaque question pour signaler une imprécision ou une erreur dans
+    la question ou l'explication — avec un message copié dans le presse-papier pour
+    faciliter le retour.
