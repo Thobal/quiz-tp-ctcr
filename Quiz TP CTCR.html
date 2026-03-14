@@ -869,54 +869,6 @@
   /* Donut chart */
 
   /* Bar chart */
-  .bar-chart { width: 100%; }
-  .bar-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 7px;
-    font-size: 12px;
-    cursor: pointer;
-    border-radius: 8px;
-    padding: 4px 6px;
-    margin-left: -6px;
-    margin-right: -6px;
-    transition: background 0.15s;
-  }
-  .bar-row:hover {
-    background: var(--surface2);
-  }
-  .bar-row:hover .bar-lbl {
-    color: var(--accent);
-  }
-  .bar-row .bar-lbl {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    width: 54px;
-    text-align: right;
-    flex-shrink: 0;
-  }
-  .bar-row .bar-track {
-    flex: 1;
-    height: 14px;
-    background: var(--surface2);
-    border-radius: 100px;
-    overflow: hidden;
-  }
-  .bar-row .bar-fill {
-    height: 100%;
-    border-radius: 100px;
-    transition: width 0.6s cubic-bezier(.4,0,.2,1);
-  }
-  .bar-row .bar-val {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    width: 28px;
-    text-align: right;
-    flex-shrink: 0;
-  }
 
   /* Heatmap fiches */
   .heatmap-grid {
@@ -1478,12 +1430,6 @@
       </div>
     </div>
 
-    <!-- Répartition bonne/mauvaise par fiche -->
-    <div class="stat-block" style="position:relative;">
-      <h3>Taux de réussite par fiche <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(5 dernières sessions)</span></h3>
-      <button class="info-btn" onclick="showInfoModal('taux-par-fiche')" aria-label="Explication">ℹ</button>
-      <div class="bar-chart" id="bar-fiche-rate"></div>
-    </div>
 
     <!-- Historique récent -->
     <div class="stat-block" style="position:relative;">
@@ -2135,13 +2081,6 @@ const INFO_TEXTS = {
            <p>Les fiches jamais jouées sont considérées comme non maîtrisées (score 0%).</p>
            <p style="color:var(--muted);font-size:12px;">Cliquer sur une cellule lance directement la fiche correspondante.</p>`
   },
-  'taux-par-fiche': {
-    title: 'Taux de réussite par fiche',
-    body: `<p>Ce graphique à barres affiche votre taux de bonnes réponses pour chaque fiche jouée.</p>
-           <p>Le calcul est basé sur vos <strong>5 dernières sessions</strong> par fiche, ce qui reflète votre niveau actuel plutôt que votre historique complet.</p>
-           <p>La couleur de chaque barre est calculée en <strong>dégradé continu</strong> selon le score exact : du <strong style="color:#e0485a">rouge</strong> à 0% jusqu'au <strong style="color:#6abf88">vert clair</strong> à 100%, en passant par le <strong style="color:#f5c842">jaune</strong> autour de 50%.</p>
-           <p style="color:var(--muted);font-size:12px;">Les fiches jamais jouées n'apparaissent pas.</p>`
-  },
 'dernieres-sessions': {
     title: 'Dernières sessions',
     body: `<p>Cette liste affiche le détail de vos 20 sessions les plus récentes.</p>
@@ -2212,7 +2151,6 @@ function showStatsScreen() {
   renderStorageInfo();
   renderHeatmap(s);
   renderMasteryHeatmap(s);
-  renderBarFicheRate(s);
   renderHistory(s);
 }
 
@@ -2426,32 +2364,6 @@ function renderMasteryHeatmap(s) {
   }
 }
 
-function renderBarFicheRate(s) {
-  const wrap = document.getElementById('bar-fiche-rate');
-  if (!wrap) return;
-  const ficheHist = s.ficheHistory || {};
-  let html = '';
-  let hasData = false;
-  for (let fn = 1; fn <= 20; fn++) {
-    const history = ficheHist[String(fn)] || [];
-    if (!history.length) continue;
-    hasData = true;
-    const tot = history.reduce((a, h) => a + h.total, 0);
-    const cor = history.reduce((a, h) => a + h.score, 0);
-    const pct = Math.round(cor / tot * 100);
-    const col = gradColor(pct);
-    const fillStyle = pct === 0
-      ? `min-width:14px;width:0%;background:${col}`
-      : `width:${pct}%;background:${col}`;
-    html += `<div class="bar-row" onclick="startFiche(${fn})" title="Démarrer la fiche ${fn}">
-      <span class="bar-lbl">Fiche ${fn}</span>
-      <div class="bar-track"><div class="bar-fill" style="${fillStyle}"></div></div>
-      <span class="bar-val">${pct}%</span>
-    </div>`;
-  }
-  if (!hasData) html = '<div style="color:var(--muted);font-size:13px;font-family:DM Mono,monospace">Aucune donnée</div>';
-  wrap.innerHTML = html;
-}
 
 
 function renderHistory(s) {
