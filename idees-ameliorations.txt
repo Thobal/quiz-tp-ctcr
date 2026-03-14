@@ -9,35 +9,29 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    qui lance un mini-quiz uniquement sur les questions où tu as échoué — comme les
    flashcards d'un système de répétition espacée.
 
-2. Affichage de la difficulté par question
-   Calculer automatiquement un taux d'échec par question (basé sur l'historique)
-   et l'afficher dans la révision avec un indicateur rouge/jaune/vert. Permet de
-   savoir quelles questions sont objectivement les plus difficiles.
-
-
 ── ENRICHIR LES STATISTIQUES ──────────────────────────────────────────────────
 
-3. Graphique de progression par fiche
+2. Graphique de progression par fiche
    Sur la heatmap "fiches les moins maîtrisées", au clic sur une cellule, afficher
    un mini-graphique montrant l'évolution du score sur les 5 dernières sessions de
    cette fiche (tendance haussière ou baissière).
 
-4. Indicateur de régularité (streak)
+3. Indicateur de régularité (streak)
    Un KPI "Série en cours" qui compte le nombre de jours consécutifs où au moins
    une session a été jouée — comme un streak Duolingo. Moteur de motivation.
 
-5. Meilleur score et score moyen par fiche
+4. Meilleur score et score moyen par fiche
    Dans la section statistiques, afficher pour chaque fiche son record personnel
    et sa moyenne globale (pas seulement les 5 dernières sessions).
 
 
 ── AMÉLIORER L'EXPÉRIENCE ─────────────────────────────────────────────────────
 
-6. Export / partage des statistiques
+5. Export / partage des statistiques
    Un bouton pour exporter les stats en JSON ou PDF — pratique si tu changes
    d'appareil ou veux garder une trace de ta progression.
 
-7. Réinitialisation sélective
+6. Réinitialisation sélective
    Actuellement, la réinitialisation efface tout. Permettre de remettre à zéro
    une fiche spécifique sans perdre l'historique des autres.
 
