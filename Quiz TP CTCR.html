@@ -2100,10 +2100,17 @@ const INFO_TEXTS = {
            <p style="color:var(--muted);font-size:12px;">L'application conserve jusqu'à 50 sessions en mémoire, mais seules les 20 plus récentes sont affichées ici.</p>`
   },
   'stockage-local': {
-    title: 'Stockage local',
-    body: `<p>Vos statistiques sont enregistrées directement sur votre appareil, dans la mémoire de votre navigateur — un peu comme un carnet de notes que le navigateur conserve pour vous.</p>
-           <p>Elles ne sont <strong>pas envoyées sur Internet</strong> et ne prennent que très peu de place.</p>
-           <p>⚠️ Ces données peuvent être effacées si vous videz le cache ou l'historique de votre navigateur, ou si vous utilisez un autre navigateur. Pensez à ne pas effacer les données de site si vous souhaitez conserver votre progression.</p>`
+    title: 'Comment fonctionne la sauvegarde de vos statistiques ?',
+    body: `<p>Cette application ne nécessite aucun compte utilisateur et peut fonctionner entièrement hors ligne. Elle peut être utilisée de deux façons : soit en ouvrant directement le fichier HTML enregistré sur votre ordinateur, soit en accédant à une adresse internet (URL) sur laquelle elle a été mise en ligne. Dans les deux cas, vos statistiques (scores, progression, historique des sessions) sont automatiquement sauvegardées dans la mémoire locale de votre navigateur, sur votre ordinateur. On appelle cela le "stockage local" ou <em>localStorage</em>.</p>
+           <p><strong>Pour que vos statistiques soient conservées entre chaque utilisation, une condition est indispensable :</strong> l'application doit toujours être accédée depuis le même endroit — que ce soit toujours la même adresse internet, ou toujours le même fichier au même emplacement sur votre disque. Si vous alternez entre les deux, vos statistiques ne seront pas partagées et vous aurez deux historiques séparés.</p>
+           <p>⚠️ <strong>Attention : si vous avez reçu le fichier HTML de cette application par email,</strong> ne cliquez pas directement sur la pièce jointe pour l'ouvrir. Les navigateurs ouvrent alors le fichier depuis un dossier temporaire dont le nom change à chaque ouverture. L'application fonctionnera normalement — vous pourrez répondre aux questions et naviguer dans toutes les sections — mais vos statistiques seront perdues à chaque fois que vous fermerez le fichier. Pour conserver votre progression, enregistrez d'abord le fichier sur votre ordinateur (sur le Bureau ou dans vos Documents, par exemple), puis ouvrez-le depuis cet endroit à chaque utilisation.</p>
+           <p><strong>Quelques précisions supplémentaires :</strong></p>
+           <ul>
+             <li>Vos données ne quittent jamais votre ordinateur. Aucune information n'est envoyée sur internet.</li>
+             <li>Chaque navigateur possède son propre stockage local. Si vous utilisez Chrome un jour et Safari un autre jour, vos statistiques ne seront pas partagées entre les deux.</li>
+             <li>Si vous videz le cache ou les données de navigation de votre navigateur, vos statistiques seront effacées.</li>
+             <li>La capacité de stockage disponible est d'environ 5 Mo, ce qui est largement suffisant pour des années d'utilisation de cette application.</li>
+           </ul>`
   }
 };
 
