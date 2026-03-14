@@ -1230,6 +1230,25 @@
   }
   .info-modal-close:hover { color: var(--text); }
 
+  .export-stats-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid rgba(245,200,66,0.3);
+    border-radius: 10px;
+    color: rgba(245,200,66,0.7);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .export-stats-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(245,200,66,0.06);
+  }
   .reset-stats-btn {
     width: 100%;
     margin-top: 8px;
@@ -1559,6 +1578,7 @@
       </div>
     </div>
 
+    <button class="export-stats-btn" onclick="exportStatsPDF()">📄 Exporter les statistiques en PDF</button>
     <button class="reset-stats-btn" onclick="resetStats()">⚠ Réinitialiser toutes les statistiques</button>
   </div>
 
@@ -2244,6 +2264,107 @@ function resetStats() {
     btn.className = 'fiche-btn';
   });
   showStatsScreen();
+}
+
+// ── EXPORT PDF ─────────────────────────────────────────────────────
+function exportStatsPDF() {
+  const btn = document.querySelector('.export-stats-btn');
+  const originalText = btn.textContent;
+  btn.textContent = '⏳ Chargement…';
+  btn.disabled = true;
+
+  if (window.jspdf) {
+    generateStatsPDF();
+    btn.textContent = originalText;
+    btn.disabled = false;
+    return;
+  }
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';
+  script.onload = () => {
+    generateStatsPDF();
+    btn.textContent = originalText;
+    btn.disabled = false;
+  };
+  script.onerror = () => {
+    alert('Impossible de charger la librairie PDF.\nVérifiez votre connexion internet et réessayez.');
+    btn.textContent = originalText;
+    btn.disabled = false;
+  };
+  document.head.appendChild(script);
+}
+
+function generateStatsPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const s = loadStats();
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    + ' à ' + now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  // Calcul basé sur ficheHistory uniquement (quiz aléatoires et thématiques exclus — même logique que la jauge)
+  const ficheHist = s.ficheHistory || {};
+  let ficheTotalCor = 0, ficheTotalTot = 0, ficheTotalSessions = 0;
+  for (let fn = 1; fn <= 20; fn++) {
+    const hist = ficheHist[String(fn)] || [];
+    ficheTotalCor += hist.reduce((a, h) => a + h.score, 0);
+    ficheTotalTot += hist.reduce((a, h) => a + h.total, 0);
+  }
+  Object.values(s.ficheCount || {}).forEach(v => { ficheTotalSessions += v; });
+  const pct = ficheTotalTot > 0 ? Math.round(ficheTotalCor / ficheTotalTot * 100) : 0;
+
+  let y = 20;
+  const lh = 5.5; // line height
+  const pageH = 280;
+  const margin = 14;
+  const maxW = 182;
+
+  function checkPage() {
+    if (y > pageH) { doc.addPage(); y = 20; }
+  }
+  function title(text, size = 13) {
+    doc.setFontSize(size);
+    doc.setFont('helvetica', 'bold');
+    doc.text(text, margin, y);
+    y += size === 13 ? 8 : 6;
+    checkPage();
+  }
+  function line(text, size = 9, bold = false) {
+    doc.setFontSize(size);
+    doc.setFont('helvetica', bold ? 'bold' : 'normal');
+    const lines = doc.splitTextToSize(text, maxW);
+    lines.forEach(l => { doc.text(l, margin, y); y += lh; checkPage(); });
+  }
+  function separator() { y += 4; checkPage(); }
+
+  // ── En-tête ──
+  title('Quiz TP CTCR — Rapport de statistiques', 16);
+  line(`Exporté le ${dateStr}`, 9);
+  separator();
+
+  // ── KPIs ──
+  title('Statistiques globales');
+  line(`Le taux de réussite est basé sur les 5 dernières sessions par fiche. Les quiz aléatoires et thématiques ne sont pas pris en compte. Les fiches jamais jouées sont exclues du calcul.`, 8);
+  y += 2;
+  line(`Fiches étudiées : ${ficheTotalSessions}`);
+  line(`Questions répondues : ${ficheTotalTot}`);
+  line(`Taux de réussite global : ${ficheTotalCor} / ${ficheTotalTot} (${pct} %)`);
+  separator();
+
+  // ── Progression par fiche ──
+  title('Progression par fiche');
+  for (let f = 1; f <= 20; f++) {
+    const count = s.ficheCount[f] || 0;
+    const history = s.ficheHistory[f] || [];
+    let avg = 'jamais jouée';
+    if (history.length > 0) {
+      const sum = history.reduce((a, h) => a + Math.round(h.score / h.total * 100), 0);
+      avg = `score moyen ${Math.round(sum / history.length)} % (sur les ${history.length} dernière(s) session(s))`;
+    }
+    line(`Fiche ${String(f).padStart(2, '0')} — ${count} session(s) — ${avg}`);
+  }
+  separator();
+
+  doc.save('quiz-ctcr-statistiques.pdf');
 }
 
 // ── STATS RENDERING ────────────────────────────────────────────────
