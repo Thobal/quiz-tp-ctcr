@@ -11,11 +11,7 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
 
 ── AMÉLIORER L'EXPÉRIENCE ─────────────────────────────────────────────────────
 
-2. Export / partage des statistiques
-   Un bouton pour exporter les stats en JSON ou PDF — pratique si tu changes
-   d'appareil ou veux garder une trace de ta progression.
-
-3. Heatmap "fiches non travaillées depuis longtemps"
+2. Heatmap "fiches non travaillées depuis longtemps"
    Sur l'écran de statistiques, une troisième heatmap mettant en lumière les
    fiches que l'utilisateur n'a pas travaillées depuis longtemps, afin qu'il
    puisse les refaire pour s'assurer qu'il ne les a pas oubliées. Les cellules
