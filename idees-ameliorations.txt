@@ -35,3 +35,30 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    Actuellement, la réinitialisation efface tout. Permettre de remettre à zéro
    une fiche spécifique sans perdre l'historique des autres.
 
+
+── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
+   (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Indices progressifs
+   Sur les questions texte libre, un bouton "Indice" qui révèle le premier mot ou
+   le nombre de caractères de la réponse. Utile quand on bloque sans vouloir
+   directement voir la réponse.
+
+[REJETÉ] Affichage de la difficulté par question
+   Calculer automatiquement un taux d'échec par question (basé sur l'historique)
+   et l'afficher dans la révision avec un indicateur rouge/jaune/vert. Permet de
+   savoir quelles questions sont objectivement les plus difficiles.
+
+[REJETÉ] Personnalisation du quiz aléatoire
+   Permettre de choisir le nombre de questions (5, 10, 15, 20) et éventuellement
+   de sélectionner les fiches sources du tirage aléatoire.
+
+[REJETÉ] Mode examen blanc
+   Un mode spécial simulant les conditions réelles de l'examen : nombre de questions
+   fixé, pas de feedback immédiat, résultats seulement à la fin, avec un seuil de
+   réussite affiché (ex: 7/10 pour valider).
+
+[REJETÉ] Signaler une erreur
+   Un bouton sur chaque question pour signaler une imprécision ou une erreur dans
+   la question ou l'explication — avec un message copié dans le presse-papier pour
+   faciliter le retour.
