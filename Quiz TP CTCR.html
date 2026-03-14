@@ -2343,11 +2343,11 @@ function generateStatsPDF() {
 
   // ── KPIs ──
   title('Statistiques globales');
-  line(`Le taux de réussite est basé sur les 5 dernières sessions par fiche. Les quiz aléatoires et thématiques ne sont pas pris en compte. Les fiches jamais jouées sont exclues du calcul.`, 8);
+  line(`Le taux de réussite est basé sur les 5 dernières sessions par fiche. Les quiz aléatoires et thématiques ne sont pas pris en compte. Les fiches jamais étudiées sont exclues du calcul.`, 8);
   y += 2;
   line(`Fiches étudiées : ${ficheTotalSessions}`);
   line(`Questions répondues : ${ficheTotalTot}`);
-  line(`Taux de réussite global : ${pct} % (${ficheTotalCor} / ${ficheTotalTot})`);
+  line(`Taux de réussite global : ${pct} % (${ficheTotalCor} bonnes réponses / ${ficheTotalTot})`);
   separator();
 
   // ── Progression par fiche ──
@@ -2355,7 +2355,7 @@ function generateStatsPDF() {
   for (let f = 1; f <= 20; f++) {
     const count = s.ficheCount[f] || 0;
     const history = s.ficheHistory[f] || [];
-    let avg = 'jamais jouée';
+    let avg = 'Jamais étudiée';
     if (history.length > 0) {
       const sum = history.reduce((a, h) => a + Math.round(h.score / h.total * 100), 0);
       avg = `score moyen ${Math.round(sum / history.length)} % (sur les ${history.length} dernière(s) session(s))`;
