@@ -9,15 +9,6 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    qui lance un mini-quiz uniquement sur les questions où tu as échoué — comme les
    flashcards d'un système de répétition espacée.
 
-── AMÉLIORER L'EXPÉRIENCE ─────────────────────────────────────────────────────
-
-2. Heatmap "fiches non travaillées depuis longtemps"
-   Sur l'écran de statistiques, une troisième heatmap mettant en lumière les
-   fiches que l'utilisateur n'a pas travaillées depuis longtemps, afin qu'il
-   puisse les refaire pour s'assurer qu'il ne les a pas oubliées. Les cellules
-   pourraient être colorées selon l'ancienneté de la dernière session (ex :
-   vert = récent, orange = quelques semaines, rouge = plus d'un mois ou jamais).
-
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
 
