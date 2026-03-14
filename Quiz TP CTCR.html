@@ -7,17 +7,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f4f7fa;
-    --surface: #ffffff;
-    --surface2: #edf1f5;
-    --border: #dde3ec;
-    --accent: #003a5d;
-    --accent2: #c32142;
-    --green: #1d9e5e;
-    --red: #e02020;
-    --text: #00263c;
-    --muted: #6b7a8d;
-    --card: #ffffff;
+    --bg: #0d0f14;
+    --surface: #161920;
+    --surface2: #1e2230;
+    --border: #2a2f3f;
+    --accent: #f5c842;
+    --accent2: #e8834a;
+    --green: #3ecf7a;
+    --red: #f0566e;
+    --text: #e8eaf0;
+    --muted: #7a8099;
+    --card: #12151d;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,7 +39,7 @@
     position: fixed;
     top: -200px; left: -200px;
     width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(0,58,93,0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(245,200,66,0.06) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
   }
@@ -49,7 +49,7 @@
     position: fixed;
     bottom: -200px; right: -200px;
     width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(195,33,66,0.04) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(232,131,74,0.05) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
   }
@@ -92,7 +92,7 @@
   }
 
   h1 span {
-    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -158,7 +158,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(0,58,93,0.07), transparent);
+    background: linear-gradient(135deg, rgba(245,200,66,0.08), transparent);
     opacity: 0;
     transition: opacity 0.2s;
   }
@@ -167,7 +167,7 @@
   .fiche-btn:hover {
     border-color: var(--accent);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,58,93,0.12);
+    box-shadow: 0 8px 24px rgba(245,200,66,0.1);
   }
 
   .fiche-btn .label {
@@ -220,7 +220,7 @@
     color: var(--accent);
     background: var(--surface2);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,58,93,0.12);
+    box-shadow: 0 8px 24px rgba(245,200,66,0.1);
   }
 
   .random-btn .icon,
@@ -419,7 +419,6 @@
     background: linear-gradient(90deg, var(--accent), var(--accent2));
     border-radius: 100px;
     transition: width 0.5s ease;
-    opacity: 0.85;
   }
 
   /* QUESTION CARD */
@@ -440,7 +439,7 @@
     font-family: 'Syne', sans-serif;
     font-size: 80px;
     font-weight: 800;
-    color: rgba(0,58,93,0.05);
+    color: rgba(245,200,66,0.04);
     line-height: 1;
     pointer-events: none;
     user-select: none;
@@ -496,11 +495,11 @@
   #answer-input::placeholder { color: var(--muted); }
 
   .submit-btn {
-    background: var(--accent2);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     border: none;
     border-radius: 12px;
     padding: 14px 24px;
-    color: #fff;
+    color: #000;
     font-family: 'Syne', sans-serif;
     font-weight: 700;
     font-size: 15px;
@@ -511,7 +510,7 @@
 
   .submit-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(195,33,66,0.3);
+    box-shadow: 0 6px 20px rgba(245,200,66,0.25);
   }
 
   .submit-btn:active { transform: translateY(0); }
@@ -561,7 +560,7 @@
     font-size: 13.5px;
     line-height: 1.55;
     padding-top: 10px;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
 
   .next-btn {
@@ -592,7 +591,7 @@
     width: 148px;
     height: 148px;
     border-radius: 50%;
-    background: conic-gradient(var(--accent2) calc(var(--pct) * 1%), var(--surface2) 0);
+    background: conic-gradient(var(--accent) calc(var(--pct) * 1%), var(--surface2) 0);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -646,11 +645,11 @@
   }
 
   .results-table tbody tr {
-    border-bottom: 1px solid rgba(0,58,93,0.08);
+    border-bottom: 1px solid rgba(42,47,63,0.5);
     transition: background 0.15s;
   }
 
-  .results-table tbody tr:hover { background: rgba(0,58,93,0.03); }
+  .results-table tbody tr:hover { background: rgba(255,255,255,0.02); }
 
   .results-table td {
     padding: 12px 14px;
@@ -674,11 +673,11 @@
   .home-btn {
     width: 100%;
     margin-top: 28px;
-    background: var(--accent2);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     border: none;
     border-radius: 12px;
     padding: 16px;
-    color: #fff;
+    color: #000;
     font-family: 'Syne', sans-serif;
     font-weight: 700;
     font-size: 16px;
@@ -687,7 +686,7 @@
   }
 
   .home-btn:hover {
-    box-shadow: 0 8px 24px rgba(195,33,66,0.3);
+    box-shadow: 0 8px 24px rgba(245,200,66,0.2);
     transform: translateY(-1px);
   }
 
@@ -828,7 +827,7 @@
     color: var(--accent);
     background: var(--surface2);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,58,93,0.12);
+    box-shadow: 0 8px 24px rgba(245,200,66,0.1);
   }
 
   .stats-header {
@@ -937,20 +936,20 @@
     font-weight: 500;
     opacity: 0.8;
   }
-  .hm-cell.hm-0  { background: #e8edf3; color: #a0adb8; border: 1px solid #dde3ec; }
-  .hm-cell.hm-1  { background: rgba(0,58,93,0.08); color: #5080a0; }
-  .hm-cell.hm-2  { background: rgba(0,58,93,0.22); color: #003a5d; }
-  .hm-cell.hm-3  { background: rgba(0,58,93,0.55); color: #fff; }
-  .hm-cell.hm-4  { background: rgba(0,58,93,0.82); color: #fff; font-weight: 800; }
-  .hm-cell.hm-hi { background: #003a5d; color: #fff; font-weight: 900; box-shadow: 0 0 24px rgba(0,58,93,0.4), 0 0 6px rgba(0,58,93,0.5); }
+  .hm-cell.hm-0  { background: #080a0e; color: #4a5068; border: 1px solid #151820; }
+  .hm-cell.hm-1  { background: rgba(245,200,66,0.06); color: #7a6828; }
+  .hm-cell.hm-2  { background: rgba(245,200,66,0.22); color: #c89830; }
+  .hm-cell.hm-3  { background: rgba(245,200,66,0.60); color: #0d0f14; }
+  .hm-cell.hm-4  { background: rgba(245,200,66,0.88); color: #0a0800; font-weight: 800; }
+  .hm-cell.hm-hi { background: #f5c842; color: #0d0f14; font-weight: 900; box-shadow: 0 0 24px rgba(245,200,66,0.75), 0 0 6px rgba(245,200,66,0.9); }
 
   /* Heatmap maîtrise — palette rouge (pire score = plus rouge) */
-  .hm-cell.hm-ok   { background: #e8edf3; color: #a0adb8; border: 1px solid #dde3ec; }
-  .hm-cell.hm-r1   { background: rgba(195,33,66,0.09); color: #c32142; }
-  .hm-cell.hm-r2   { background: rgba(195,33,66,0.25); color: #a01030; }
-  .hm-cell.hm-r3   { background: rgba(195,33,66,0.55); color: #fff; }
-  .hm-cell.hm-r4   { background: rgba(195,33,66,0.82); color: #fff; font-weight: 800; }
-  .hm-cell.hm-worst { background: #c32142; color: #fff; font-weight: 900; box-shadow: 0 0 24px rgba(195,33,66,0.45), 0 0 6px rgba(195,33,66,0.6); }
+  .hm-cell.hm-ok   { background: #080a0e; color: #4a5068; border: 1px solid #151820; }
+  .hm-cell.hm-r1   { background: rgba(240,86,110,0.12); color: #c05070; }
+  .hm-cell.hm-r2   { background: rgba(240,86,110,0.30); color: #f07090; }
+  .hm-cell.hm-r3   { background: rgba(240,86,110,0.58); color: #fff; }
+  .hm-cell.hm-r4   { background: rgba(240,86,110,0.82); color: #fff; font-weight: 800; }
+  .hm-cell.hm-worst { background: #f0566e; color: #fff; font-weight: 900; box-shadow: 0 0 24px rgba(240,86,110,0.75), 0 0 6px rgba(240,86,110,0.9); }
 
   /* Sparkline */
   .sparkline-wrap { width: 100%; overflow-x: auto; }
@@ -963,7 +962,7 @@
     align-items: center;
     gap: 12px;
     padding: 9px 0;
-    border-bottom: 1px solid rgba(0,58,93,0.1);
+    border-bottom: 1px solid rgba(42,47,63,0.6);
     font-size: 13px;
   }
   .history-item:last-child { border-bottom: none; }
@@ -1050,13 +1049,13 @@
     border-top: 1px solid var(--border);
     font-size: 13px;
     line-height: 1.65;
-    color: #7a8a9a;
+    color: #9ba3b8;
   }
   .storage-inline-info p { margin-bottom: 10px; }
   .storage-inline-info ul { padding-left: 18px; }
   .storage-inline-info li { margin-bottom: 6px; }
   .storage-inline-info.hidden { display: none; }
-  #storage-info-btn.active { background: var(--accent); color: #fff; }
+  #storage-info-btn.active { background: var(--accent); color: #000; }
 
   /* Bouton info + modale */
   .info-btn {
@@ -1396,16 +1395,16 @@
       <button class="info-btn" onclick="showInfoModal('taux-global')" aria-label="Explication du calcul">ℹ</button>
       <div class="gauge-wrap">
         <svg id="gauge-svg" viewBox="0 0 200 110" width="200" height="110">
-          <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#dde3ec" stroke-width="18" stroke-linecap="round"/>
+          <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#1e2230" stroke-width="18" stroke-linecap="round"/>
           <path id="gauge-fill" d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="url(#gaugeGrad)" stroke-width="18" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2"/>
           <defs>
             <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#e02020"/>
-              <stop offset="50%" stop-color="#d97706"/>
-              <stop offset="100%" stop-color="#1d9e5e"/>
+              <stop offset="0%" stop-color="#f0566e"/>
+              <stop offset="50%" stop-color="#f5c842"/>
+              <stop offset="100%" stop-color="#3ecf7a"/>
             </linearGradient>
           </defs>
-          <text id="gauge-pct" x="100" y="96" text-anchor="middle" font-family="Syne,sans-serif" font-size="26" font-weight="800" fill="#00263c">—%</text>
+          <text id="gauge-pct" x="100" y="96" text-anchor="middle" font-family="Syne,sans-serif" font-size="26" font-weight="800" fill="#e8eaf0">—%</text>
         </svg>
         <div class="gauge-lbl" id="gauge-sub">— bonnes réponses sur —</div>
       </div>
@@ -1436,11 +1435,11 @@
       <div class="heatmap-grid" id="heatmap-grid"></div>
       <div style="display:flex;gap:6px;align-items:center;margin-top:8px;">
         <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Moins</span>
-        <div style="width:14px;height:14px;border-radius:4px;background:#e8edf3;border:1px solid #dde3ec"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:rgba(0,58,93,0.22)"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:rgba(0,58,93,0.52)"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:rgba(0,58,93,0.82)"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:#003a5d"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:var(--surface2)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(245,200,66,0.22)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(245,200,66,0.52)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(245,200,66,0.82)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:#f5c842"></div>
         <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Plus</span>
       </div>
     </div>
@@ -1452,11 +1451,11 @@
       <div class="heatmap-grid" id="mastery-grid"></div>
       <div style="display:flex;gap:6px;align-items:center;margin-top:8px;">
         <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Maîtrisé</span>
-        <div style="width:14px;height:14px;border-radius:4px;background:#e8edf3;border:1px solid #dde3ec"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:rgba(195,33,66,0.22)"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:rgba(195,33,66,0.52)"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:rgba(195,33,66,0.82)"></div>
-        <div style="width:14px;height:14px;border-radius:4px;background:#c32142"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:var(--surface2)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(240,86,110,0.22)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(240,86,110,0.52)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(240,86,110,0.82)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:#f0566e"></div>
         <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">À travailler</span>
       </div>
     </div>
@@ -1985,15 +1984,15 @@ function renderStorageInfo() {
   const buildRows = (quota) => {
     const lsPct   = Math.min(100, (totalBytes / LS_TYPICAL) * 100);
     const quizPct = Math.min(100, (quizBytes  / LS_TYPICAL) * 100);
-    const lsColor   = lsPct > 80 ? '#e02020' : lsPct > 50 ? '#d97706' : '#1d9e5e';
-    const quizColor = '#003a5d';
+    const lsColor   = lsPct > 80 ? '#f0566e' : lsPct > 50 ? '#f5c842' : '#3ecf7a';
+    const quizColor = '#6ba4ab';
 
     let quotaRow = '';
     // N'afficher la ligne que si les valeurs sont fiables (non nulles)
     // navigator.storage.estimate() retourne 0/0 pour les fichiers file:// dans certains navigateurs
     if (quota && quota.quota > 0 && quota.usage > 0) {
       const storagePct = Math.min(100, (quota.usage / quota.quota) * 100);
-      const stoColor = storagePct > 80 ? '#e02020' : storagePct > 50 ? '#d97706' : '#1d9e5e';
+      const stoColor = storagePct > 80 ? '#f0566e' : storagePct > 50 ? '#f5c842' : '#3ecf7a';
       quotaRow = `
         <div class="storage-row">
           <div class="storage-row-header">
@@ -2122,7 +2121,7 @@ const INFO_TEXTS = {
     title: 'Taux de réussite par fiche',
     body: `<p>Ce graphique à barres affiche votre taux de bonnes réponses pour chaque fiche jouée.</p>
            <p>Le calcul est basé sur vos <strong>5 dernières sessions</strong> par fiche, ce qui reflète votre niveau actuel plutôt que votre historique complet.</p>
-           <p>La couleur indique le niveau : <strong style="color:#1d9e5e">vert</strong> ≥ 70%, <strong style="color:#d97706">orange</strong> entre 50% et 70%, <strong style="color:#e02020">rouge</strong> en dessous de 50%.</p>
+           <p>La couleur indique le niveau : <strong style="color:#3ecf7a">vert</strong> ≥ 70%, <strong style="color:#f5c842">jaune</strong> entre 50% et 70%, <strong style="color:#f0566e">rouge</strong> en dessous de 50%.</p>
            <p style="color:var(--muted);font-size:12px;">Les fiches jamais jouées n'apparaissent pas.</p>`
   },
 'dernieres-sessions': {
@@ -2216,7 +2215,7 @@ function renderSparkline(s) {
   if (!svg) return;
   const data = [...s.scoreHistory].reverse();
   if (data.length < 2) {
-    svg.innerHTML = '<text x="200" y="45" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#6b7a8d">Pas encore assez de données</text>';
+    svg.innerHTML = '<text x="200" y="45" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#7a8099">Pas encore assez de données</text>';
     return;
   }
   const W = 400, H = 80, padL = 22, padR = 10, padV = 10;
@@ -2229,24 +2228,24 @@ function renderSparkline(s) {
   let lines = '';
   [25,50,75,100].forEach(y => {
     const yp = H - padV - (y/100)*(H-padV*2);
-    lines += `<line x1="${padL}" y1="${yp}" x2="${W-padR}" y2="${yp}" stroke="rgba(0,58,93,0.12)" stroke-width="1" stroke-dasharray="3,3"/>`;
-    lines += `<text x="${padL-3}" y="${yp+3}" text-anchor="end" font-family="DM Mono,monospace" font-size="7" fill="#6b7a8d">${y}</text>`;
+    lines += `<line x1="${padL}" y1="${yp}" x2="${W-padR}" y2="${yp}" stroke="#2a2f3f" stroke-width="1" stroke-dasharray="3,3"/>`;
+    lines += `<text x="${padL-3}" y="${yp+3}" text-anchor="end" font-family="DM Mono,monospace" font-size="7" fill="#7a8099">${y}</text>`;
   });
   // Dots
   const dots = pts.map((p,i) => {
-    const col = data[i] >= 70 ? '#1d9e5e' : data[i] >= 50 ? '#d97706' : '#e02020';
-    return `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${col}" stroke="#ffffff" stroke-width="1.5"/>`;
+    const col = data[i] >= 70 ? '#3ecf7a' : data[i] >= 50 ? '#f5c842' : '#f0566e';
+    return `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${col}" stroke="#0d0f14" stroke-width="1.5"/>`;
   }).join('');
   svg.innerHTML = `
     <defs>
       <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#003a5d" stop-opacity="0.15"/>
-        <stop offset="100%" stop-color="#003a5d" stop-opacity="0"/>
+        <stop offset="0%" stop-color="#f5c842" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#f5c842" stop-opacity="0"/>
       </linearGradient>
     </defs>
     ${lines}
     <path d="${areaD}" fill="url(#sparkGrad)"/>
-    <polyline points="${ptsStr}" fill="none" stroke="#003a5d" stroke-width="2" stroke-linejoin="round"/>
+    <polyline points="${ptsStr}" fill="none" stroke="#f5c842" stroke-width="2" stroke-linejoin="round"/>
     ${dots}
   `;
 }
@@ -2258,7 +2257,7 @@ function renderRollingAvg(s) {
   // Historique chronologique (du plus ancien au plus récent)
   const history = [...s.scoreHistory].reverse();
   if (history.length < 2) {
-    svg.innerHTML = '<text x="200" y="45" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#6b7a8d">Pas encore assez de données</text>';
+    svg.innerHTML = '<text x="200" y="45" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#7a8099">Pas encore assez de données</text>';
     return;
   }
 
@@ -2280,26 +2279,26 @@ function renderRollingAvg(s) {
   let lines = '';
   [25, 50, 75, 100].forEach(y => {
     const yp = H - padV - (y / 100) * (H - padV * 2);
-    lines += `<line x1="${padL}" y1="${yp}" x2="${W - padR}" y2="${yp}" stroke="rgba(0,58,93,0.12)" stroke-width="1" stroke-dasharray="3,3"/>`;
-    lines += `<text x="${padL - 3}" y="${yp + 3}" text-anchor="end" font-family="DM Mono,monospace" font-size="7" fill="#6b7a8d">${y}</text>`;
+    lines += `<line x1="${padL}" y1="${yp}" x2="${W - padR}" y2="${yp}" stroke="#2a2f3f" stroke-width="1" stroke-dasharray="3,3"/>`;
+    lines += `<text x="${padL - 3}" y="${yp + 3}" text-anchor="end" font-family="DM Mono,monospace" font-size="7" fill="#7a8099">${y}</text>`;
   });
 
   // Points colorés selon la valeur de la moyenne glissante
   const dots = pts.map((p, i) => {
-    const col = data[i] >= 70 ? '#1d9e5e' : data[i] >= 50 ? '#d97706' : '#e02020';
-    return `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${col}" stroke="#ffffff" stroke-width="1.5"/>`;
+    const col = data[i] >= 70 ? '#3ecf7a' : data[i] >= 50 ? '#f5c842' : '#f0566e';
+    return `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${col}" stroke="#0d0f14" stroke-width="1.5"/>`;
   }).join('');
 
   svg.innerHTML = `
     <defs>
       <linearGradient id="rollGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#c32142" stop-opacity="0.12"/>
-        <stop offset="100%" stop-color="#c32142" stop-opacity="0"/>
+        <stop offset="0%" stop-color="#3ecf7a" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#3ecf7a" stop-opacity="0"/>
       </linearGradient>
     </defs>
     ${lines}
     <path d="${areaD}" fill="url(#rollGrad)"/>
-    <polyline points="${ptsStr}" fill="none" stroke="#c32142" stroke-width="2" stroke-linejoin="round"/>
+    <polyline points="${ptsStr}" fill="none" stroke="#3ecf7a" stroke-width="2" stroke-linejoin="round"/>
     ${dots}
   `;
 }
@@ -2389,7 +2388,7 @@ function renderBarFicheRate(s) {
     const tot = history.reduce((a, h) => a + h.total, 0);
     const cor = history.reduce((a, h) => a + h.score, 0);
     const pct = Math.round(cor / tot * 100);
-    const col = pct >= 70 ? '#1d9e5e' : pct >= 50 ? '#d97706' : '#e02020';
+    const col = pct >= 70 ? '#3ecf7a' : pct >= 50 ? '#f5c842' : '#f0566e';
     html += `<div class="bar-row">
       <span class="bar-lbl">Fiche ${fn}</span>
       <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"></div></div>
