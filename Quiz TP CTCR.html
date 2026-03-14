@@ -1546,6 +1546,22 @@
     </div>
 
 
+    <!-- Heatmap ancienneté des fiches -->
+    <div class="stat-block" style="position:relative;">
+      <h3>Fiches non travaillées depuis longtemps</h3>
+      <button class="info-btn" onclick="showInfoModal('fiches-anciennete')" aria-label="Explication">ℹ</button>
+      <div class="heatmap-grid" id="staleness-grid"></div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:8px;">
+        <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Récent</span>
+        <div style="width:14px;height:14px;border-radius:4px;background:#080c1a"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(42,100,248,0.30)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(42,100,248,0.60)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:rgba(42,100,248,0.85)"></div>
+        <div style="width:14px;height:14px;border-radius:4px;background:#2a64f8"></div>
+        <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">Ancien</span>
+      </div>
+    </div>
+
     <!-- Historique récent -->
     <div class="stat-block" style="position:relative;">
       <h3>Dernières sessions <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(20 dernières affichées)</span></h3>
@@ -2128,7 +2144,8 @@ function loadStats() {
     ficheCount: {},      // {ficheNum: times played}
     ficheCorrect: {},    // {ficheNum: total correct}
     ficheTotal: {},      // {ficheNum: total questions}
-    ficheHistory: {},    // {ficheNum: [{score, total}]} last 5 sessions per fiche
+    ficheHistory: {},     // {ficheNum: [{score, total}]} last 5 sessions per fiche
+    ficheLastPlayed: {}, // {ficheNum: timestamp_ms} date of last fiche session
     sessionHistory: [],  // [{mode, score, total, ts}] last 50
     scoreHistory: [],    // [score/10 * 100] last 30 sessions for sparkline
     wrongHistory: []     // [{q, userAns, correct, fiche, qNum, panel, ts}] last 20 wrong answers
@@ -2155,6 +2172,8 @@ function recordSession(mode, score, total, results) {
     if (!s.ficheHistory[fn]) s.ficheHistory[fn] = [];
     s.ficheHistory[fn].unshift({ score, total });
     if (s.ficheHistory[fn].length > 5) s.ficheHistory[fn].pop();
+    if (!s.ficheLastPlayed) s.ficheLastPlayed = {};
+    s.ficheLastPlayed[fn] = Date.now();
   }
 
   // History (keep last 50)
@@ -2547,6 +2566,7 @@ function showStatsScreen() {
   renderStorageInfo();
   renderHeatmap(s);
   renderMasteryHeatmap(s);
+  renderStalenessHeatmap(s);
   renderHistory(s);
 }
 
@@ -2760,6 +2780,90 @@ function renderMasteryHeatmap(s) {
   }
 }
 
+
+
+function renderStalenessHeatmap(s) {
+  const grid = document.getElementById('staleness-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const lastPlayed = s.ficheLastPlayed || {};
+  const now = Date.now();
+
+  // Récupérer les timestamps (null = jamais jouée)
+  const timestamps = [];
+  for (let i = 1; i <= 20; i++) {
+    timestamps.push(lastPlayed[String(i)] || null);
+  }
+
+  // Trouver le timestamp le plus ancien parmi les fiches jouées
+  const playedTs = timestamps.filter(t => t !== null);
+  const oldestTs = playedTs.length ? Math.min(...playedTs) : now;
+  const range = now - oldestTs;  // durée totale de la plage
+
+  // Dégradé bleu : t=0 (récent) → sombre  |  t=1 (ancien/jamais) → bleu vif
+  function gradBlue(t) {
+    const v = Math.max(0, Math.min(1, t));
+    const r = Math.round(0x08 + (0x2a - 0x08) * v);
+    const g = Math.round(0x0c + (0x64 - 0x0c) * v);
+    const b = Math.round(0x1a + (0xf8 - 0x1a) * v);
+    return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+  }
+
+  for (let i = 1; i <= 20; i++) {
+    const ts = lastPlayed[String(i)] || null;
+
+    // Calcul de la vétusté : 0 = récent, 1 = plus ancien ou jamais joué
+    let staleness;
+    if (ts === null) {
+      staleness = 1;  // jamais jouée → couleur la plus éclatante
+    } else if (range === 0) {
+      staleness = 0;  // toutes les fiches jouées au même moment
+    } else {
+      staleness = (now - ts) / range;
+    }
+
+    const col = gradBlue(staleness);
+
+    // Couleur du texte selon la luminosité du fond
+    let textColor;
+    if      (staleness > 0.75) textColor = '#ffffff';
+    else if (staleness > 0.50) textColor = '#c0d4ff';
+    else if (staleness > 0.25) textColor = '#6080b0';
+    else                       textColor = '#4a5068';
+
+    // Halo bleu proportionnel à l'ancienneté
+    const haloT = Math.max(0, (staleness - 0.5) * 2);
+    const shadow = haloT > 0
+      ? `0 0 14px rgba(42,100,248,${(haloT * 0.70).toFixed(2)}), 0 0 4px rgba(42,100,248,${(haloT * 0.85).toFixed(2)})`
+      : 'none';
+
+    // Affichage de la date
+    let dateLabel;
+    if (ts === null) {
+      dateLabel = 'Jamais';
+    } else {
+      const d = new Date(ts);
+      const day   = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year  = String(d.getFullYear()).slice(-2);
+      dateLabel = `${day}/${month}/${year}`;
+    }
+
+    const cell = document.createElement('div');
+    cell.className = 'hm-cell';
+    cell.style.background  = col;
+    cell.style.color       = textColor;
+    cell.style.boxShadow   = shadow;
+    cell.innerHTML = `<span class="hm-num">${i}</span><span class="hm-count">${dateLabel}</span>`;
+    cell.title = ts
+      ? `Fiche ${i} — dernière session le ${new Date(ts).toLocaleDateString('fr-FR')}`
+      : `Fiche ${i} — jamais étudiée`;
+    cell.style.cursor = 'pointer';
+    cell.addEventListener('click', () => startFiche(i));
+    grid.appendChild(cell);
+  }
+}
 
 
 function renderHistory(s) {
