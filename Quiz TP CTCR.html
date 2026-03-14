@@ -2490,16 +2490,47 @@ function generateStatsPDF() {
 
   // ── Progression par fiche ──
   title('Progression par fiche');
+
+  // Classer les fiches en 3 groupes selon le score moyen
+  const parfaites = [], ameliorer = [], revoir = [];
   for (let f = 1; f <= 20; f++) {
-    const count = s.ficheCount[f] || 0;
+    const count   = s.ficheCount[f] || 0;
     const history = s.ficheHistory[f] || [];
-    let avg = 'Jamais étudiée';
-    if (history.length > 0) {
+    if (history.length === 0) {
+      revoir.push({ f, count, label: null }); // jamais étudiée
+    } else {
       const sum = history.reduce((a, h) => a + Math.round(h.score / h.total * 100), 0);
-      avg = `score moyen ${Math.round(sum / history.length)} % (sur les ${history.length} dernière(s) session(s))`;
+      const avg = Math.round(sum / history.length);
+      const label = `score moyen ${avg} % (sur les ${history.length} dernière(s) session(s))`;
+      if (avg >= 95)      parfaites.push({ f, count, label });
+      else if (avg >= 75) ameliorer.push({ f, count, label });
+      else                revoir.push({ f, count, label });
     }
-    line(`Fiche ${String(f).padStart(2, '0')} — ${count} session(s) — ${avg}`);
   }
+
+  const renderGroup = (fiches) => {
+    if (fiches.length === 0) {
+      line('Aucune fiche dans cette catégorie.', 9);
+    } else {
+      fiches.forEach(({ f, count, label }) => {
+        const num = String(f).padStart(2, '0');
+        if (label === null) line(`Fiche ${num} — Jamais étudiée`);
+        else                line(`Fiche ${num} — ${count} session(s) — ${label}`);
+      });
+    }
+  };
+
+  y += 2;
+  title('Fiches parfaitement connues', 11);
+  renderGroup(parfaites);
+  separator();
+
+  title('Fiches à améliorer', 11);
+  renderGroup(ameliorer);
+  separator();
+
+  title('Fiches à voir ou à revoir intégralement', 11);
+  renderGroup(revoir);
   separator();
 
   doc.save('quiz-ctcr-statistiques.pdf');
