@@ -41,10 +41,3 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    Actuellement, la réinitialisation efface tout. Permettre de remettre à zéro
    une fiche spécifique sans perdre l'historique des autres.
 
-
-── CONTENU ─────────────────────────────────────────────────────────────────────
-
-8. Signaler une erreur
-   Un bouton sur chaque question pour signaler une imprécision ou une erreur dans
-   la question ou l'explication — avec un message copié dans le presse-papier pour
-   faciliter le retour.
