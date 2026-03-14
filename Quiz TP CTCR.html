@@ -710,6 +710,82 @@
 
 
   /* ── REVISION SCREEN ── */
+  /* Switch Réviser / Mes erreurs */
+  .rev-switch {
+    display: flex;
+    background: var(--surface2);
+    border-radius: 100px;
+    padding: 3px;
+    margin-bottom: 20px;
+  }
+  .rev-switch-btn {
+    flex: 1;
+    padding: 9px 12px;
+    border-radius: 100px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .rev-switch-btn.active {
+    background: var(--accent);
+    color: #0d0f14;
+  }
+
+  /* Carte erreur */
+  .wrong-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+  .wrong-card-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .wrong-card-q {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .wrong-card-ans {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+  }
+  .wrong-card-user {
+    color: #e0485a;
+  }
+  .wrong-card-correct {
+    color: #6abf88;
+  }
+  .wrong-card-ts {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 10px;
+    font-family: 'DM Mono', monospace;
+  }
+  .wrong-empty {
+    text-align: center;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    padding: 40px 0;
+  }
+
   .revision-intro {
     font-size: 13px;
     color: var(--muted);
@@ -1427,6 +1503,12 @@
       <h2>Révision</h2>
     </div>
 
+    <!-- Switch -->
+    <div class="rev-switch" id="rev-switch">
+      <button class="rev-switch-btn active" id="rev-btn-fiches" onclick="switchRevMode('fiches')">Réviser les fiches</button>
+      <button class="rev-switch-btn" id="rev-btn-errors" onclick="switchRevMode('errors')">Mes erreurs</button>
+    </div>
+
     <!-- Fiche selector -->
     <div class="revision-selector" id="revision-selector">
       <p class="revision-intro">Choisissez une fiche pour afficher toutes ses questions et réponses.</p>
@@ -1440,6 +1522,11 @@
         <h3 id="revision-fiche-title">Fiche 1</h3>
       </div>
       <div id="revision-qa-list"></div>
+    </div>
+
+    <!-- Mes erreurs -->
+    <div class="hidden" id="revision-errors">
+      <div id="revision-errors-list"></div>
     </div>
   </div>
 
@@ -1947,7 +2034,8 @@ function loadStats() {
     ficheTotal: {},      // {ficheNum: total questions}
     ficheHistory: {},    // {ficheNum: [{score, total}]} last 5 sessions per fiche
     sessionHistory: [],  // [{mode, score, total, ts}] last 50
-    scoreHistory: []     // [score/10 * 100] last 30 sessions for sparkline
+    scoreHistory: [],    // [score/10 * 100] last 30 sessions for sparkline
+    wrongHistory: []     // [{q, userAns, correct, fiche, qNum, panel, ts}] last 20 wrong answers
   }));
 }
 
@@ -2028,6 +2116,21 @@ const INFO_TEXTS = {
 };
 
 // ── DÉGRADÉ SCORE (rouge → jaune → vert) ───────────────────────────────────
+function recordWrongAnswer(q, userAns, prettyAnswers) {
+  const s = loadStats();
+  if (!s.wrongHistory) s.wrongHistory = [];
+  const ficheNum = randomQuestions ? q.ficheNum : currentFiche;
+  const qNum = randomQuestions ? q.qNum : currentQIndex + 1;
+  const ts = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+  // Supprimer doublon éventuel (même question)
+  s.wrongHistory = s.wrongHistory.filter(e => e.q !== q.q);
+  // Ajouter en tête
+  s.wrongHistory.unshift({ q: q.q, userAns, correct: prettyAnswers, fiche: ficheNum, qNum, panel: q.panel || null, ts });
+  // Garder les 20 dernières
+  if (s.wrongHistory.length > 20) s.wrongHistory = s.wrongHistory.slice(0, 20);
+  saveStats(s);
+}
+
 function gradColor(pct) {
   const t = Math.max(0, Math.min(100, pct)) / 100;
   function lerpHex(a, b, u) {
@@ -2329,14 +2432,61 @@ function showRevisionScreen() {
     cell.addEventListener('click', () => showRevisionFiche(i));
     grid.appendChild(cell);
   }
-  document.getElementById('revision-selector').classList.remove('hidden');
-  document.getElementById('revision-content').classList.add('hidden');
+  // Toujours démarrer sur "Réviser les fiches"
+  switchRevMode('fiches');
+}
+
+function switchRevMode(mode) {
+  const selector  = document.getElementById('revision-selector');
+  const content   = document.getElementById('revision-content');
+  const errors    = document.getElementById('revision-errors');
+  const btnFiches = document.getElementById('rev-btn-fiches');
+  const btnErrors = document.getElementById('rev-btn-errors');
+  if (mode === 'fiches') {
+    selector.classList.remove('hidden');
+    content.classList.add('hidden');
+    errors.classList.add('hidden');
+    btnFiches.classList.add('active');
+    btnErrors.classList.remove('active');
+  } else {
+    selector.classList.add('hidden');
+    content.classList.add('hidden');
+    errors.classList.remove('hidden');
+    btnFiches.classList.remove('active');
+    btnErrors.classList.add('active');
+    renderWrongHistory();
+  }
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 function showRevisionSelector() {
-  document.getElementById('revision-selector').classList.remove('hidden');
-  document.getElementById('revision-content').classList.add('hidden');
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  switchRevMode('fiches');
+}
+
+function renderWrongHistory() {
+  const list = document.getElementById('revision-errors-list');
+  const s = loadStats();
+  const wh = s.wrongHistory || [];
+  if (!wh.length) {
+    list.innerHTML = '<div class="wrong-empty">Aucune erreur enregistrée pour le moment.<br>Répondez à des questions pour les voir apparaître ici.</div>';
+    return;
+  }
+  list.innerHTML = wh.map(e => {
+    const panelHtml = e.panel && PANEL_SVGS[e.panel]
+      ? `<div class="qa-panel">${PANEL_SVGS[e.panel]}</div>`
+      : '';
+    const ficheLabel = e.fiche === 'aléatoire' ? 'Quiz aléatoire' : `Fiche ${e.fiche}`;
+    return `
+      <div class="wrong-card">
+        <div class="wrong-card-meta">${ficheLabel} · Question ${e.qNum} · ${e.ts}</div>
+        ${panelHtml}
+        <div class="wrong-card-q">${e.q}</div>
+        <div class="wrong-card-ans">
+          <span class="wrong-card-user">✗ Votre réponse : ${e.userAns}</span>
+          <span class="wrong-card-correct">✓ Bonne réponse : ${e.correct}</span>
+        </div>
+      </div>`;
+  }).join('');
 }
 
 function showRevisionFiche(n) {
@@ -2493,6 +2643,7 @@ function submitVF(choice) {
 
   answered = true;
   sessionResults.push({ q: q.q, userAns: choice, isCorrect, correct: prettyAnswers });
+  if (!isCorrect) recordWrongAnswer(q, choice, prettyAnswers);
 
   // Style the clicked button
   const vraiBt = document.getElementById('vf-vrai');
@@ -2533,6 +2684,7 @@ function submitON(choice) {
   justAnswered = true;
   setTimeout(() => { justAnswered = false; }, 400);
   sessionResults.push({ q: q.q, userAns: choice, isCorrect, correct: prettyAnswers });
+  if (!isCorrect) recordWrongAnswer(q, choice, prettyAnswers);
 
   const ouiBt = document.getElementById('on-oui');
   const nonBt = document.getElementById('on-non');
@@ -2575,6 +2727,7 @@ function submitAnswer() {
   justAnswered = true;
   setTimeout(() => { justAnswered = false; }, 400);
   sessionResults.push({ q: q.q, userAns, isCorrect, correct: prettyAnswers });
+  if (!isCorrect) recordWrongAnswer(q, userAns, prettyAnswers);
 
   const fb = document.getElementById('feedback');
   const explHtml = q.expl ? `<div class="expl-text">💡 ${q.expl}</div>` : '';
@@ -2648,9 +2801,6 @@ function showResults() {
 
 function goHome() {
   randomQuestions = null;
-  // Reset revision screen to selector view
-  document.getElementById('revision-selector').classList.remove('hidden');
-  document.getElementById('revision-content').classList.add('hidden');
   showScreen('home-screen');
   document.querySelectorAll('.fiche-btn').forEach((btn, i) => {
     btn.className = 'fiche-btn';
