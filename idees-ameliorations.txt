@@ -59,12 +59,7 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
 
 ── CONTENU ─────────────────────────────────────────────────────────────────────
 
-11. Filtre par thème dans le quiz aléatoire
-    Les questions couvrent des thèmes variés (réglementation sociale, mécanique,
-    signalisation…). Permettre de filtrer par thème pour travailler une compétence
-    précise.
-
-12. Signaler une erreur
+11. Signaler une erreur
     Un bouton sur chaque question pour signaler une imprécision ou une erreur dans
     la question ou l'explication — avec un message copié dans le presse-papier pour
     faciliter le retour.
