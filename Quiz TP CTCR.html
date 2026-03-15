@@ -157,6 +157,26 @@
     .subtitle { font-size: 12.5px; }
   }
 
+  @media (max-width: 420px) {
+    .hero-card {
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px 12px;
+    }
+    .hero-bus { transform: none; }
+    .hero-bus svg { width: 56px; height: 56px; }
+    .kpi-block {
+      display: grid;
+      grid-template-columns: 1fr 60px 34px;
+      width: 100%;
+      font-size: 10.5px;
+      column-gap: 6px;
+      padding: 7px 10px;
+    }
+    .kpi-block .kpi-bar { width: 60px; }
+    .kpi-block .kpi-value { font-size: 11px; }
+  }
+
   /* SCREENS */
   .screen { animation: fadeUp 0.4s ease both; }
   .screen.hidden { display: none; }
