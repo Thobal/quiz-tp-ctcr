@@ -2806,9 +2806,12 @@ function renderStalenessHeatmap(s) {
   // Trouver le timestamp le plus ancien parmi les fiches jouées
   const playedTs = timestamps.filter(t => t !== null);
   const oldestTs = playedTs.length ? Math.min(...playedTs) : now;
-  // Le range minimum est 30 jours : une fiche jouée aujourd'hui reste toujours "récente"
-  const MIN_RANGE = 30 * 24 * 60 * 60 * 1000;
-  const range = Math.max(now - oldestTs, MIN_RANGE);
+  const range    = now - oldestTs;
+
+  // Cas spécial : toutes les fiches jouées l'ont été aujourd'hui (aucune plus ancienne)
+  // → les fiches du jour = couleur la plus sombre, les jamais-jouées = couleur la plus claire
+  const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
+  const allPlayedToday = playedTs.length > 0 && playedTs.every(t => t >= todayStart.getTime());
 
   // Dégradé bleu : t=0 (récent) → sombre  |  t=1 (ancien/jamais) → bleu vif
   function gradBlue(t) {
@@ -2822,8 +2825,17 @@ function renderStalenessHeatmap(s) {
   for (let i = 1; i <= 20; i++) {
     const ts = lastPlayed[String(i)] || null;
 
-    // Calcul de la vétusté : 0 = récent (< 30j), 1 = très ancien ou jamais joué
-    const staleness = ts === null ? 1 : Math.min(1, (now - ts) / range);
+    // Calcul de la vétusté : 0 = récent, 1 = ancien ou jamais joué
+    let staleness;
+    if (ts === null) {
+      staleness = 1;                             // jamais jouée → couleur la plus claire
+    } else if (allPlayedToday) {
+      staleness = 0;                             // cas spécial : tout fait aujourd'hui → sombre
+    } else if (range === 0) {
+      staleness = 0;                             // toutes jouées au même instant → sombre
+    } else {
+      staleness = Math.min(1, (now - ts) / range);
+    }
 
     const col = gradBlue(staleness);
 
