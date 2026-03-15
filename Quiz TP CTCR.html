@@ -203,7 +203,7 @@
     background: var(--accent);
     color: #0d0f14;
     font-family: 'DM Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.04em;
     padding: 3px 7px;
@@ -3440,8 +3440,22 @@ function updateRecommendedFiches() {
     urgences.push({ fiche: i, urgence: staleness * (1 - mastery) });
   }
 
-  // Top 3 fiches les plus urgentes
-  const top3 = urgences.sort((a, b) => b.urgence - a.urgence).slice(0, 3).filter(u => u.urgence > 0);
+  // Top 3 fiches les plus urgentes (avec tie-breaking aléatoire)
+  urgences.sort((a, b) => b.urgence - a.urgence);
+  const withUrgence = urgences.filter(u => u.urgence > 0);
+  let top3;
+  if (withUrgence.length <= 3) {
+    top3 = withUrgence;
+  } else {
+    const cutoff = urgences[2].urgence;
+    const definite = withUrgence.filter(u => u.urgence > cutoff);
+    const tied = withUrgence.filter(u => u.urgence === cutoff);
+    for (let i = tied.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [tied[i], tied[j]] = [tied[j], tied[i]];
+    }
+    top3 = [...definite, ...tied.slice(0, 3 - definite.length)];
+  }
   const buttons = document.querySelectorAll('.fiche-btn');
   top3.forEach(({ fiche }) => {
     const btn = buttons[fiche - 1];
@@ -3449,7 +3463,7 @@ function updateRecommendedFiches() {
     btn.classList.add('recommended');
     const badge = document.createElement('span');
     badge.className = 'badge-recommande';
-    badge.textContent = 'À revoir en priorité';
+    badge.textContent = 'À prioriser';
     btn.appendChild(badge);
   });
 }
