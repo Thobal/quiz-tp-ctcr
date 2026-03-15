@@ -1,9 +1,6 @@
 IDÉES D'AMÉLIORATION — Quiz TP CTCR
 =====================================
 
-
-── AMÉLIORER L'APPRENTISSAGE ──────────────────────────────────────────────────
-
 1. Mode révision ciblée des erreurs
    Depuis "Mes 20 dernières erreurs", un bouton "Se faire interroger sur mes erreurs"
    qui lance un mini-quiz uniquement sur les questions où tu as échoué — comme les
@@ -19,8 +16,6 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    Pendant un quiz, afficher discrètement un mini-compteur (ex : "5 / 7 correctes")
    pour que l'utilisateur suive sa progression question par question sans attendre
    l'écran de résultats.
-
-── AMÉLIORER L'EXPÉRIENCE ─────────────────────────────────────────────────────
 
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
