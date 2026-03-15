@@ -2741,26 +2741,17 @@ function renderMasteryHeatmap(s) {
   const effectiveRates = rates.map(r => r.rate !== null ? r.rate : 0);
   const worstRate = Math.min(...effectiveRates);
 
-  // Dégradé rouge : #f0566e (0%) → #0a0b0e (100%)
-  function gradRed(p) {
-    const t = Math.max(0, Math.min(100, p)) / 100;
-    const r = Math.round(0xf0 + (0x0a - 0xf0) * t);
-    const g = Math.round(0x56 + (0x0b - 0x56) * t);
-    const b = Math.round(0x6e + (0x0e - 0x6e) * t);
-    return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
-  }
-
   for (const { num, tot, sessions, rate } of rates) {
     const effective = rate !== null ? rate : 0;
     const pct = Math.round(effective * 100);
-    const col = gradRed(pct);
-
-    // Texte : blanc sur rouge vif, rose clair sur rouge moyen, rose muted sur rouge sombre
-    let textColor;
-    if      (pct < 25) textColor = '#ffffff';   // blanc sur rouge vif
-    else if (pct < 50) textColor = '#ffe0e6';   // rose très clair sur rouge moyen
-    else if (pct < 75) textColor = '#d08090';   // rose sur rouge sombre
-    else               textColor = '#4a5068';   // gris muted (même que fiches non travaillées)
+    // Dégradé rouge : #f0566e (0%) → #0a0b0e (100%)
+    const t = Math.max(0, Math.min(100, pct)) / 100;
+    const r = Math.round(0xf0 + (0x0a - 0xf0) * t);
+    const g = Math.round(0x56 + (0x0b - 0x56) * t);
+    const b = Math.round(0x6e + (0x0e - 0x6e) * t);
+    const col = '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+    const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+    const textColor = lum > 50 ? '#0d0f14' : '#4a5068';
 
     // Halo rouge proportionnel à la gravité, supprimé dès 75%
     const haloT = Math.max(0, (1 - pct / 75));
@@ -2812,15 +2803,6 @@ function renderStalenessHeatmap(s) {
   const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
   const allPlayedToday = playedTs.length > 0 && playedTs.every(t => t >= todayStart.getTime());
 
-  // Dégradé bleu : t=0 (récent) → sombre  |  t=1 (ancien/jamais) → bleu vif
-  function gradBlue(t) {
-    const v = Math.max(0, Math.min(1, t));
-    const r = Math.round(0x06 + (0x00 - 0x06) * v);
-    const g = Math.round(0x0d + (0xb4 - 0x0d) * v);
-    const b = Math.round(0x11 + (0xd8 - 0x11) * v);
-    return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
-  }
-
   for (let i = 1; i <= 20; i++) {
     const ts = lastPlayed[String(i)] || null;
 
@@ -2836,14 +2818,14 @@ function renderStalenessHeatmap(s) {
       staleness = Math.min(1, (now - ts) / range);
     }
 
-    const col = gradBlue(staleness);
-
-    // Couleur du texte selon la luminosité du fond
-    let textColor;
-    if      (staleness > 0.75) textColor = '#ffffff';
-    else if (staleness > 0.50) textColor = '#b0e8f8';
-    else if (staleness > 0.25) textColor = '#407080';
-    else                       textColor = '#4a5068';
+    // Dégradé bleu : staleness=0 (récent) → sombre  |  staleness=1 (ancien/jamais) → cyan vif
+    const v = Math.max(0, Math.min(1, staleness));
+    const r = Math.round(0x06 + (0x00 - 0x06) * v);
+    const g = Math.round(0x0d + (0xb4 - 0x0d) * v);
+    const b = Math.round(0x11 + (0xd8 - 0x11) * v);
+    const col = '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+    const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+    const textColor = lum > 50 ? '#0d0f14' : '#4a5068';
 
     // Halo cyan proportionnel à l'ancienneté
     const haloT = Math.max(0, (staleness - 0.5) * 2);
