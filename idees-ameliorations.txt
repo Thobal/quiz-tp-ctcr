@@ -1,15 +1,35 @@
 IDÉES D'AMÉLIORATION — Quiz TP CTCR
 =====================================
 
-1. Mode révision ciblée des erreurs
-   Depuis "Mes 20 dernières erreurs", un bouton "Se faire interroger sur mes erreurs"
-   qui lance un mini-quiz uniquement sur les questions où tu as échoué — comme les
-   flashcards d'un système de répétition espacée.
-
-2. Filtre par fiche dans l'historique des sessions
+1. Filtre par fiche dans l'historique des sessions
    Dans la section "Dernières sessions" des statistiques, ajouter un sélecteur
    permettant de n'afficher que les sessions d'une fiche spécifique. Utile pour
    suivre la progression dans le temps sur une fiche en particulier.
+
+2. Bouton "Rejouer" en fin de quiz
+   Sur l'écran de résultats, ajouter un bouton "Rejouer" qui relance immédiatement
+   le même quiz (même fiche, aléatoire ou thématique) sans repasser par l'accueil.
+   Encourage à s'améliorer d'une tentative à l'autre sans friction.
+
+3. Compteur de sessions sur les boutons de fiche
+   Afficher discrètement le nombre de sessions jouées directement sur chaque bouton
+   de la grille de l'accueil. Permet de voir en un coup d'œil les fiches peu
+   pratiquées, sans avoir à ouvrir les statistiques.
+
+4. Détail d'une erreur cliquable dans la révision
+   Dans "Mes 20 dernières erreurs", rendre chaque carte cliquable pour afficher
+   une vue détaillée : question complète, réponse donnée, bonne réponse, explication
+   et image de panneau si disponible. Actuellement les cartes sont non interactives.
+
+5. Quiz des questions non maîtrisées
+   Un nouveau mode de quiz qui pioche uniquement parmi les questions dont le taux
+   de réussite personnel est inférieur à 50 % (calculé sur l'historique), pour
+   cibler ses lacunes de manière encore plus précise que la révision classique.
+
+6. Partage de score
+   En fin de quiz, un bouton pour copier dans le presse-papier (ou partager via
+   l'API Web Share sur mobile) un résumé de la session : fiche, score, date.
+   Permet de garder une trace externe ou de partager ses progrès.
 
 ── IDÉES RÉALISÉES ───────────────────────────────────────────────────────────
 
@@ -20,6 +40,11 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
 
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Mode révision ciblée des erreurs
+   Depuis "Mes 20 dernières erreurs", un bouton "Se faire interroger sur mes erreurs"
+   qui lance un mini-quiz uniquement sur les questions où tu as échoué — comme les
+   flashcards d'un système de répétition espacée.
 
 [REJETÉ] Quiz du glossaire
    Dans l'écran Glossaire, ajouter un bouton "Se tester sur le glossaire" qui
