@@ -3412,6 +3412,8 @@ function updateRecommendedFiches() {
   });
 
   const s = loadStats();
+  if ((s.totalSessions || 0) < 5) return;
+
   const now = Date.now();
   const lastPlayed = s.ficheLastPlayed || {};
   const ficheHistory = s.ficheHistory || {};
