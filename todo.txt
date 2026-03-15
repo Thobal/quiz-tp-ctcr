@@ -1,3 +1,4 @@
 TODO — Quiz TP CTCR
 ===================
 
+- Changez l'icône du bouton qui sert à purger le cache du navigateur.
