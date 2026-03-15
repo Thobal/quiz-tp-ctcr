@@ -17,23 +17,24 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    rouge pâle pour les fiches en difficulté, neutre pour les fiches jamais jouées.
    Donne une lecture immédiate de l'état général sans quitter l'accueil.
 
-4. Quiz du glossaire
-   Dans l'écran Glossaire, ajouter un bouton "Se tester sur le glossaire" qui
-   propose un terme et demande d'en retrouver la définition (ou inversement).
-   Exploite le contenu déjà présent sans ajouter de nouvelles données.
-
-5. Filtre par fiche dans l'historique des sessions
+4. Filtre par fiche dans l'historique des sessions
    Dans la section "Dernières sessions" des statistiques, ajouter un sélecteur
    permettant de n'afficher que les sessions d'une fiche spécifique. Utile pour
    suivre la progression dans le temps sur une fiche en particulier.
 
-6. Indicateur de tendance par fiche
+── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
+   (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Quiz du glossaire
+   Dans l'écran Glossaire, ajouter un bouton "Se tester sur le glossaire" qui
+   propose un terme et demande d'en retrouver la définition (ou inversement).
+   La validation des réponses libres sur des définitions longues est trop complexe
+   à implémenter correctement.
+
+[REJETÉ] Indicateur de tendance par fiche
    Sur les boutons de fiche de l'accueil (ou dans les stats), afficher une petite
    flèche ↑ ou ↓ indiquant si le score s'améliore ou se dégrade entre les deux
    dernières sessions de cette fiche. Complément léger aux heatmaps existantes.
-
-── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
-   (conservées pour mémoire — ne pas reproposer)
 
 [REJETÉ] Score en temps réel pendant le quiz
    Pendant un quiz, afficher discrètement un mini-compteur (ex : "5 / 7 correctes")
