@@ -2711,7 +2711,6 @@ function renderHeatmap(s) {
     cell.className = 'hm-cell';
     cell.style.background = `rgb(${r},${g},${b})`;
     cell.style.color = t > 0.5 ? '#0d0f14' : '#4a5068';
-    cell.style.fontWeight = t > 0.7 ? '800' : '500';
     cell.innerHTML = `<span class="hm-num">${i}</span><span class="hm-count">${cnt}×</span>`;
     cell.title = `Fiche ${i} — révisée ${cnt} fois · Cliquer pour démarrer`;
     cell.style.cursor = 'pointer';
