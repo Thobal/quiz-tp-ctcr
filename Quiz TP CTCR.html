@@ -2248,6 +2248,18 @@ function saveStats(s) {
   localStorage.setItem('quizStats', JSON.stringify(s));
 }
 
+// Calcule le taux de réussite sur les fiches travaillées (ficheHistory, 5 dernières sessions/fiche).
+// Retourne { cor, tot, rate } — rate est null si aucune donnée.
+function computeWorkedMastery(s) {
+  const hist = s.ficheHistory || {};
+  let cor = 0, tot = 0;
+  for (let i = 1; i <= 20; i++) {
+    const sessions = hist[String(i)] || [];
+    sessions.forEach(h => { cor += h.score; tot += h.total; });
+  }
+  return { cor, tot, rate: tot > 0 ? cor / tot : null };
+}
+
 function recordSession(mode, score, total, results) {
   const s = loadStats();
   s.totalSessions++;
@@ -2671,15 +2683,8 @@ function showStatsScreen() {
 
 
 function renderGauge(s) {
-  // Calcul basé sur les 5 dernières sessions par fiche (ficheHistory)
-  const ficheHist = s.ficheHistory || {};
-  let totalCor = 0, totalTot = 0;
-  for (let fn = 1; fn <= 20; fn++) {
-    const history = ficheHist[String(fn)] || [];
-    totalCor += history.reduce((a, h) => a + h.score, 0);
-    totalTot += history.reduce((a, h) => a + h.total, 0);
-  }
-  const rate = totalTot > 0 ? totalCor / totalTot : 0;
+  const { cor: totalCor, tot: totalTot, rate: r } = computeWorkedMastery(s);
+  const rate = r ?? 0;
   const arc = 251.2;
   const offset = arc - (arc * rate);
   const fill = document.getElementById('gauge-fill');
@@ -3472,16 +3477,11 @@ function updateMasteryKpi() {
   const s = loadStats();
   const block = document.getElementById('kpi-block');
   if ((s.totalSessions || 0) < 5) { block.classList.add('hidden'); return; }
-  const hist = s.ficheHistory || {};
 
-  // KPI 1 : maîtrise des fiches travaillées uniquement
-  let totalScore = 0, totalQuestions = 0;
-  for (let i = 1; i <= 20; i++) {
-    const sessions = hist[String(i)] || [];
-    sessions.forEach(h => { totalScore += h.score; totalQuestions += h.total; });
-  }
+  // KPI 1 : maîtrise des fiches travaillées (même calcul que la jauge stats)
+  const { cor: totalScore, tot: totalQuestions, rate: workedRate } = computeWorkedMastery(s);
   if (totalQuestions === 0) { block.classList.add('hidden'); return; }
-  const pct = Math.round(totalScore / totalQuestions * 100);
+  const pct = Math.round((workedRate ?? 0) * 100);
   const color = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--accent)' : 'var(--red)';
   document.getElementById('kpi-fill').style.width      = pct + '%';
   document.getElementById('kpi-fill').style.background = color;
