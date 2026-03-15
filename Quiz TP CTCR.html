@@ -1399,6 +1399,27 @@
   }
   .info-modal-close:hover { color: var(--text); }
 
+  .pdf-share-action-btn {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    transition: all 0.15s;
+  }
+  .pdf-share-action-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .pdf-share-action-btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #1a1d2e;
+  }
+  .pdf-share-action-btn.primary:hover { opacity: 0.88; }
+
   .stats-action-row {
     display: flex;
     gap: 10px;
@@ -1912,6 +1933,18 @@
       <button class="info-modal-close" onclick="hideInfoModal()">✕</button>
       <h4 id="info-modal-title"></h4>
       <div id="info-modal-body"></div>
+    </div>
+  </div>
+
+  <div id="pdf-share-modal" class="info-modal-overlay hidden" onclick="if(event.target===this)closePdfShareModal()">
+    <div class="info-modal-box" onclick="event.stopPropagation()">
+      <button class="info-modal-close" onclick="closePdfShareModal()">✕</button>
+      <h4>Statistiques PDF</h4>
+      <p style="font-size:13.5px;line-height:1.6;color:var(--text);margin:12px 0 20px;">Voulez-vous partager le fichier ou le télécharger sur cet appareil ?</p>
+      <div style="display:flex;gap:10px;flex-direction:column;">
+        <button class="pdf-share-action-btn primary" onclick="sharePDFFile()">📤 Partager…</button>
+        <button class="pdf-share-action-btn" onclick="triggerPDFDownload(window._pdfShareBlob);closePdfShareModal()">⬇️ Télécharger</button>
+      </div>
     </div>
   </div>
 
@@ -2702,8 +2735,12 @@ class MiniPDF {
     return lines.length ? lines : [''];
   }
 
+  toBlob() {
+    return new Blob([this._build()], { type: 'application/pdf' });
+  }
+
   save(filename) {
-    const blob = new Blob([this._build()], { type: 'application/pdf' });
+    const blob = this.toBlob();
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = filename;
@@ -2829,8 +2866,35 @@ class MiniPDF {
 }
 
 // ── EXPORT PDF ─────────────────────────────────────────────────────
+const PDF_FILENAME = 'quiz-ctcr-statistiques.pdf';
+
 function exportStatsPDF() {
-  generateStatsPDF();
+  const blob = generateStatsPDF();
+  const file = new File([blob], PDF_FILENAME, { type: 'application/pdf' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    window._pdfShareFile = file;
+    window._pdfShareBlob = blob;
+    document.getElementById('pdf-share-modal').classList.remove('hidden');
+  } else {
+    triggerPDFDownload(blob);
+  }
+}
+
+function triggerPDFDownload(blob) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = PDF_FILENAME;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function sharePDFFile() {
+  navigator.share({ files: [window._pdfShareFile] }).catch(() => {});
+  closePdfShareModal();
+}
+
+function closePdfShareModal() {
+  document.getElementById('pdf-share-modal').classList.add('hidden');
 }
 
 function generateStatsPDF() {
@@ -2933,7 +2997,7 @@ function generateStatsPDF() {
   renderGroup(revoir);
   separator();
 
-  doc.save('quiz-ctcr-statistiques.pdf');
+  return doc.toBlob();
 }
 
 // ── STATS RENDERING ────────────────────────────────────────────────
