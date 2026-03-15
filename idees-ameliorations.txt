@@ -6,6 +6,32 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    qui lance un mini-quiz uniquement sur les questions où tu as échoué — comme les
    flashcards d'un système de répétition espacée.
 
+2. Taux de maîtrise global affiché sur l'accueil
+   Sous le titre, afficher un seul chiffre synthétique : le pourcentage de maîtrise
+   moyen sur l'ensemble des fiches travaillées (basé sur les 5 dernières sessions
+   par fiche). Permet d'avoir une vue d'ensemble sans ouvrir les statistiques.
+
+3. Teinte des boutons de fiche selon la maîtrise
+   Sur l'écran d'accueil, colorer légèrement le fond de chaque bouton de fiche
+   selon son taux de maîtrise : vert pâle pour les fiches bien maîtrisées,
+   rouge pâle pour les fiches en difficulté, neutre pour les fiches jamais jouées.
+   Donne une lecture immédiate de l'état général sans quitter l'accueil.
+
+4. Quiz du glossaire
+   Dans l'écran Glossaire, ajouter un bouton "Se tester sur le glossaire" qui
+   propose un terme et demande d'en retrouver la définition (ou inversement).
+   Exploite le contenu déjà présent sans ajouter de nouvelles données.
+
+5. Filtre par fiche dans l'historique des sessions
+   Dans la section "Dernières sessions" des statistiques, ajouter un sélecteur
+   permettant de n'afficher que les sessions d'une fiche spécifique. Utile pour
+   suivre la progression dans le temps sur une fiche en particulier.
+
+6. Indicateur de tendance par fiche
+   Sur les boutons de fiche de l'accueil (ou dans les stats), afficher une petite
+   flèche ↑ ou ↓ indiquant si le score s'améliore ou se dégrade entre les deux
+   dernières sessions de cette fiche. Complément léger aux heatmaps existantes.
+
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
 
