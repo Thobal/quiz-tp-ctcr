@@ -2349,7 +2349,7 @@ function looseNormalize(str) {
   return str.toLowerCase()
     .normalize('NFD').replace(/[̀-ͯ]/g, '')
     // supprimer les unités courantes collées ou séparées
-    .replace(/\s*(km\/h|km|m\/s|ms|kg|t\b|%|€|heures?|hres?|mins?|minutes?|secondes?|secs?|jours?)\s*/g, ' ')
+    .replace(/\s*(km\/h|km|m\/s|ms|m\b|kg|tonnes?|t\b|%|€|h\b|heures?|hres?|mins?|minutes?|secondes?|secs?|jours?|mois|periodes?|ans?\b)\s*/g, ' ')
     .replace(/[''`]/g, "'")
     .replace(/[^a-z0-9 '.-]/g, ' ')
     .replace(/\s+/g, ' ')
