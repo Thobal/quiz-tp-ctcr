@@ -1377,6 +1377,85 @@
     background: rgba(240,86,110,0.06);
   }
 
+  /* ── MODE STRICT / LOOSE ── */
+  .loose-mode-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .loose-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .toggle-track {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    border-radius: 11px;
+    background: var(--border);
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .loose-toggle-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .loose-toggle-label input[type="checkbox"]:checked + .toggle-track {
+    background: var(--accent);
+  }
+  .toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.2s;
+    pointer-events: none;
+  }
+  .loose-toggle-label input[type="checkbox"]:checked + .toggle-track .toggle-thumb {
+    transform: translateX(18px);
+  }
+  .loose-mode-info-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: color 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+    padding: 0;
+  }
+  .loose-mode-info-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .quiz-loose-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
   @media (max-width: 500px) {
     .heatmap-grid { grid-template-columns: repeat(2,1fr); }
   }
@@ -1503,6 +1582,15 @@
       </div>
     </div>
 
+    <div class="loose-mode-row">
+      <label class="loose-toggle-label" for="loose-toggle-home">
+        <span>Strict</span>
+        <input type="checkbox" id="loose-toggle-home" onchange="toggleLooseMode(this.checked)">
+        <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        <span>Yolo !</span>
+      </label>
+    </div>
+
     <div class="grid" id="fiche-grid"></div>
     <div class="action-btns-wrap">
       <div class="quiz-btns-row">
@@ -1545,6 +1633,14 @@
     <div class="progress-header">
       <button class="back-btn" onclick="goHome()">← Retour</button>
       <div class="progress-info">Question <strong id="q-counter">1</strong> / 10</div>
+      <div class="quiz-loose-row">
+        <label class="loose-toggle-label" for="loose-toggle-quiz">
+          <span>Strict</span>
+          <input type="checkbox" id="loose-toggle-quiz" onchange="toggleLooseMode(this.checked)">
+          <div class="toggle-track"><div class="toggle-thumb"></div></div>
+          <span>Yolo !</span>
+        </label>
+      </div>
     </div>
     <div class="progress-bar-track">
       <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
@@ -2191,6 +2287,51 @@ function normalize(str) {
   return str.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
 }
 
+function looseNormalize(str) {
+  return str.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    // supprimer les unités courantes collées ou séparées
+    .replace(/\s*(km\/h|km|m\/s|ms|kg|t\b|%|€|heures?|hres?|mins?|minutes?|secondes?|secs?|jours?)\s*/g, ' ')
+    .replace(/[''`]/g, "'")
+    .replace(/[^a-z0-9 '.-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({length: m + 1}, (_, i) => Array.from({length: n + 1}, (_, j) => i === 0 ? j : j === 0 ? i : 0));
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]);
+  return dp[m][n];
+}
+
+function looseMatch(correctAnswers, userInput) {
+  const u = looseNormalize(userInput);
+  return correctAnswers.some(ans => {
+    const a = looseNormalize(ans);
+    // Correspondance exacte après normalisation étendue
+    if (a === u) return true;
+    // Tolérance Levenshtein : 1 erreur jusqu'à 5 chars, 2 erreurs de 6 à 10, 3 erreurs au-delà
+    const maxLen = Math.max(a.length, u.length);
+    const threshold = maxLen <= 5 ? 1 : maxLen <= 10 ? 2 : 3;
+    return levenshtein(a, u) <= threshold;
+  });
+}
+
+function toggleLooseMode(enabled) {
+  looseMode = enabled;
+  localStorage.setItem('quizLooseMode', enabled ? '1' : '0');
+  // Synchroniser les deux toggles
+  const h = document.getElementById('loose-toggle-home');
+  const q = document.getElementById('loose-toggle-quiz');
+  if (h) h.checked = enabled;
+  if (q) q.checked = enabled;
+  // Afficher la modale d'information à l'activation
+  if (enabled) showInfoModal('loose-mode');
+}
+
 // STATE
 let currentFiche = null;
 let currentQIndex = 0;
@@ -2198,6 +2339,7 @@ let answered = false;
 let sessionResults = [];
 let randomQuestions = null;
 let justAnswered = false;
+let looseMode = false;
 
 // INIT
 
@@ -2386,6 +2528,12 @@ const INFO_TEXTS = {
            <p>Pour chaque session, vous voyez : le type (fiche, quiz aléatoire ou quiz thématique), la date et l'heure, le score obtenu, ainsi qu'une ligne de pastilles indiquant question par question si la réponse était correcte (vert) ou incorrecte (rouge).</p>
            <p>Chaque ligne est cliquable pour relancer directement le quiz correspondant : fiche, quiz aléatoire ou thème.</p>
            <p style="color:var(--muted);font-size:12px;">L'application conserve jusqu'à 50 sessions en mémoire, mais seules les 20 plus récentes sont affichées ici.</p>`
+  },
+  'loose-mode': {
+    title: 'Mode YOLO !',
+    body: `<p>Ce mode assouplit la validation des réponses texte libres — pratique sur téléphone ou tablette, où les fautes de frappe et les oublis d'accents sont fréquents.</p>
+           <p>En mode Yolo, l'application ignore les accents, les majuscules, la ponctuation, et tolère de petites fautes de frappe (1 à 3 caractères selon la longueur du mot). Les unités comme <em>km/h</em>, <em>t</em> ou <em>%</em> sont également ignorées lors de la comparaison.</p>
+           <p><strong style="color:var(--red);">⚠️ Attention : ce mode est bien plus permissif que ne le sera l'examinateur le jour de l'examen.</strong> Un examinateur attend une réponse précise, bien orthographiée, avec les bonnes unités. Garder ce mode activé peut vous donner une fausse impression de maîtrise. Pensez à le désactiver lors de vos révisions sérieuses.</p>`
   },
 };
 
@@ -3157,6 +3305,10 @@ function showRevisionFiche(n) {
 }
 
 function init() {
+  // Charger le mode loose depuis localStorage
+  looseMode = localStorage.getItem('quizLooseMode') === '1';
+  toggleLooseMode(looseMode);
+
   const grid = document.getElementById('fiche-grid');
   for (let i = 1; i <= 20; i++) {
     const btn = document.createElement('button');
@@ -3454,7 +3606,7 @@ function submitAnswer() {
   if (!userAns) return;
 
   const q = randomQuestions ? randomQuestions[currentQIndex] : FICHES[currentFiche][currentQIndex];
-  const isCorrect = q.r.some(ans => normalize(ans) === normalize(userAns));
+  const isCorrect = looseMode ? looseMatch(q.r, userAns) : q.r.some(ans => normalize(ans) === normalize(userAns));
   const prettyAnswers = q.r.join(' ou ');
 
   answered = true;
