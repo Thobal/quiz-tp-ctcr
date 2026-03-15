@@ -184,6 +184,34 @@
     line-height: 1;
   }
 
+  /* Fiche recommandée */
+  .fiche-btn.recommended {
+    border-color: var(--accent);
+    overflow: visible;
+    z-index: 2;
+    animation: pulse-glow 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 1px var(--accent), 0 0 18px rgba(245,200,66,0.35), 0 0 6px rgba(245,200,66,0.5); }
+    50%       { box-shadow: 0 0 0 1px var(--accent), 0 0 28px rgba(245,200,66,0.55), 0 0 10px rgba(245,200,66,0.7); }
+  }
+  .badge-recommande {
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #0d0f14;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 2px 6px;
+    border-radius: 5px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
   /* Random quiz button */
   .action-btns-wrap {
     display: flex;
@@ -3003,6 +3031,7 @@ function init() {
     btn.onclick = () => startFiche(i);
     grid.appendChild(btn);
   }
+  updateRecommendedFiches();
 
   document.addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
@@ -3374,12 +3403,64 @@ function showResults() {
   showScreen('results-screen');
 }
 
+function updateRecommendedFiches() {
+  // Nettoie les mises en relief existantes
+  document.querySelectorAll('.fiche-btn').forEach(btn => {
+    btn.classList.remove('recommended');
+    const badge = btn.querySelector('.badge-recommande');
+    if (badge) badge.remove();
+  });
+
+  const s = loadStats();
+  const now = Date.now();
+  const lastPlayed = s.ficheLastPlayed || {};
+  const ficheHistory = s.ficheHistory || {};
+
+  // Calcul du staleness (même logique que renderStalenessHeatmap)
+  const playedTs = [];
+  for (let i = 1; i <= 20; i++) { const ts = lastPlayed[String(i)]; if (ts) playedTs.push(ts); }
+  const oldestTs = playedTs.length ? Math.min(...playedTs) : now;
+  const range    = now - oldestTs;
+  const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
+  const allPlayedToday = playedTs.length > 0 && playedTs.every(t => t >= todayStart.getTime());
+
+  // Calcul urgence pour chaque fiche (formule B : staleness × (1 − maîtrise))
+  const urgences = [];
+  for (let i = 1; i <= 20; i++) {
+    const ts = lastPlayed[String(i)] || null;
+    let staleness;
+    if      (ts === null)         staleness = 1;
+    else if (allPlayedToday)      staleness = 0;
+    else if (range === 0)         staleness = 0;
+    else                          staleness = Math.min(1, (now - ts) / range);
+    const hist    = ficheHistory[String(i)] || [];
+    const tot     = hist.reduce((a, h) => a + h.total, 0);
+    const cor     = hist.reduce((a, h) => a + h.score, 0);
+    const mastery = tot > 0 ? cor / tot : 0;
+    urgences.push({ fiche: i, urgence: staleness * (1 - mastery) });
+  }
+
+  // Top 3 fiches les plus urgentes
+  const top3 = urgences.sort((a, b) => b.urgence - a.urgence).slice(0, 3).filter(u => u.urgence > 0);
+  const buttons = document.querySelectorAll('.fiche-btn');
+  top3.forEach(({ fiche }) => {
+    const btn = buttons[fiche - 1];
+    if (!btn) return;
+    btn.classList.add('recommended');
+    const badge = document.createElement('span');
+    badge.className = 'badge-recommande';
+    badge.textContent = 'À revoir en priorité';
+    btn.appendChild(badge);
+  });
+}
+
 function goHome() {
   randomQuestions = null;
   showScreen('home-screen');
   document.querySelectorAll('.fiche-btn').forEach((btn, i) => {
     btn.className = 'fiche-btn';
   });
+  updateRecommendedFiches();
 }
 
 function showScreen(id) {
