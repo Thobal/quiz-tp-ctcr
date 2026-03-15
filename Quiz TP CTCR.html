@@ -3476,12 +3476,9 @@ function showResults() {
 function updateMasteryKpi() {
   const s = loadStats();
   const block = document.getElementById('kpi-block');
-  if ((s.totalSessions || 0) < 5) { block.classList.add('hidden'); return; }
-
   // KPI 1 : maîtrise des fiches travaillées (même calcul que la jauge stats)
   const { cor: totalScore, tot: totalQuestions, rate: workedRate } = computeWorkedMastery(s);
-  if (totalQuestions === 0) { block.classList.add('hidden'); return; }
-  const pct = Math.round((workedRate ?? 0) * 100);
+  const pct = totalQuestions === 0 ? 0 : Math.round((workedRate ?? 0) * 100);
   const color = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--accent)' : 'var(--red)';
   document.getElementById('kpi-fill').style.width      = pct + '%';
   document.getElementById('kpi-fill').style.background = color;
@@ -3516,7 +3513,8 @@ function updateRecommendedFiches() {
   });
 
   const s = loadStats();
-  if ((s.totalSessions || 0) < 5) return;
+  const ficheSessionsRec = Object.values(s.ficheCount || {}).reduce((a, v) => a + v, 0);
+  if (ficheSessionsRec < 5) return;
 
   const now = Date.now();
   const lastPlayed = s.ficheLastPlayed || {};
