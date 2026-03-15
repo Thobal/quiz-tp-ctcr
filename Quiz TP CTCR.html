@@ -2713,7 +2713,6 @@ function renderHeatmap(s) {
     const lum = 0.299 * r + 0.587 * g + 0.114 * b;
     cell.style.color = lum > 50 ? '#0d0f14' : '#7a8398';
     cell.innerHTML = `<span class="hm-num">${i}</span><span class="hm-count">${cnt}×</span>`;
-    cell.title = `Fiche ${i} — révisée ${cnt} fois · Cliquer pour démarrer`;
     cell.style.cursor = 'pointer';
     cell.addEventListener('click', () => startFiche(i));
     grid.appendChild(cell);
@@ -2768,9 +2767,6 @@ function renderMasteryHeatmap(s) {
     cell.style.boxShadow = shadow;
     const label = rate !== null ? `${pct}%` : '—';
     cell.innerHTML = `<span class="hm-num">${num}</span><span class="hm-count">${label}</span>`;
-    cell.title = rate !== null
-      ? `Fiche ${num} — score moyen ${pct}% sur ${sessions} dernière(s) session(s)`
-      : `Fiche ${num} — pas encore jouée`;
     cell.style.cursor = 'pointer';
     cell.addEventListener('click', () => startFiche(num));
     grid.appendChild(cell);
@@ -2851,9 +2847,6 @@ function renderStalenessHeatmap(s) {
     cell.style.color       = textColor;
     cell.style.boxShadow   = shadow;
     cell.innerHTML = `<span class="hm-num">${i}</span><span class="hm-count">${dateLabel}</span>`;
-    cell.title = ts
-      ? `Fiche ${i} — dernière session le ${new Date(ts).toLocaleDateString('fr-FR')}`
-      : `Fiche ${i} — jamais étudiée`;
     cell.style.cursor = 'pointer';
     cell.addEventListener('click', () => startFiche(i));
     grid.appendChild(cell);
