@@ -105,6 +105,35 @@
     line-height: 1.6;
   }
 
+  .mastery-kpi {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 5px 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .mastery-kpi .kpi-bar {
+    width: 70px;
+    height: 5px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .mastery-kpi .kpi-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+  .mastery-kpi .kpi-value {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
   .copyright {
     text-align: center;
     font-size: 11px;
@@ -1412,6 +1441,11 @@
       <div class="hero-text">
         <h1>Quiz <span>TP CTCR</span></h1>
         <p class="subtitle">20 fiches · 10 questions chacune<br>Testez vos connaissances pour le permis de conduire professionnel</p>
+        <div class="mastery-kpi hidden" id="mastery-kpi">
+          <span>Maîtrise globale</span>
+          <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill"></div></div>
+          <span class="kpi-value" id="kpi-value"></span>
+        </div>
       </div>
     </div>
 
@@ -3032,6 +3066,7 @@ function init() {
     grid.appendChild(btn);
   }
   updateRecommendedFiches();
+  updateMasteryKpi();
 
   document.addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
@@ -3403,6 +3438,26 @@ function showResults() {
   showScreen('results-screen');
 }
 
+function updateMasteryKpi() {
+  const s = loadStats();
+  const kpi = document.getElementById('mastery-kpi');
+  if ((s.totalSessions || 0) < 5) { kpi.classList.add('hidden'); return; }
+  const hist = s.ficheHistory || {};
+  let totalScore = 0, totalQuestions = 0;
+  for (let i = 1; i <= 20; i++) {
+    const sessions = hist[String(i)] || [];
+    sessions.forEach(h => { totalScore += h.score; totalQuestions += h.total; });
+  }
+  if (totalQuestions === 0) { kpi.classList.add('hidden'); return; }
+  const pct = Math.round(totalScore / totalQuestions * 100);
+  const color = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--accent)' : 'var(--red)';
+  document.getElementById('kpi-fill').style.width  = pct + '%';
+  document.getElementById('kpi-fill').style.background = color;
+  document.getElementById('kpi-value').textContent = pct + ' %';
+  document.getElementById('kpi-value').style.color = color;
+  kpi.classList.remove('hidden');
+}
+
 function updateRecommendedFiches() {
   // Nettoie les mises en relief existantes
   document.querySelectorAll('.fiche-btn').forEach(btn => {
@@ -3484,6 +3539,7 @@ function goHome() {
     btn.className = 'fiche-btn';
   });
   updateRecommendedFiches();
+  updateMasteryKpi();
 }
 
 function showScreen(id) {

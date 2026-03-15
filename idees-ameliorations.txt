@@ -11,13 +11,7 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    moyen sur l'ensemble des fiches travaillées (basé sur les 5 dernières sessions
    par fiche). Permet d'avoir une vue d'ensemble sans ouvrir les statistiques.
 
-3. Teinte des boutons de fiche selon la maîtrise
-   Sur l'écran d'accueil, colorer légèrement le fond de chaque bouton de fiche
-   selon son taux de maîtrise : vert pâle pour les fiches bien maîtrisées,
-   rouge pâle pour les fiches en difficulté, neutre pour les fiches jamais jouées.
-   Donne une lecture immédiate de l'état général sans quitter l'accueil.
-
-4. Filtre par fiche dans l'historique des sessions
+3. Filtre par fiche dans l'historique des sessions
    Dans la section "Dernières sessions" des statistiques, ajouter un sélecteur
    permettant de n'afficher que les sessions d'une fiche spécifique. Utile pour
    suivre la progression dans le temps sur une fiche en particulier.
