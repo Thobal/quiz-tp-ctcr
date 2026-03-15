@@ -6,15 +6,17 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    qui lance un mini-quiz uniquement sur les questions où tu as échoué — comme les
    flashcards d'un système de répétition espacée.
 
-2. Taux de maîtrise global affiché sur l'accueil
-   Sous le titre, afficher un seul chiffre synthétique : le pourcentage de maîtrise
-   moyen sur l'ensemble des fiches travaillées (basé sur les 5 dernières sessions
-   par fiche). Permet d'avoir une vue d'ensemble sans ouvrir les statistiques.
-
-3. Filtre par fiche dans l'historique des sessions
+2. Filtre par fiche dans l'historique des sessions
    Dans la section "Dernières sessions" des statistiques, ajouter un sélecteur
    permettant de n'afficher que les sessions d'une fiche spécifique. Utile pour
    suivre la progression dans le temps sur une fiche en particulier.
+
+── IDÉES RÉALISÉES ───────────────────────────────────────────────────────────
+
+[RÉALISÉ] Taux de maîtrise global affiché sur l'accueil
+   Sous le titre, afficher un seul chiffre synthétique : le pourcentage de maîtrise
+   moyen sur l'ensemble des fiches travaillées (basé sur les 5 dernières sessions
+   par fiche). Permet d'avoir une vue d'ensemble sans ouvrir les statistiques.
 
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
