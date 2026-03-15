@@ -6,12 +6,6 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    qui lance un mini-quiz uniquement sur les questions où tu as échoué — comme les
    flashcards d'un système de répétition espacée.
 
-2. Fiche recommandée "à faire maintenant"
-   Sur l'écran d'accueil, mettre en valeur la fiche la plus urgente à retravailler,
-   calculée en combinant l'ancienneté (heatmap 3) et le taux de maîtrise (heatmap 2).
-   Un badge ou une mise en relief sur la cellule de la fiche concernée suffirait —
-   simple et actionnable sans alourdir l'interface.
-
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
 
