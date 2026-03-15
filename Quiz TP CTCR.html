@@ -2895,17 +2895,29 @@ class MiniPDF {
 const PDF_FILENAME = 'quiz-ctcr-statistiques.pdf';
 
 function exportStatsPDF() {
-  const blob = generateStatsPDF();
-  const file = new File([blob], PDF_FILENAME, { type: 'application/pdf' });
-  // Affiche la modale dès que navigator.share existe (mobile), sans se fier
-  // à canShare qui peut renvoyer false à tort sur certains contextes HTTP/Android.
-  if (typeof navigator.share === 'function') {
-    window._pdfShareFile = file;
-    window._pdfShareBlob = blob;
-    document.getElementById('pdf-share-modal').classList.remove('hidden');
-  } else {
-    triggerPDFDownload(blob);
+  try {
+    dbgLog('exportStatsPDF() appelé');
+    const blob = generateStatsPDF();
+    dbgLog('blob généré : ' + blob.size + ' octets');
+    const file = new File([blob], PDF_FILENAME, { type: 'application/pdf' });
+    dbgLog('navigator.share : ' + typeof navigator.share);
+    if (typeof navigator.share === 'function') {
+      window._pdfShareFile = file;
+      window._pdfShareBlob = blob;
+      document.getElementById('pdf-share-modal').classList.remove('hidden');
+      dbgLog('modale ouverte');
+    } else {
+      triggerPDFDownload(blob);
+      dbgLog('téléchargement déclenché');
+    }
+  } catch(e) {
+    dbgLog('ERREUR : ' + e.message + ' — ' + e.stack);
   }
+}
+
+function dbgLog(msg) {
+  const el = document.getElementById('dbg-share');
+  if (el) el.innerHTML += '<br><span style="color:#f5c842">[PDF] ' + msg + '</span>';
 }
 
 function triggerPDFDownload(blob) {
