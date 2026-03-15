@@ -15,31 +15,30 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    Un badge ou une mise en relief sur la cellule de la fiche concernée suffirait —
    simple et actionnable sans alourdir l'interface.
 
-3. Mode apprentissage progressif
-   En fin de quiz, les questions ratées sont reposées automatiquement jusqu'à ce que
-   l'utilisateur obtienne la bonne réponse. La session se termine uniquement quand
-   toutes les questions sont maîtrisées. Renforce la mémorisation au sein de la même
-   session sans nécessiter de rejouer la fiche entière.
-
-4. Export des données en JSON
+3. Export des données en JSON
    Un bouton pour exporter toutes les statistiques brutes en JSON — permettant de les
    sauvegarder, de les transférer sur un autre appareil ou de les archiver. Complémentaire
    de l'export PDF existant qui, lui, est lisible mais non réimportable.
 
-5. Score en temps réel pendant le quiz
+4. Score en temps réel pendant le quiz
    Pendant un quiz, afficher discrètement un mini-compteur (ex : "5 / 7 correctes")
    pour que l'utilisateur suive sa progression question par question sans attendre
    l'écran de résultats.
-
-6. Résumé "depuis la dernière visite"
-   Au lancement de l'application, afficher un petit bandeau indiquant depuis combien
-   de jours l'utilisateur n'a pas joué, et rappelant quelles fiches avaient été
-   travaillées lors de la dernière session. Favorise la reprise rapide après une pause.
 
 ── AMÉLIORER L'EXPÉRIENCE ─────────────────────────────────────────────────────
 
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Mode apprentissage progressif
+   En fin de quiz, les questions ratées sont reposées automatiquement jusqu'à ce que
+   l'utilisateur obtienne la bonne réponse. La session se termine uniquement quand
+   toutes les questions sont maîtrisées.
+
+[REJETÉ] Résumé "depuis la dernière visite"
+   Au lancement de l'application, afficher un petit bandeau indiquant depuis combien
+   de jours l'utilisateur n'a pas joué, et rappelant quelles fiches avaient été
+   travaillées lors de la dernière session.
 
 [REJETÉ] Graphique de progression par fiche
    Sur la heatmap "fiches les moins maîtrisées", au clic sur une cellule, afficher
