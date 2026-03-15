@@ -6,6 +6,32 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    l'API Web Share sur mobile) un résumé de la session : fiche, score, date.
    Permet de garder une trace externe ou de partager ses progrès.
 
+2. Chronomètre de session
+   Mesurer le temps total passé sur un quiz et l'afficher dans les résultats en
+   fin de session. Permet de suivre si l'on répond plus vite au fil de
+   l'entraînement, en plus du score.
+
+3. Résumé de fiche avant quiz
+   Juste avant de démarrer un quiz, afficher une ligne récapitulative : score
+   moyen, nombre de sessions jouées et date de la dernière session. Donne le
+   contexte sans avoir à consulter les statistiques complètes.
+
+4. Mise en évidence des différences dans les corrections
+   Dans "Mes 20 dernières erreurs" et dans la correction immédiate, mettre en
+   évidence les caractères ou mots qui diffèrent entre la réponse donnée et la
+   bonne réponse (style diff). Permet de voir exactement où se situe l'erreur
+   d'un seul coup d'œil.
+
+5. Filtre par fiche dans "Mes 20 dernières erreurs"
+   Ajouter un sélecteur permettant de n'afficher que les erreurs d'une fiche
+   spécifique. Utile pour cibler une révision sur une fiche précise sans être
+   distrait par les erreurs des autres fiches.
+
+6. Animation sur score parfait
+   Lorsque le score final est 100 %, déclencher une petite animation (confetti
+   ou similaire) sur l'écran de résultats. Rend le moment mémorable et renforce
+   la motivation à viser la perfection.
+
 ── IDÉES RÉALISÉES ───────────────────────────────────────────────────────────
 
 [RÉALISÉ] Taux de maîtrise global affiché sur l'accueil
