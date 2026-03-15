@@ -3426,7 +3426,12 @@ function updateRecommendedFiches() {
   const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
   const allPlayedToday = playedTs.length > 0 && playedTs.every(t => t >= todayStart.getTime());
 
-  // Calcul urgence pour chaque fiche (formule B : staleness × (1 − maîtrise))
+  // Calcul de la rareté (inverse du nombre de sessions normalisé)
+  const ficheCount = s.ficheCount || {};
+  const counts = Object.values(ficheCount).map(Number).filter(v => v > 0);
+  const maxCount = counts.length ? Math.max(...counts) : 1;
+
+  // Calcul urgence — moyenne pondérée : 0.4×ancienneté + 0.2×rareté + 0.4×(1−maîtrise)
   const urgences = [];
   for (let i = 1; i <= 20; i++) {
     const ts = lastPlayed[String(i)] || null;
@@ -3435,11 +3440,13 @@ function updateRecommendedFiches() {
     else if (allPlayedToday)      staleness = 0;
     else if (range === 0)         staleness = 0;
     else                          staleness = Math.min(1, (now - ts) / range);
+    const rarete  = 1 - (ficheCount[String(i)] || 0) / maxCount;
     const hist    = ficheHistory[String(i)] || [];
     const tot     = hist.reduce((a, h) => a + h.total, 0);
     const cor     = hist.reduce((a, h) => a + h.score, 0);
     const mastery = tot > 0 ? cor / tot : 0;
-    urgences.push({ fiche: i, urgence: staleness * (1 - mastery) });
+    const urgence = 0.4 * staleness + 0.2 * rarete + 0.4 * (1 - mastery);
+    urgences.push({ fiche: i, urgence });
   }
 
   // Top 3 fiches les plus urgentes (avec tie-breaking aléatoire)
