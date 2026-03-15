@@ -1421,17 +1421,6 @@
       <strong>Fonctionnement</strong><br>
       Choisissez une fiche pour démarrer une session de <strong>10 questions</strong>. Vous pouvez aussi lancer un <strong>Quiz Aléatoire</strong> pour piocher 10 questions au hasard dans toutes les fiches, ou un <strong>Quiz Thématique</strong> pour cibler un thème précis (signalisation, temps de repos, chronotachygraphe…). Saisissez vos réponses et validez — un récapitulatif complet s'affiche à la fin.
     </div>
-    <!-- BOUTON TEMPORAIRE — migration ficheLastPlayed — à supprimer après usage -->
-    <button onclick="migrateLastPlayed()" style="
-      display:block; width:100%; margin:12px 0 4px; padding:10px;
-      background:transparent; border:1px dashed rgba(255,160,0,0.45);
-      border-radius:10px; color:rgba(255,160,0,0.7);
-      font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.06em;
-      cursor:pointer;">
-      🛠 [TEMP] Migrer les données pour la heatmap ancienneté
-    </button>
-    <!-- FIN BOUTON TEMPORAIRE -->
-
     <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite.</p>
   </div>
 
@@ -2799,44 +2788,6 @@ function renderMasteryHeatmap(s) {
 }
 
 
-
-// ── MIGRATION TEMPORAIRE — ficheLastPlayed ──────────────────────────
-// À supprimer après usage. N'impacte que ficheLastPlayed, rien d'autre.
-function migrateLastPlayed() {
-  const s = loadStats();
-  if (!s.ficheLastPlayed) s.ficheLastPlayed = {};
-
-  const now = Date.now();
-  const DAY = 24 * 60 * 60 * 1000;
-  const sessionHist = s.sessionHistory || [];
-  let migrated = 0;
-
-  for (let f = 1; f <= 20; f++) {
-    const key = String(f);
-
-    // Ne pas écraser un timestamp réel déjà enregistré
-    if (s.ficheLastPlayed[key]) continue;
-
-    // Fiche jamais jouée : on ne touche à rien
-    if (!(s.ficheCount && s.ficheCount[key])) continue;
-
-    // Chercher la position la plus récente dans sessionHistory
-    const idx = sessionHist.findIndex(h => String(h.mode) === key);
-
-    if (idx !== -1) {
-      // Présente dans l'historique récent : position ≈ ancienneté en jours (max 14j)
-      s.ficheLastPlayed[key] = now - Math.min(idx, 14) * DAY;
-    } else {
-      // Jouée mais absente de l'historique récent : 15 jours en arrière
-      s.ficheLastPlayed[key] = now - 15 * DAY;
-    }
-    migrated++;
-  }
-
-  saveStats(s);
-  showStatsScreen();
-  alert(`Migration effectuée : ${migrated} fiche(s) mise(s) à jour.\nVous pouvez maintenant supprimer le bouton de migration.`);
-}
 
 function renderStalenessHeatmap(s) {
   const grid = document.getElementById('staleness-grid');
