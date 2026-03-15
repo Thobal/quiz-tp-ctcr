@@ -2711,7 +2711,7 @@ function renderHeatmap(s) {
     cell.className = 'hm-cell';
     cell.style.background = `rgb(${r},${g},${b})`;
     const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-    cell.style.color = lum > 50 ? '#0d0f14' : '#4a5068';
+    cell.style.color = lum > 50 ? '#0d0f14' : '#7a8398';
     cell.innerHTML = `<span class="hm-num">${i}</span><span class="hm-count">${cnt}×</span>`;
     cell.title = `Fiche ${i} — révisée ${cnt} fois · Cliquer pour démarrer`;
     cell.style.cursor = 'pointer';
@@ -2751,7 +2751,7 @@ function renderMasteryHeatmap(s) {
     const b = Math.round(0x6e + (0x0e - 0x6e) * t);
     const col = '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
     const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-    const textColor = lum > 50 ? '#0d0f14' : '#4a5068';
+    const textColor = lum > 50 ? '#0d0f14' : '#7a8398';
 
     // Halo rouge proportionnel à la gravité, supprimé dès 75%
     const haloT = Math.max(0, (1 - pct / 75));
@@ -2825,7 +2825,7 @@ function renderStalenessHeatmap(s) {
     const b = Math.round(0x11 + (0xd8 - 0x11) * v);
     const col = '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
     const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-    const textColor = lum > 50 ? '#0d0f14' : '#4a5068';
+    const textColor = lum > 50 ? '#0d0f14' : '#7a8398';
 
     // Halo cyan proportionnel à l'ancienneté
     const haloT = Math.max(0, (staleness - 0.5) * 2);
