@@ -1,17 +1,12 @@
 IDÉES D'AMÉLIORATION — Quiz TP CTCR
 =====================================
 
-1. Détail d'une erreur cliquable dans la révision
-   Dans "Mes 20 dernières erreurs", rendre chaque carte cliquable pour afficher
-   une vue détaillée : question complète, réponse donnée, bonne réponse, explication
-   et image de panneau si disponible. Actuellement les cartes sont non interactives.
-
-2. Quiz des questions non maîtrisées
+1. Quiz des questions non maîtrisées
    Un nouveau mode de quiz qui pioche uniquement parmi les questions dont le taux
    de réussite personnel est inférieur à 50 % (calculé sur l'historique), pour
    cibler ses lacunes de manière encore plus précise que la révision classique.
 
-3. Partage de score
+2. Partage de score
    En fin de quiz, un bouton pour copier dans le presse-papier (ou partager via
    l'API Web Share sur mobile) un résumé de la session : fiche, score, date.
    Permet de garder une trace externe ou de partager ses progrès.
@@ -25,6 +20,11 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
 
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Détail d'une erreur cliquable dans la révision
+   Dans "Mes 20 dernières erreurs", rendre chaque carte cliquable pour afficher
+   une vue détaillée : question complète, réponse donnée, bonne réponse, explication
+   et image de panneau si disponible. Actuellement les cartes sont non interactives.
 
 [REJETÉ] Bouton "Rejouer" en fin de quiz
    Sur l'écran de résultats, ajouter un bouton "Rejouer" qui relance immédiatement
