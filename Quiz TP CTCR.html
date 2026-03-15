@@ -106,41 +106,36 @@
   }
 
   .kpi-block {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-top: 10px;
-    width: 100%;
-    max-width: 320px;
-  }
-  .mastery-kpi {
-    display: grid;
-    grid-template-columns: 1fr 80px 38px;
+    display: inline-grid;
+    grid-template-columns: auto 80px 40px;
     align-items: center;
-    gap: 8px;
-    padding: 5px 12px;
+    column-gap: 10px;
+    row-gap: 6px;
+    margin-top: 10px;
+    padding: 8px 14px;
     background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 14px;
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     color: var(--muted);
   }
-  .mastery-kpi > span:first-child {
+  .kpi-block .kpi-label {
+    white-space: nowrap;
     text-align: right;
   }
-  .mastery-kpi .kpi-bar {
+  .kpi-block .kpi-bar {
     width: 80px;
     height: 5px;
     background: var(--border);
     border-radius: 3px;
     overflow: hidden;
   }
-  .mastery-kpi .kpi-fill {
+  .kpi-block .kpi-fill {
     height: 100%;
     border-radius: 3px;
   }
-  .mastery-kpi .kpi-value {
+  .kpi-block .kpi-value {
     font-size: 13px;
     font-weight: 700;
     text-align: right;
@@ -1453,17 +1448,13 @@
       <div class="hero-text">
         <h1>Quiz <span>TP CTCR</span></h1>
         <p class="subtitle">20 fiches · 10 questions chacune<br>Testez vos connaissances pour le permis de conduire professionnel</p>
-        <div class="kpi-block">
-          <div class="mastery-kpi hidden" id="mastery-kpi">
-            <span>Maîtrise des fiches travaillées</span>
-            <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill"></div></div>
-            <span class="kpi-value" id="kpi-value"></span>
-          </div>
-          <div class="mastery-kpi hidden" id="mastery-kpi-global">
-            <span>Maîtrise globale</span>
-            <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill-global"></div></div>
-            <span class="kpi-value" id="kpi-value-global"></span>
-          </div>
+        <div class="kpi-block hidden" id="kpi-block">
+          <span class="kpi-label">Maîtrise des fiches travaillées</span>
+          <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill"></div></div>
+          <span class="kpi-value" id="kpi-value"></span>
+          <span class="kpi-label">Maîtrise globale</span>
+          <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill-global"></div></div>
+          <span class="kpi-value" id="kpi-value-global"></span>
         </div>
       </div>
     </div>
@@ -3459,13 +3450,8 @@ function showResults() {
 
 function updateMasteryKpi() {
   const s = loadStats();
-  const kpi       = document.getElementById('mastery-kpi');
-  const kpiGlobal = document.getElementById('mastery-kpi-global');
-  if ((s.totalSessions || 0) < 5) {
-    kpi.classList.add('hidden');
-    kpiGlobal.classList.add('hidden');
-    return;
-  }
+  const block = document.getElementById('kpi-block');
+  if ((s.totalSessions || 0) < 5) { block.classList.add('hidden'); return; }
   const hist = s.ficheHistory || {};
 
   // KPI 1 : maîtrise des fiches travaillées uniquement
@@ -3474,14 +3460,13 @@ function updateMasteryKpi() {
     const sessions = hist[String(i)] || [];
     sessions.forEach(h => { totalScore += h.score; totalQuestions += h.total; });
   }
-  if (totalQuestions === 0) { kpi.classList.add('hidden'); kpiGlobal.classList.add('hidden'); return; }
+  if (totalQuestions === 0) { block.classList.add('hidden'); return; }
   const pct = Math.round(totalScore / totalQuestions * 100);
   const color = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--accent)' : 'var(--red)';
   document.getElementById('kpi-fill').style.width      = pct + '%';
   document.getElementById('kpi-fill').style.background = color;
   document.getElementById('kpi-value').textContent     = pct + ' %';
   document.getElementById('kpi-value').style.color     = color;
-  kpi.classList.remove('hidden');
 
   // KPI 2 : maîtrise globale (fiches non travaillées comptent pour 0 %)
   let sumMastery = 0;
@@ -3497,7 +3482,8 @@ function updateMasteryKpi() {
   document.getElementById('kpi-fill-global').style.background = colorG;
   document.getElementById('kpi-value-global').textContent     = pctGlobal + ' %';
   document.getElementById('kpi-value-global').style.color     = colorG;
-  kpiGlobal.classList.remove('hidden');
+
+  block.classList.remove('hidden');
 }
 
 function updateRecommendedFiches() {
