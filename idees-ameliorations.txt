@@ -15,12 +15,7 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    Un badge ou une mise en relief sur la cellule de la fiche concernée suffirait —
    simple et actionnable sans alourdir l'interface.
 
-3. Export des données en JSON
-   Un bouton pour exporter toutes les statistiques brutes en JSON — permettant de les
-   sauvegarder, de les transférer sur un autre appareil ou de les archiver. Complémentaire
-   de l'export PDF existant qui, lui, est lisible mais non réimportable.
-
-4. Score en temps réel pendant le quiz
+3. Score en temps réel pendant le quiz
    Pendant un quiz, afficher discrètement un mini-compteur (ex : "5 / 7 correctes")
    pour que l'utilisateur suive sa progression question par question sans attendre
    l'écran de résultats.
@@ -29,6 +24,10 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
 
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Export des données en JSON
+   Un bouton pour exporter toutes les statistiques brutes en JSON — permettant de les
+   sauvegarder, de les transférer sur un autre appareil ou de les archiver.
 
 [REJETÉ] Mode apprentissage progressif
    En fin de quiz, les questions ratées sont reposées automatiquement jusqu'à ce que
