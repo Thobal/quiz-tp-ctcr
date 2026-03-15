@@ -3327,7 +3327,7 @@ function renderWrongHistory() {
         </div>
         <div class="wrong-card-ans-row">
           <span class="wrong-ans-label correct">Correct</span>
-          <span class="wrong-ans-value correct">${e.correct}</span>
+          <span class="wrong-ans-value correct">${e.correct.replace(/ ou /g, ' <span style="color:var(--muted)">ou</span> ')}</span>
         </div>
       </div>`;
 
