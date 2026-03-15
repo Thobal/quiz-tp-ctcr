@@ -534,6 +534,8 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .back-btn:hover { border-color: var(--accent); color: var(--accent); }
@@ -542,6 +544,7 @@
     font-family: 'DM Mono', monospace;
     font-size: 13px;
     color: var(--muted);
+    white-space: nowrap;
   }
 
   .progress-info strong {
@@ -1523,6 +1526,8 @@
     font-size: 11px;
     color: var(--muted);
     letter-spacing: 0.04em;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   @media (max-width: 500px) {
@@ -1704,7 +1709,6 @@
       <div class="progress-info">Question <strong id="q-counter">1</strong> / 10</div>
       <div class="quiz-loose-row">
         <label class="loose-toggle-label" for="loose-toggle-quiz">
-          <span>Strict</span>
           <input type="checkbox" id="loose-toggle-quiz" onchange="toggleLooseMode(this.checked)">
           <div class="toggle-track"><div class="toggle-thumb"></div></div>
           <span>Yolo !</span>
