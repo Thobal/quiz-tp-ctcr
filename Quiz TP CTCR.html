@@ -105,11 +105,19 @@
     line-height: 1.6;
   }
 
+  .kpi-block {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 320px;
+  }
   .mastery-kpi {
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: 1fr 80px 38px;
     align-items: center;
     gap: 8px;
-    margin-top: 10px;
     padding: 5px 12px;
     background: var(--surface2);
     border: 1px solid var(--border);
@@ -118,8 +126,11 @@
     font-size: 12px;
     color: var(--muted);
   }
+  .mastery-kpi > span:first-child {
+    text-align: right;
+  }
   .mastery-kpi .kpi-bar {
-    width: 70px;
+    width: 80px;
     height: 5px;
     background: var(--border);
     border-radius: 3px;
@@ -132,6 +143,7 @@
   .mastery-kpi .kpi-value {
     font-size: 13px;
     font-weight: 700;
+    text-align: right;
   }
 
   .copyright {
@@ -1441,15 +1453,17 @@
       <div class="hero-text">
         <h1>Quiz <span>TP CTCR</span></h1>
         <p class="subtitle">20 fiches · 10 questions chacune<br>Testez vos connaissances pour le permis de conduire professionnel</p>
-        <div class="mastery-kpi hidden" id="mastery-kpi">
-          <span>Maîtrise des fiches travaillées</span>
-          <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill"></div></div>
-          <span class="kpi-value" id="kpi-value"></span>
-        </div>
-        <div class="mastery-kpi hidden" id="mastery-kpi-global">
-          <span>Maîtrise globale</span>
-          <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill-global"></div></div>
-          <span class="kpi-value" id="kpi-value-global"></span>
+        <div class="kpi-block">
+          <div class="mastery-kpi hidden" id="mastery-kpi">
+            <span>Maîtrise des fiches travaillées</span>
+            <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill"></div></div>
+            <span class="kpi-value" id="kpi-value"></span>
+          </div>
+          <div class="mastery-kpi hidden" id="mastery-kpi-global">
+            <span>Maîtrise globale</span>
+            <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill-global"></div></div>
+            <span class="kpi-value" id="kpi-value-global"></span>
+          </div>
         </div>
       </div>
     </div>
