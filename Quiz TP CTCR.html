@@ -2871,7 +2871,9 @@ const PDF_FILENAME = 'quiz-ctcr-statistiques.pdf';
 function exportStatsPDF() {
   const blob = generateStatsPDF();
   const file = new File([blob], PDF_FILENAME, { type: 'application/pdf' });
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+  // Affiche la modale dès que navigator.share existe (mobile), sans se fier
+  // à canShare qui peut renvoyer false à tort sur certains contextes HTTP/Android.
+  if (typeof navigator.share === 'function') {
     window._pdfShareFile = file;
     window._pdfShareBlob = blob;
     document.getElementById('pdf-share-modal').classList.remove('hidden');
@@ -2889,8 +2891,14 @@ function triggerPDFDownload(blob) {
 }
 
 function sharePDFFile() {
-  navigator.share({ files: [window._pdfShareFile] }).catch(() => {});
   closePdfShareModal();
+  const file = window._pdfShareFile;
+  const canFiles = (() => { try { return navigator.canShare({ files: [file] }); } catch(e) { return false; } })();
+  // Tente le partage avec fichier, sinon tente texte seul, sinon télécharge
+  (canFiles
+    ? navigator.share({ files: [file], title: 'Quiz TP CTCR — Statistiques' })
+    : navigator.share({ title: 'Quiz TP CTCR — Statistiques', text: 'Mes statistiques Quiz TP CTCR' })
+  ).catch(() => triggerPDFDownload(window._pdfShareBlob));
 }
 
 function closePdfShareModal() {
