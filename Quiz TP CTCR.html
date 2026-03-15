@@ -1720,6 +1720,31 @@
       <strong>Fonctionnement</strong><br>
       Choisissez une fiche pour démarrer une session de <strong>10 questions</strong>. Vous pouvez aussi lancer un <strong>Quiz Aléatoire</strong> pour piocher 10 questions au hasard dans toutes les fiches, ou un <strong>Quiz Thématique</strong> pour cibler un thème précis (signalisation, temps de repos, chronotachygraphe…). Saisissez vos réponses et validez — un récapitulatif complet s'affiche à la fin.
     </div>
+    <div id="share-debug" style="margin:20px 0;padding:14px;background:#1a1d2e;border:1px solid #f5c842;border-radius:10px;font-family:monospace;font-size:12px;color:#ccc;line-height:1.8;">
+      <strong style="color:#f5c842;">🔧 DEBUG Web Share</strong><br>
+      <span id="dbg-share"></span>
+    </div>
+    <script>
+      (function() {
+        const testBlob = new Blob(['test'], { type: 'application/pdf' });
+        const testFile = new File([testBlob], 'test.pdf', { type: 'application/pdf' });
+        let canShareFiles = '?';
+        try { canShareFiles = navigator.canShare ? String(navigator.canShare({ files: [testFile] })) : 'canShare absent'; }
+        catch(e) { canShareFiles = 'exception: ' + e.message; }
+        let canShareText = '?';
+        try { canShareText = navigator.canShare ? String(navigator.canShare({ text: 'test' })) : 'canShare absent'; }
+        catch(e) { canShareText = 'exception: ' + e.message; }
+        document.getElementById('dbg-share').innerHTML = [
+          'navigator.share : ' + (typeof navigator.share),
+          'navigator.canShare : ' + (typeof navigator.canShare),
+          'canShare({files:[pdf]}) : ' + canShareFiles,
+          'canShare({text}) : ' + canShareText,
+          'isSecureContext : ' + window.isSecureContext,
+          'protocol : ' + location.protocol,
+          'userAgent : ' + navigator.userAgent.substring(0, 80),
+        ].join('<br>');
+      })();
+    </script>
     <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite.</p>
   </div>
 
