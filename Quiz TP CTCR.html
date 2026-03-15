@@ -1446,6 +1446,11 @@
           <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill"></div></div>
           <span class="kpi-value" id="kpi-value"></span>
         </div>
+        <div class="mastery-kpi hidden" id="mastery-kpi-global">
+          <span>Maîtrise globale</span>
+          <div class="kpi-bar"><div class="kpi-fill" id="kpi-fill-global"></div></div>
+          <span class="kpi-value" id="kpi-value-global"></span>
+        </div>
       </div>
     </div>
 
@@ -3440,22 +3445,45 @@ function showResults() {
 
 function updateMasteryKpi() {
   const s = loadStats();
-  const kpi = document.getElementById('mastery-kpi');
-  if ((s.totalSessions || 0) < 5) { kpi.classList.add('hidden'); return; }
+  const kpi       = document.getElementById('mastery-kpi');
+  const kpiGlobal = document.getElementById('mastery-kpi-global');
+  if ((s.totalSessions || 0) < 5) {
+    kpi.classList.add('hidden');
+    kpiGlobal.classList.add('hidden');
+    return;
+  }
   const hist = s.ficheHistory || {};
+
+  // KPI 1 : maîtrise des fiches travaillées uniquement
   let totalScore = 0, totalQuestions = 0;
   for (let i = 1; i <= 20; i++) {
     const sessions = hist[String(i)] || [];
     sessions.forEach(h => { totalScore += h.score; totalQuestions += h.total; });
   }
-  if (totalQuestions === 0) { kpi.classList.add('hidden'); return; }
+  if (totalQuestions === 0) { kpi.classList.add('hidden'); kpiGlobal.classList.add('hidden'); return; }
   const pct = Math.round(totalScore / totalQuestions * 100);
   const color = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--accent)' : 'var(--red)';
-  document.getElementById('kpi-fill').style.width  = pct + '%';
+  document.getElementById('kpi-fill').style.width      = pct + '%';
   document.getElementById('kpi-fill').style.background = color;
-  document.getElementById('kpi-value').textContent = pct + ' %';
-  document.getElementById('kpi-value').style.color = color;
+  document.getElementById('kpi-value').textContent     = pct + ' %';
+  document.getElementById('kpi-value').style.color     = color;
   kpi.classList.remove('hidden');
+
+  // KPI 2 : maîtrise globale (fiches non travaillées comptent pour 0 %)
+  let sumMastery = 0;
+  for (let i = 1; i <= 20; i++) {
+    const sessions = hist[String(i)] || [];
+    const tot = sessions.reduce((a, h) => a + h.total, 0);
+    const cor = sessions.reduce((a, h) => a + h.score, 0);
+    sumMastery += tot > 0 ? cor / tot : 0;
+  }
+  const pctGlobal = Math.round(sumMastery / 20 * 100);
+  const colorG = pctGlobal >= 70 ? 'var(--green)' : pctGlobal >= 50 ? 'var(--accent)' : 'var(--red)';
+  document.getElementById('kpi-fill-global').style.width      = pctGlobal + '%';
+  document.getElementById('kpi-fill-global').style.background = colorG;
+  document.getElementById('kpi-value-global').textContent     = pctGlobal + ' %';
+  document.getElementById('kpi-value-global').style.color     = colorG;
+  kpiGlobal.classList.remove('hidden');
 }
 
 function updateRecommendedFiches() {
