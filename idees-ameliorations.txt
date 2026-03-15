@@ -12,13 +12,13 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    Un badge ou une mise en relief sur la cellule de la fiche concernée suffirait —
    simple et actionnable sans alourdir l'interface.
 
-3. Score en temps réel pendant le quiz
+── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
+   (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Score en temps réel pendant le quiz
    Pendant un quiz, afficher discrètement un mini-compteur (ex : "5 / 7 correctes")
    pour que l'utilisateur suive sa progression question par question sans attendre
    l'écran de résultats.
-
-── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
-   (conservées pour mémoire — ne pas reproposer)
 
 [REJETÉ] Export des données en JSON
    Un bouton pour exporter toutes les statistiques brutes en JSON — permettant de les
