@@ -1723,16 +1723,8 @@
       <strong>Fonctionnement</strong><br>
       Choisissez une fiche pour démarrer une session de <strong>10 questions</strong>. Vous pouvez aussi lancer un <strong>Quiz Aléatoire</strong> pour piocher 10 questions au hasard dans toutes les fiches, ou un <strong>Quiz Thématique</strong> pour cibler un thème précis (signalisation, temps de repos, chronotachygraphe…). Saisissez vos réponses et validez — un récapitulatif complet s'affiche à la fin.
     </div>
-    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.0.3</p>
+    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.0.4</p>
 
-    <div style="margin-top:24px;padding:16px;border:1px dashed #f5c842;border-radius:12px;background:#1a1d2e;">
-      <p style="font-family:'DM Mono',monospace;font-size:11px;color:#f5c842;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 12px;">🔧 Transfert de données (temporaire)</p>
-      <div style="display:flex;gap:10px;">
-        <button onclick="exportLocalStorage()" style="flex:1;padding:10px;border-radius:9px;border:1px solid #f5c842;background:transparent;color:#f5c842;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">⬇️ Exporter</button>
-        <button onclick="document.getElementById('import-ls-input').click()" style="flex:1;padding:10px;border-radius:9px;border:1px solid #6abf88;background:transparent;color:#6abf88;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">⬆️ Importer</button>
-      </div>
-      <input type="file" id="import-ls-input" accept=".json" style="display:none" onchange="importLocalStorage(this)">
-    </div>
   </div>
 
   <!-- QUIZ SCREEN -->
@@ -2915,36 +2907,6 @@ function closePdfShareModal() {
   document.getElementById('pdf-share-modal').classList.remove('open');
 }
 
-// ── TRANSFERT LOCALSTORAGE ──────────────────────────────────────────
-function exportLocalStorage() {
-  const keys = ['quizStats', 'quizLooseMode'];
-  const data = {};
-  keys.forEach(k => { const v = localStorage.getItem(k); if (v !== null) data[k] = v; });
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'quiz-ctcr-sauvegarde.json';
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-}
-
-function importLocalStorage(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const data = JSON.parse(e.target.result);
-      Object.entries(data).forEach(([k, v]) => localStorage.setItem(k, v));
-      alert('Importation réussie ! La page va se recharger.');
-      location.reload();
-    } catch(err) {
-      alert('Erreur lors de l\'importation : ' + err.message);
-    }
-  };
-  reader.readAsText(file);
-  input.value = '';
-}
 
 function generateStatsPDF() {
   const doc = new MiniPDF();
