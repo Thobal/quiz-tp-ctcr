@@ -698,6 +698,17 @@
     font-size: 14px;
   }
 
+  .feedback .yolo-save {
+    font-size: 12.5px;
+    color: #e8c84a;
+    margin-top: 10px;
+    padding: 7px 11px;
+    background: rgba(245,200,66,0.08);
+    border: 1px solid rgba(245,200,66,0.22);
+    border-radius: 8px;
+    line-height: 1.5;
+  }
+
   .feedback .expl-text {
     color: var(--muted);
     margin-top: 10px;
@@ -3683,7 +3694,9 @@ function submitAnswer() {
   if (!userAns) return;
 
   const q = randomQuestions ? randomQuestions[currentQIndex] : FICHES[currentFiche][currentQIndex];
-  const isCorrect = looseMode ? looseMatch(q.r, userAns) : q.r.some(ans => normalize(ans) === normalize(userAns));
+  const isCorrectStrict = q.r.some(ans => normalize(ans) === normalize(userAns));
+  const isCorrect = looseMode ? looseMatch(q.r, userAns) : isCorrectStrict;
+  const savedByYolo = looseMode && isCorrect && !isCorrectStrict;
   const prettyAnswers = q.r.join(' ou ');
 
   answered = true;
@@ -3696,7 +3709,10 @@ function submitAnswer() {
   const explHtml = q.expl ? `<div class="expl-text">💡 ${q.expl}</div>` : '';
   if (isCorrect) {
     fb.className = 'feedback correct';
-    fb.innerHTML = `✅ Bonne réponse${explHtml}`;
+    const yoloHtml = savedByYolo
+      ? `<div class="yolo-save">⚡ Sauvé par le mode YOLO — en mode strict, la réponse attendue était : <strong>${prettyAnswers}</strong></div>`
+      : '';
+    fb.innerHTML = `✅ Bonne réponse${yoloHtml}${explHtml}`;
   } else {
     fb.className = 'feedback incorrect';
     fb.innerHTML = `❌ Mauvaise réponse<div class="correct-ans">Bonne(s) réponse(s) : <strong>${prettyAnswers}</strong></div>${explHtml}`;
