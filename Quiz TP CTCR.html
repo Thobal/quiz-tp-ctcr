@@ -2371,6 +2371,8 @@ function looseMatch(correctAnswers, userInput) {
     const a = looseNormalize(ans);
     // Correspondance exacte après normalisation étendue
     if (a === u) return true;
+    // Pas de tolérance pour les réponses purement numériques (ex: 112 ≠ 113)
+    if (/^\d+$/.test(a) && /^\d+$/.test(u)) return false;
     // Tolérance Levenshtein : 1 erreur jusqu'à 5 chars, 2 erreurs de 6 à 10, 3 erreurs au-delà
     const maxLen = Math.max(a.length, u.length);
     const threshold = maxLen <= 5 ? 1 : maxLen <= 10 ? 2 : 3;
