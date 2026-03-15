@@ -885,19 +885,57 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 18px 20px;
-    margin-bottom: 12px;
+    overflow: hidden;
+    margin-bottom: 10px;
   }
-  .wrong-card-meta {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
+  .wrong-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    background: #1c2235;
+    border-bottom: 1px solid var(--border);
+  }
+  .wrong-card-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .wrong-card-ts {
+    font-size: 10px;
     color: var(--muted);
-    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+    flex: 1;
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+  }
+  .wrong-card-body {
+    display: flex;
+    align-items: stretch;
+  }
+  .wrong-card-content {
+    flex: 1;
+    padding: 14px 14px 12px;
+    min-width: 0;
+  }
+  .wrong-card-panel-col {
+    width: 92px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 22px 10px 14px;
+  }
+  .wrong-card-panel-col svg {
+    width: 56px;
+    height: auto;
   }
   .wrong-card-q {
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 400;
     color: var(--text);
     margin-bottom: 12px;
@@ -906,21 +944,41 @@
   .wrong-card-ans {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    font-size: 13px;
-    font-family: 'DM Mono', monospace;
+    gap: 7px;
   }
-  .wrong-card-user {
-    color: #e0485a;
+  .wrong-card-ans-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 12.5px;
+    line-height: 1.4;
   }
-  .wrong-card-correct {
-    color: #6abf88;
-  }
-  .wrong-card-ts {
+  .wrong-ans-label {
     font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    width: 52px;
+    text-align: right;
     color: var(--muted);
-    margin-top: 10px;
+  }
+  .wrong-ans-label.user { }
+  .wrong-ans-label.correct { }
+  .wrong-ans-value {
+    flex: 1;
+    padding: 4px 10px;
+    border-left: 3px solid transparent;
     font-family: 'DM Mono', monospace;
+    font-size: 12.5px;
+    color: var(--text);
+  }
+  .wrong-ans-value.user {
+    border-left-color: rgba(224,72,90,0.6);
+    color: var(--muted);
+  }
+  .wrong-ans-value.correct {
+    border-left-color: rgba(106,191,136,0.6);
   }
   .wrong-empty {
     text-align: center;
@@ -3253,22 +3311,39 @@ function renderWrongHistory() {
     return;
   }
   list.innerHTML = wh.map(e => {
-    const panelHtml = e.panel && PANEL_SVGS[e.panel]
-      ? `<div class="qa-panel">${PANEL_SVGS[e.panel]}</div>`
-      : '';
     const src = e.source !== undefined ? String(e.source) : String(e.fiche);
     const ficheLabel = src === 'aléatoire' ? 'Quiz aléatoire'
       : src.startsWith('Thématique') ? src.replace('Thématique · ', 'Thème : ')
       : `Fiche ${e.fiche}`;
     const ficheDetail = (src === 'aléatoire' || src.startsWith('Thématique')) ? ` · Fiche ${e.fiche}` : '';
+    const badge = `${ficheLabel}${ficheDetail} · Question ${e.qNum}`;
+
+    const questionContent = `
+      <div class="wrong-card-q">${e.q}</div>
+      <div class="wrong-card-ans">
+        <div class="wrong-card-ans-row">
+          <span class="wrong-ans-label user">Donné</span>
+          <span class="wrong-ans-value user">${e.userAns}</span>
+        </div>
+        <div class="wrong-card-ans-row">
+          <span class="wrong-ans-label correct">Correct</span>
+          <span class="wrong-ans-value correct">${e.correct}</span>
+        </div>
+      </div>`;
+
+    const panelCol = (e.panel && PANEL_SVGS[e.panel])
+      ? `<div class="wrong-card-panel-col">${PANEL_SVGS[e.panel]}</div>`
+      : `<div class="wrong-card-panel-col"></div>`;
+
     return `
       <div class="wrong-card">
-        <div class="wrong-card-meta">${ficheLabel}${ficheDetail} · Question ${e.qNum} · ${e.ts}</div>
-        ${panelHtml}
-        <div class="wrong-card-q">${e.q}</div>
-        <div class="wrong-card-ans">
-          <span class="wrong-card-user">✗ Votre réponse : ${e.userAns}</span>
-          <span class="wrong-card-correct">✓ Bonne réponse : ${e.correct}</span>
+        <div class="wrong-card-header">
+          <span class="wrong-card-badge">${badge}</span>
+          <span class="wrong-card-ts">${e.ts}</span>
+        </div>
+        <div class="wrong-card-body">
+          <div class="wrong-card-content">${questionContent}</div>
+          ${panelCol}
         </div>
       </div>`;
   }).join('');
