@@ -1935,9 +1935,6 @@
         <button class="wh-mode-btn"        onclick="setWeeklyMode('global')">Maîtrise globale</button>
       </div>
       <div id="weekly-history-wrap"></div>
-      <div style="margin-top:14px;">
-        <button onclick="fixWeekSessions()" style="font-family:'DM Mono',monospace;font-size:0.75rem;background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:8px;cursor:pointer;">⚙ Recalculer les sessions de la semaine</button>
-      </div>
     </div>
 
     <!-- Stockage local -->
@@ -2164,7 +2161,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.2.3';
+const APP_VERSION = '1.2.4';
 
 const FICHES = {
   1: [
@@ -2616,29 +2613,6 @@ function computeWorkedMastery(s) {
     sessions.forEach(h => { cor += h.score; tot += h.total; });
   }
   return { cor, tot, rate: tot > 0 ? cor / tot : null };
-}
-
-// ── [TEMPORAIRE] Recalcule le compteur de sessions de la semaine courante ──
-function fixWeekSessions() {
-  const s = loadStats();
-  if (!s.weeklyHistory) { alert('Aucun historique hebdomadaire.'); return; }
-  const { y, w } = isoWeekOf(new Date());
-  const entry = s.weeklyHistory.find(e => e.y === y && e.w === w);
-  if (!entry) { alert('Aucune entrée pour la semaine courante.'); return; }
-  const currentYear = new Date().getFullYear();
-  let count = 0;
-  (s.sessionHistory || []).forEach(session => {
-    // ts format: "DD/MM, HH:MM" (sans année)
-    const m = (session.ts || '').match(/^(\d{2})\/(\d{2})/);
-    if (!m) return;
-    const d = new Date(currentYear, parseInt(m[2], 10) - 1, parseInt(m[1], 10));
-    const { y: sy, w: sw } = isoWeekOf(d);
-    if (sy === y && sw === w) count++;
-  });
-  entry.sessions = count;
-  saveStats(s);
-  renderWeeklyHistory(s);
-  alert(`Compteur mis à jour : ${count} session(s) trouvée(s) cette semaine.`);
 }
 
 // ── ISO week (norme ISO 8601) ───────────────────────────────────────────────
