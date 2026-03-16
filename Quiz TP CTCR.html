@@ -1766,7 +1766,7 @@
       <strong>Fonctionnement</strong><br>
       Choisissez une fiche pour démarrer une session de <strong>10 questions</strong>. Vous pouvez aussi lancer un <strong>Quiz Aléatoire</strong> pour piocher 10 questions au hasard dans toutes les fiches, ou un <strong>Quiz Thématique</strong> pour cibler un thème précis (signalisation, temps de repos, chronotachygraphe…). Saisissez vos réponses et validez — un récapitulatif complet s'affiche à la fin.
     </div>
-    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.1.9</p>
+    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.1.10</p>
 
   </div>
 
@@ -3041,10 +3041,11 @@ function exportStatsPDF() {
 }
 
 async function triggerPDFDownload(blob) {
+  const filename = getPDFFilename();
   if (window.showSaveFilePicker) {
     try {
       const fileHandle = await window.showSaveFilePicker({
-        suggestedName: PDF_FILENAME,
+        suggestedName: filename,
         types: [{ description: 'Fichier PDF', accept: { 'application/pdf': ['.pdf'] } }]
       });
       const writable = await fileHandle.createWritable();
@@ -3057,7 +3058,7 @@ async function triggerPDFDownload(blob) {
   }
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = PDF_FILENAME;
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
