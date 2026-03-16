@@ -8,9 +8,6 @@
 2. **Filtre par fiche dans "Mes 20 dernières erreurs"**
    Ajouter un sélecteur permettant de n'afficher que les erreurs d'une fiche spécifique. Utile pour cibler une révision sur une fiche précise sans être distrait par les erreurs des autres fiches.
 
-3. **Lecture audio des questions**
-   Ajouter un bouton sur chaque question de quiz pour faire lire la question à voix haute via l'API Web Speech (intégrée dans tous les navigateurs modernes, aucune dépendance). Utile sur mobile pour s'entraîner mains libres.
-
 ---
 
 ## Réalisées
@@ -79,3 +76,5 @@
 - **Signaler une erreur** — Un bouton sur chaque question pour signaler une imprécision, avec un message copié dans le presse-papier.
 
 - **Graphique comparatif des scores par fiche** — Un graphique en barres horizontales affichant le score moyen (5 dernières sessions) de chaque fiche travaillée, triées par score croissant. Permet d'identifier d'un coup d'œil les fiches les plus faibles sans parcourir la heatmap.
+
+- **Lecture audio des questions** — Bouton pour faire lire la question à voix haute via l'API Web Speech. Impact limité (usage bureau majoritaire, voix de synthèse peu adaptée aux termes techniques).
