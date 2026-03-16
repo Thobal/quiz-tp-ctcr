@@ -2,22 +2,13 @@
 
 ## À réaliser
 
-1. **Chronomètre de session**
-   Mesurer le temps total passé sur un quiz et l'afficher dans les résultats en fin de session. Permet de suivre si l'on répond plus vite au fil de l'entraînement, en plus du score.
-
-2. **Dernière date de jeu sur les boutons de fiche**
-   Afficher discrètement sous chaque fiche la date de la dernière session (ex : "il y a 5 jours"). Permet d'identifier les fiches délaissées d'un coup d'œil sans ouvrir les statistiques.
-
-3. **Tri des fiches sur l'accueil**
+1. **Tri des fiches sur l'accueil**
    Un sélecteur pour trier les fiches par score croissant, par date de dernière session, ou par ordre numérique. Aide à prioriser les révisions sans avoir à chercher dans les stats.
 
-4. **Export d'une session en image**
-   À la fin d'un quiz, générer une image PNG du récapitulatif (score, fiche, détail des questions) pour le partager ou l'archiver en dehors de l'application.
-
-5. **Mise en évidence des questions jamais tombées**
+2. **Mise en évidence des questions jamais tombées**
    Dans l'écran de révision, marquer visuellement les questions que l'utilisateur n'a jamais eu dans un quiz. Permet de cibler les angles morts de sa préparation.
 
-6. **Comparaison du score par rapport à sa propre moyenne**
+3. **Comparaison du score par rapport à sa propre moyenne**
    Sur l'écran de résultats, indiquer si le score est au-dessus ou en dessous de sa moyenne habituelle sur cette fiche (ex : "Au-dessus de votre moyenne de 6.8/10 sur cette fiche").
 
 ---
@@ -102,3 +93,9 @@
 - **Comparaison avec la session précédente sur l'écran de résultats** — Badge +X / −X points par rapport à la dernière session jouée sur la même fiche.
 
 - **Raccourcis clavier pendant le quiz** — Répondre et naviguer au clavier (Entrée, flèches). Gain de fluidité sur ordinateur, mais impact limité sur mobile qui est le support principal.
+
+- **Chronomètre de session** — Mesurer le temps total passé sur un quiz et l'afficher dans les résultats. Apport discutable car le temps varie selon les interruptions, pas seulement la vitesse de réponse.
+
+- **Dernière date de jeu sur les boutons de fiche** — Afficher la date de dernière session sous chaque fiche. Information déjà accessible dans les statistiques, doublon peu justifié.
+
+- **Export d'une session en image** — Générer une image PNG du récapitulatif en fin de quiz. Complexité d'implémentation (canvas) élevée pour un usage occasionnel.
