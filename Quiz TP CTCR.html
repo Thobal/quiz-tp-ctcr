@@ -1767,7 +1767,7 @@
       <strong>Fonctionnement</strong><br>
       Choisissez une fiche pour démarrer une session de <strong>10 questions</strong>. Vous pouvez aussi lancer un <strong>Quiz Aléatoire</strong> pour piocher 10 questions au hasard dans toutes les fiches, ou un <strong>Quiz Thématique</strong> pour cibler un thème précis (signalisation, temps de repos, chronotachygraphe…). Saisissez vos réponses et validez — un récapitulatif complet s'affiche à la fin.
     </div>
-    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.1.11</p>
+    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.1.12</p>
 
   </div>
 
@@ -2168,6 +2168,8 @@ function toggleGlossaireCard(card) {
   document.querySelectorAll('.glossaire-card.open').forEach(c => c.classList.remove('open'));
   if (!isOpen) card.classList.add('open');
 }
+
+const APP_VERSION = '1.1.12';
 
 const FICHES = {
   1: [
@@ -2786,6 +2788,7 @@ function updateExportBadge() {
 
 async function exportStatsJSON() {
   const data = {
+    appVersion: APP_VERSION,
     quizStats: localStorage.getItem('quizStats'),
     quizLooseMode: localStorage.getItem('quizLooseMode')
   };
@@ -2833,6 +2836,16 @@ function importStatsJSON() {
     reader.onload = function(ev) {
       try {
         const data = JSON.parse(ev.target.result);
+        if (!data.appVersion) {
+          alert('Ce fichier ne provient pas de l\'application Quiz TP CTCR et ne peut pas être importé.');
+          return;
+        }
+        if (data.appVersion !== APP_VERSION) {
+          const proceed = confirm(
+            `Avertissement : ce fichier a été exporté depuis la version ${data.appVersion} de l'application, alors que vous utilisez actuellement la version ${APP_VERSION}.\n\nL'import peut néanmoins fonctionner correctement. Voulez-vous continuer ?`
+          );
+          if (!proceed) return;
+        }
         if (data.quizStats) localStorage.setItem('quizStats', data.quizStats);
         if (data.quizLooseMode !== undefined) localStorage.setItem('quizLooseMode', data.quizLooseMode);
         alert('Données importées avec succès. La page va se recharger.');
