@@ -2167,7 +2167,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.1';
+const APP_VERSION = '1.3.2';
 
 const FICHES = {
   1: [
@@ -2758,7 +2758,8 @@ function generateFakeStats() {
     const targetRate = lastEntry.worked / 100;
     const ficheRates = {
       2: 0.18, 9: 0.28, 19: 0.23,   // très mauvais (différents)
-      4: 0.48, 12: 0.55, 17: 0.43   // moyens (différents)
+      4: 0.48, 12: 0.55, 17: 0.43,  // moyens (différents)
+      5: 0.78, 11: 0.83, 18: 0.75   // plutôt bons (différents)
     };
     FICHES.forEach(f => {
       const fn = String(f);
