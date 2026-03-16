@@ -4442,10 +4442,14 @@ function renderFicheGrid(sort, animate) {
       const existing = btn.querySelector('.score');
       if (showScore) {
         const color = scoreCouleur(f.score);
-        const html = f.score !== null
-          ? `<span class="score" style="color:${color}">${f.score}%</span>`
-          : `<span class="score" style="color:var(--muted)">—</span>`;
-        if (!existing) btn.insertAdjacentHTML('beforeend', html);
+        const label = f.score !== null ? `${f.score}%` : '—';
+        const colorVal = f.score !== null ? color : 'var(--muted)';
+        if (existing) {
+          existing.textContent = label;
+          existing.style.color = colorVal;
+        } else {
+          btn.insertAdjacentHTML('beforeend', `<span class="score" style="color:${colorVal}">${label}</span>`);
+        }
       } else {
         if (existing) existing.remove();
       }
@@ -4475,10 +4479,14 @@ function renderFicheGrid(sort, animate) {
       const existing = btn.querySelector('.score');
       if (showScore) {
         const color = scoreCouleur(f.score);
-        const html = f.score !== null
-          ? `<span class="score" style="color:${color}">${f.score}%</span>`
-          : `<span class="score" style="color:var(--muted)">—</span>`;
-        if (!existing) btn.insertAdjacentHTML('beforeend', html);
+        const label = f.score !== null ? `${f.score}%` : '—';
+        const colorVal = f.score !== null ? color : 'var(--muted)';
+        if (existing) {
+          existing.textContent = label;
+          existing.style.color = colorVal;
+        } else {
+          btn.insertAdjacentHTML('beforeend', `<span class="score" style="color:${colorVal}">${label}</span>`);
+        }
       } else {
         if (existing) existing.remove();
       }
