@@ -1928,7 +1928,7 @@
 
     <!-- Progression hebdomadaire -->
     <div class="stat-block" style="position:relative;">
-      <h3>Progression hebdomadaire <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(15 dernières semaines ISO)</span></h3>
+      <h3>Progression hebdomadaire <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(15 dernières semaines)</span></h3>
       <button class="info-btn" onclick="showInfoModal('weekly-history')" aria-label="Explication">ℹ</button>
       <div class="wh-mode-toggle">
         <button class="wh-mode-btn active" onclick="setWeeklyMode('worked')">Fiches travaillées</button>
@@ -2740,7 +2740,7 @@ const INFO_TEXTS = {
   },
 'weekly-history': {
     title: 'Progression hebdomadaire',
-    body: `<p>Ce tableau affiche l'évolution de votre maîtrise semaine par semaine, selon la numérotation ISO 8601 (les semaines commencent le lundi).</p>
+    body: `<p>Ce tableau affiche l'évolution de votre maîtrise semaine par semaine (les semaines commencent le lundi).</p>
            <p><strong>Fiches travaillées</strong> — niveau de maîtrise calculé uniquement sur les fiches que vous avez travaillées (identique à la jauge du même nom).</p>
            <p><strong>Maîtrise globale</strong> — même calcul, mais ramené sur les 20 fiches du programme. Les fiches non travaillées comptent pour 0 % et tirent ce score vers le bas.</p>
            <p>La valeur enregistrée pour chaque semaine correspond à l'état de vos jauges à la fin de cette semaine. Les 15 dernières semaines sont affichées.</p>
