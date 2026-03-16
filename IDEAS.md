@@ -2,12 +2,13 @@
 
 ## À réaliser
 
-1. **Tri des fiches sur l'accueil**
-   Un sélecteur pour trier les fiches par score croissant, par date de dernière session, ou par ordre numérique. Aide à prioriser les révisions sans avoir à chercher dans les stats.
+*(aucune pour le moment)*
 
 ---
 
 ## Réalisées
+
+- **Tri des fiches sur l'accueil** — Sélecteur permettant de trier les fiches par numéro ou par score croissant (fiches non travaillées en premier). Animation FLIP lors du réordonnancement. Le score s'affiche sur chaque bouton en mode tri par score. Les badges "À prioriser" sont masqués en mode score (redondants). La grille est recalculée à chaque retour sur l'accueil pour refléter les scores mis à jour. Le tri choisi est mémorisé dans le localStorage.
 
 - **Barre de progression pendant le quiz** — Un compteur "Question X / 10" est affiché dans le bandeau supérieur du quiz.
 

@@ -239,6 +239,13 @@
     font-weight: 800;
     line-height: 1;
   }
+  .fiche-btn .score {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 1;
+    margin-top: 5px;
+  }
 
   /* Fiche recommandée */
   .fiche-btn.recommended {
@@ -1509,12 +1516,40 @@
   .loose-mode-row {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 8px;
     gap: 8px;
     margin-bottom: 14px;
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     color: var(--muted);
     letter-spacing: 0.04em;
+  }
+  .sort-toggle {
+    display: flex;
+    gap: 5px;
+  }
+  .sort-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    padding: 5px 11px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .sort-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0d0f14;
+    font-weight: 500;
+  }
+  .sort-btn:hover:not(.active) {
+    border-color: var(--muted);
+    color: var(--text);
   }
   .loose-toggle-label {
     display: flex;
@@ -1719,6 +1754,10 @@
         <div class="toggle-track"><div class="toggle-thumb"></div></div>
         <span>Yolo !</span>
       </label>
+      <div class="sort-toggle" id="fiche-sort-toggle">
+        <button class="sort-btn active" onclick="setFicheSort('num')">N° de fiche</button>
+        <button class="sort-btn" onclick="setFicheSort('score')">Score ↑</button>
+      </div>
     </div>
 
     <div class="grid" id="fiche-grid"></div>
@@ -2162,7 +2201,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.6';
+const APP_VERSION = '1.3.7';
 
 const FICHES = {
   1: [
@@ -2507,6 +2546,7 @@ let randomQuestions = null;
 let justAnswered = false;
 let looseMode = false;
 let weeklyHistoryMode = 'worked';
+let currentFicheSort = 'num';
 
 // INIT
 
@@ -3916,15 +3956,19 @@ function init() {
   looseMode = localStorage.getItem('quizLooseMode') === '1';
   toggleLooseMode(looseMode);
 
+  // Charger le tri des fiches depuis localStorage
+  currentFicheSort = localStorage.getItem('quizFicheSort') || 'num';
+
   const grid = document.getElementById('fiche-grid');
   for (let i = 1; i <= 20; i++) {
     const btn = document.createElement('button');
     btn.className = 'fiche-btn';
+    btn.dataset.id = String(i);
     btn.innerHTML = `<span class="label">Fiche</span><span class="num">${i}</span>`;
     btn.onclick = () => startFiche(i);
     grid.appendChild(btn);
   }
-  updateRecommendedFiches();
+  renderFicheGrid(currentFicheSort, false);
   updateMasteryKpi();
   snapshotWeeklyGauges(loadStats(), false);
 
@@ -4334,6 +4378,122 @@ function updateMasteryKpi() {
   block.classList.remove('hidden');
 }
 
+// ── TRI DES FICHES ──────────────────────────────────────────────────────────
+
+function scoreCouleur(v) {
+  if (v === null) return 'var(--muted)';
+  const pct = Math.max(0, Math.min(100, v)) / 100;
+  const lerp = (a, b, t) => Math.round(a + (b - a) * t);
+  const red = [240,86,110], yellow = [245,200,66], green = [62,207,122];
+  const [r1,g1,b1] = pct < 0.5 ? red : yellow;
+  const [r2,g2,b2] = pct < 0.5 ? yellow : green;
+  const t = pct < 0.5 ? pct / 0.5 : (pct - 0.5) / 0.5;
+  return `rgb(${lerp(r1,r2,t)},${lerp(g1,g2,t)},${lerp(b1,b2,t)})`;
+}
+
+function getSortedFiches(sort) {
+  const s = loadStats();
+  const ficheHistory = s.ficheHistory || {};
+  const fiches = [];
+  for (let i = 1; i <= 20; i++) {
+    const hist = ficheHistory[String(i)] || [];
+    const tot = hist.reduce((a, h) => a + h.total, 0);
+    const cor = hist.reduce((a, h) => a + h.score, 0);
+    const score = tot > 0 ? Math.round(cor / tot * 100) : null;
+    fiches.push({ id: i, score });
+  }
+  if (sort === 'score') {
+    fiches.sort((a, b) => {
+      if (a.score === null && b.score === null) return a.id - b.id;
+      if (a.score === null) return -1;
+      if (b.score === null) return 1;
+      return a.score - b.score;
+    });
+  }
+  return fiches;
+}
+
+function renderFicheGrid(sort, animate) {
+  const grid = document.getElementById('fiche-grid');
+  const fiches = getSortedFiches(sort);
+  const showScore = sort === 'score';
+
+  // Sync sort buttons
+  const sortBtns = document.querySelectorAll('#fiche-sort-toggle .sort-btn');
+  const sorts = ['num', 'score'];
+  sortBtns.forEach((btn, i) => btn.classList.toggle('active', sorts[i] === sort));
+
+  if (animate) {
+    // FIRST : enregistrer les positions actuelles
+    const oldRects = {};
+    grid.querySelectorAll('.fiche-btn').forEach(btn => {
+      oldRects[btn.dataset.id] = btn.getBoundingClientRect();
+    });
+
+    // LAST : réordonner le DOM (mêmes éléments)
+    const btnMap = {};
+    grid.querySelectorAll('.fiche-btn').forEach(btn => { btnMap[btn.dataset.id] = btn; });
+    fiches.forEach(f => grid.appendChild(btnMap[String(f.id)]));
+
+    // Mettre à jour le contenu en place
+    fiches.forEach(f => {
+      const btn = btnMap[String(f.id)];
+      if (!btn) return;
+      const existing = btn.querySelector('.score');
+      if (showScore) {
+        const color = scoreCouleur(f.score);
+        const html = f.score !== null
+          ? `<span class="score" style="color:${color}">${f.score}%</span>`
+          : `<span class="score" style="color:var(--muted)">—</span>`;
+        if (!existing) btn.insertAdjacentHTML('beforeend', html);
+      } else {
+        if (existing) existing.remove();
+      }
+    });
+
+    // INVERT + PLAY : Web Animations API
+    grid.querySelectorAll('.fiche-btn').forEach(btn => {
+      const oldRect = oldRects[btn.dataset.id];
+      if (!oldRect) return;
+      const newRect = btn.getBoundingClientRect();
+      const dx = oldRect.left - newRect.left;
+      const dy = oldRect.top  - newRect.top;
+      if (dx === 0 && dy === 0) return;
+      btn.animate(
+        [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'translate(0, 0)' }],
+        { duration: 420, easing: 'cubic-bezier(0.34, 1.10, 0.64, 1)', fill: 'none' }
+      );
+    });
+  } else {
+    // Sans animation : réordonner et mettre à jour le contenu
+    const btnMap = {};
+    grid.querySelectorAll('.fiche-btn').forEach(btn => { btnMap[btn.dataset.id] = btn; });
+    fiches.forEach(f => {
+      const btn = btnMap[String(f.id)];
+      if (!btn) return;
+      grid.appendChild(btn);
+      const existing = btn.querySelector('.score');
+      if (showScore) {
+        const color = scoreCouleur(f.score);
+        const html = f.score !== null
+          ? `<span class="score" style="color:${color}">${f.score}%</span>`
+          : `<span class="score" style="color:var(--muted)">—</span>`;
+        if (!existing) btn.insertAdjacentHTML('beforeend', html);
+      } else {
+        if (existing) existing.remove();
+      }
+    });
+  }
+
+  updateRecommendedFiches();
+}
+
+function setFicheSort(sort) {
+  currentFicheSort = sort;
+  localStorage.setItem('quizFicheSort', sort);
+  renderFicheGrid(sort, true);
+}
+
 function updateRecommendedFiches() {
   // Nettoie les mises en relief existantes
   document.querySelectorAll('.fiche-btn').forEach(btn => {
@@ -4341,6 +4501,9 @@ function updateRecommendedFiches() {
     const badge = btn.querySelector('.badge-recommande');
     if (badge) badge.remove();
   });
+
+  // En mode tri par score, les badges sont inutiles : la position suffit
+  if (currentFicheSort === 'score') return;
 
   const s = loadStats();
   const ficheSessionsRec = Object.values(s.ficheCount || {}).reduce((a, v) => a + v, 0);
@@ -4397,9 +4560,8 @@ function updateRecommendedFiches() {
     }
     top3 = [...definite, ...tied.slice(0, 3 - definite.length)];
   }
-  const buttons = document.querySelectorAll('.fiche-btn');
   top3.forEach(({ fiche }) => {
-    const btn = buttons[fiche - 1];
+    const btn = document.querySelector(`.fiche-btn[data-id="${fiche}"]`);
     if (!btn) return;
     btn.classList.add('recommended');
     const badge = document.createElement('span');
@@ -4412,10 +4574,7 @@ function updateRecommendedFiches() {
 function goHome() {
   randomQuestions = null;
   showScreen('home-screen');
-  document.querySelectorAll('.fiche-btn').forEach((btn, i) => {
-    btn.className = 'fiche-btn';
-  });
-  updateRecommendedFiches();
+  renderFicheGrid(currentFicheSort, true);
   updateMasteryKpi();
 }
 
