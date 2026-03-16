@@ -6,21 +6,10 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    fin de session. Permet de suivre si l'on répond plus vite au fil de
    l'entraînement, en plus du score.
 
-2. Mise en évidence des différences dans les corrections
-   Dans "Mes 20 dernières erreurs" et dans la correction immédiate, mettre en
-   évidence les caractères ou mots qui diffèrent entre la réponse donnée et la
-   bonne réponse (style diff). Permet de voir exactement où se situe l'erreur
-   d'un seul coup d'œil.
-
-3. Filtre par fiche dans "Mes 20 dernières erreurs"
+2. Filtre par fiche dans "Mes 20 dernières erreurs"
    Ajouter un sélecteur permettant de n'afficher que les erreurs d'une fiche
    spécifique. Utile pour cibler une révision sur une fiche précise sans être
    distrait par les erreurs des autres fiches.
-
-4. Animation sur score parfait
-   Lorsque le score final est 100 %, déclencher une petite animation (confetti
-   ou similaire) sur l'écran de résultats. Rend le moment mémorable et renforce
-   la motivation à viser la perfection.
 
 ── IDÉES RÉALISÉES ───────────────────────────────────────────────────────────
 
@@ -36,6 +25,15 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
 
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Mise en évidence des différences dans les corrections
+   Dans "Mes 20 dernières erreurs" et dans la correction immédiate, mettre en
+   évidence les caractères ou mots qui diffèrent entre la réponse donnée et la
+   bonne réponse (style diff).
+
+[REJETÉ] Animation sur score parfait
+   Lorsque le score final est 100 %, déclencher une petite animation (confetti
+   ou similaire) sur l'écran de résultats.
 
 [REJETÉ] Résumé de fiche avant quiz
    Ajoute une étape supplémentaire à chaque démarrage de quiz, ce qui nuit à
