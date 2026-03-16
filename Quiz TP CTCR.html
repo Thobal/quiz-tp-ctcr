@@ -1452,14 +1452,13 @@
     color: rgb(44,169,188);
     background: rgba(44,169,188,0.06);
   }
-  .export-badge-wrap { position: relative; display: inline-flex; }
+  .export-badge-wrap { position: relative; display: inline-flex; margin-left: 10px; }
   .export-badge {
-    position: absolute; top: -6px; right: -6px;
     min-width: 18px; height: 18px; border-radius: 9px;
     background: var(--red); color: #fff;
     font-size: 10px; font-weight: 700; font-family: 'DM Mono', monospace;
     display: flex; align-items: center; justify-content: center;
-    padding: 0 4px; pointer-events: none; z-index: 2;
+    padding: 0 5px; z-index: 2;
     box-shadow: 0 0 0 2px var(--surface);
   }
   .export-badge-wrap .export-badge-tooltip {
@@ -1767,7 +1766,7 @@
       <strong>Fonctionnement</strong><br>
       Choisissez une fiche pour démarrer une session de <strong>10 questions</strong>. Vous pouvez aussi lancer un <strong>Quiz Aléatoire</strong> pour piocher 10 questions au hasard dans toutes les fiches, ou un <strong>Quiz Thématique</strong> pour cibler un thème précis (signalisation, temps de repos, chronotachygraphe…). Saisissez vos réponses et validez — un récapitulatif complet s'affiche à la fin.
     </div>
-    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.1.4</p>
+    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.1.5</p>
 
   </div>
 
@@ -1971,13 +1970,13 @@
     </div>
 
     <div class="stats-action-row">
-      <button class="transfer-stats-btn" onclick="exportStatsJSON()" style="position:relative;">
+      <button class="transfer-stats-btn" onclick="exportStatsJSON()">
+        <svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21,2H15a1,1,0,0,0,0,2h3.59l-8.3,8.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L20,5.41V9a1,1,0,0,0,2,0V3A1,1,0,0,0,21,2Z" style="fill:rgb(44,169,188)"/><path d="M20,22H4a2,2,0,0,1-2-2V4A2,2,0,0,1,4,2h7a1,1,0,0,1,0,2H4V20H20V13a1,1,0,0,1,2,0v7A2,2,0,0,1,20,22Z" style="fill:rgb(224,228,239)"/></svg>
+        Exporter statistiques
         <span class="export-badge-wrap" id="export-badge-wrap" style="display:none;">
           <span class="export-badge" id="export-badge"></span>
           <span class="export-badge-tooltip" id="export-badge-tooltip"></span>
         </span>
-        <svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21,2H15a1,1,0,0,0,0,2h3.59l-8.3,8.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L20,5.41V9a1,1,0,0,0,2,0V3A1,1,0,0,0,21,2Z" style="fill:rgb(44,169,188)"/><path d="M20,22H4a2,2,0,0,1-2-2V4A2,2,0,0,1,4,2h7a1,1,0,0,1,0,2H4V20H20V13a1,1,0,0,1,2,0v7A2,2,0,0,1,20,22Z" style="fill:rgb(224,228,239)"/></svg>
-        Exporter statistiques
       </button>
       <button class="transfer-stats-btn" onclick="importStatsJSON()">
         <svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.71,2.29a1,1,0,0,0-1.42,0L12,10.59V7a1,1,0,0,0-2,0v6a1,1,0,0,0,1,1h6a1,1,0,0,0,0-2H13.41l8.3-8.29A1,1,0,0,0,21.71,2.29Z" style="fill:rgb(44,169,188)"/><path d="M20,22H4a2,2,0,0,1-2-2V4A2,2,0,0,1,4,2h7a1,1,0,0,1,0,2H4V20H20V13a1,1,0,0,1,2,0v7A2,2,0,0,1,20,22Z" style="fill:rgb(224,228,239)"/></svg>
