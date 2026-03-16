@@ -5,9 +5,6 @@
 1. **Chronomètre de session**
    Mesurer le temps total passé sur un quiz et l'afficher dans les résultats en fin de session. Permet de suivre si l'on répond plus vite au fil de l'entraînement, en plus du score.
 
-2. **Raccourcis clavier pendant le quiz**
-   Permettre de répondre et naviguer entièrement au clavier (Entrée pour valider, flèches pour se déplacer entre les choix). Gain de fluidité significatif sur ordinateur.
-
 ---
 
 ## Réalisées
@@ -88,3 +85,5 @@
 - **Performance par thème dans les statistiques** — Regrouper les résultats par thème transversal (signalisation, temps de repos, chronotachygraphe…) plutôt que seulement par fiche.
 
 - **Comparaison avec la session précédente sur l'écran de résultats** — Badge +X / −X points par rapport à la dernière session jouée sur la même fiche.
+
+- **Raccourcis clavier pendant le quiz** — Répondre et naviguer au clavier (Entrée, flèches). Gain de fluidité sur ordinateur, mais impact limité sur mobile qui est le support principal.
