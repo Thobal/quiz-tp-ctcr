@@ -1206,54 +1206,40 @@
   .sparkline-wrap svg { display: block; width: 100%; height: 80px; }
   .sparkline-dates { display: flex; justify-content: space-between; margin-top: 4px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); padding: 0 2.5% 0 8%; }
 
-  /* Timeline list */
-  .history-list { max-height: 220px; overflow-y: auto; padding-left: 6px; padding-right: 10px; }
-  .history-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 9px 6px;
-    border-bottom: 1px solid rgba(42,47,63,0.6);
-    font-size: 13px;
+  /* Weekly history table */
+  .wh-mode-toggle { display: flex; gap: 6px; margin-bottom: 14px; }
+  .wh-mode-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    padding: 5px 12px;
     border-radius: 8px;
-    margin: 0 -6px;
-    transition: background 0.15s;
+    cursor: pointer;
+    transition: all 0.15s;
   }
-  .history-item:last-child { border-bottom: none; }
-  .history-item.clickable { cursor: pointer; }
-  .history-item.clickable:hover { background: var(--surface2); }
-  .history-item.clickable:hover .hi-mode { color: var(--accent); }
-  .history-item .hi-mode {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    flex: 1 1 0;
-    min-width: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .history-item .hi-score {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    flex-shrink: 0;
-    width: 46px;
-    text-align: right;
-  }
-  .history-item .hi-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    text-align: right;
-    flex-shrink: 0;
-  }
-  .history-item .hi-pips { display: flex; gap: 2px; flex-shrink: 0; }
-  .history-item .hi-pips span {
-    display: inline-block;
-    width: 5px; height: 5px;
-    border-radius: 50%;
-  }
+  .wh-mode-btn.active { background: var(--accent); border-color: var(--accent); color: #0d0f14; }
+  .wh-mode-btn:hover:not(.active) { border-color: var(--muted); color: var(--text); }
+  .wh-table { width: 100%; border-collapse: collapse; font-family: 'DM Mono', monospace; font-size: 0.82rem; }
+  .wh-table thead th { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0 10px 10px 0; text-align: left; border-bottom: 1px solid var(--border); }
+  .wh-table thead th:not(:first-child) { text-align: right; }
+  .wh-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .wh-table tbody tr:last-child { border-bottom: none; }
+  .wh-table tbody tr:hover { background: var(--surface2); }
+  .wh-table td { padding: 10px 10px 10px 0; vertical-align: middle; }
+  .wh-table td:not(:first-child) { text-align: right; }
+  .wh-week-label { font-family: 'Syne', sans-serif; font-size: 0.88rem; color: var(--text); }
+  .wh-score-cell { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+  .wh-bar-wrap { width: 80px; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .wh-bar-fill { height: 100%; border-radius: 3px; }
+  .wh-score-val { min-width: 38px; text-align: right; }
+  .wh-sessions { display: inline-block; background: var(--surface2); border-radius: 20px; padding: 2px 9px; color: var(--muted); font-size: 0.78rem; }
+  .wh-trend { display: inline-flex; align-items: center; gap: 3px; font-size: 0.75rem; padding: 2px 7px; border-radius: 20px; }
+  .wh-trend.up   { background: rgba(62,207,122,0.12); color: var(--green); }
+  .wh-trend.down { background: rgba(240,86,110,0.12); color: var(--red); }
+  .wh-trend.flat { background: var(--surface2); color: var(--muted); }
+  .wh-empty { color: var(--muted); font-size: 13px; padding: 16px 0; font-family: 'DM Mono', monospace; }
 
   /* Gauge */
   .gauge-wrap { display: flex; flex-direction: row; align-items: flex-start; justify-content: center; gap: 40px; flex-wrap: wrap; }
@@ -1940,11 +1926,15 @@
       </div>
     </div>
 
-    <!-- Historique récent -->
+    <!-- Progression hebdomadaire -->
     <div class="stat-block" style="position:relative;">
-      <h3>Dernières sessions <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(20 dernières affichées)</span></h3>
-      <button class="info-btn" onclick="showInfoModal('dernieres-sessions')" aria-label="Explication">ℹ</button>
-      <div class="history-list" id="history-list"></div>
+      <h3>Progression hebdomadaire <span style="font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--muted)">(15 dernières semaines ISO)</span></h3>
+      <button class="info-btn" onclick="showInfoModal('weekly-history')" aria-label="Explication">ℹ</button>
+      <div class="wh-mode-toggle">
+        <button class="wh-mode-btn active" onclick="setWeeklyMode('worked')">Fiches travaillées</button>
+        <button class="wh-mode-btn"        onclick="setWeeklyMode('global')">Maîtrise globale</button>
+      </div>
+      <div id="weekly-history-wrap"></div>
     </div>
 
     <!-- Stockage local -->
@@ -2171,7 +2161,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.1.15';
+const APP_VERSION = '1.2.0';
 
 const FICHES = {
   1: [
@@ -2515,6 +2505,7 @@ let sessionResults = [];
 let randomQuestions = null;
 let justAnswered = false;
 let looseMode = false;
+let weeklyHistoryMode = 'worked';
 
 // INIT
 
@@ -2624,6 +2615,55 @@ function computeWorkedMastery(s) {
   return { cor, tot, rate: tot > 0 ? cor / tot : null };
 }
 
+// ── ISO week (norme ISO 8601) ───────────────────────────────────────────────
+function isoWeekOf(date) {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const week = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return { y: d.getUTCFullYear(), w: week };
+}
+
+// Snapshot des valeurs des deux jauges pour la semaine ISO courante.
+// incrementSessions=true uniquement lors d'une vraie session jouée.
+function snapshotWeeklyGauges(s, incrementSessions) {
+  if (!incrementSessions && s.totalSessions === 0) return;
+  if (!s.weeklyHistory) s.weeklyHistory = [];
+
+  const { y, w } = isoWeekOf(new Date());
+
+  // Jauge 1 : fiches travaillées
+  const { rate: r } = computeWorkedMastery(s);
+  const workedPct = r != null ? Math.round(r * 100) : 0;
+
+  // Jauge 2 : maîtrise globale (même calcul que renderGauge)
+  const hist = s.ficheHistory || {};
+  let sumMastery = 0;
+  for (let i = 1; i <= 20; i++) {
+    const sessions = hist[String(i)] || [];
+    const tot = sessions.reduce((a, h) => a + h.total, 0);
+    const cor = sessions.reduce((a, h) => a + h.score, 0);
+    sumMastery += tot > 0 ? cor / tot : 0;
+  }
+  const globalPct = Math.round(sumMastery / 20 * 100);
+
+  let entry = s.weeklyHistory.find(e => e.y === y && e.w === w);
+  if (!entry) {
+    entry = { y, w, sessions: 0, worked: 0, global: 0 };
+    s.weeklyHistory.push(entry);
+  }
+  entry.worked = workedPct;
+  entry.global = globalPct;
+  if (incrementSessions) entry.sessions++;
+
+  // Tri croissant, plafond 104 semaines (2 ans)
+  s.weeklyHistory.sort((a, b) => a.y !== b.y ? a.y - b.y : a.w - b.w);
+  if (s.weeklyHistory.length > 104) s.weeklyHistory.splice(0, s.weeklyHistory.length - 104);
+
+  saveStats(s);
+}
+
 function recordSession(mode, score, total, results) {
   const s = loadStats();
   s.totalSessions++;
@@ -2654,6 +2694,7 @@ function recordSession(mode, score, total, results) {
   if (s.scoreHistory.length > 30) s.scoreHistory.pop();
 
   saveStats(s);
+  snapshotWeeklyGauges(s, true);
 }
 
 
@@ -2697,12 +2738,13 @@ const INFO_TEXTS = {
            <p>Les fiches jamais étudiées affichent <em>Jamais</em> et reçoivent la couleur la plus éclatante.</p>
            <p>💡 <strong>Chaque cellule est cliquable</strong> : appuyez dessus pour lancer directement le quiz de la fiche correspondante.</p>`
   },
-'dernieres-sessions': {
-    title: 'Dernières sessions',
-    body: `<p>Cette liste affiche le détail de vos 20 sessions les plus récentes.</p>
-           <p>Pour chaque session, vous voyez : le type (fiche, quiz aléatoire ou quiz thématique), la date et l'heure, le score obtenu, ainsi qu'une ligne de pastilles indiquant question par question si la réponse était correcte (vert) ou incorrecte (rouge).</p>
-           <p>Chaque ligne est cliquable pour relancer directement le quiz correspondant : fiche, quiz aléatoire ou thème.</p>
-           <p style="color:var(--muted);font-size:12px;">L'application conserve jusqu'à 50 sessions en mémoire, mais seules les 20 plus récentes sont affichées ici.</p>`
+'weekly-history': {
+    title: 'Progression hebdomadaire',
+    body: `<p>Ce tableau affiche l'évolution de votre maîtrise semaine par semaine, selon la numérotation ISO 8601 (les semaines commencent le lundi).</p>
+           <p><strong>Fiches travaillées</strong> — niveau de maîtrise calculé uniquement sur les fiches que vous avez travaillées (identique à la jauge du même nom).</p>
+           <p><strong>Maîtrise globale</strong> — même calcul, mais ramené sur les 20 fiches du programme. Les fiches non travaillées comptent pour 0 % et tirent ce score vers le bas.</p>
+           <p>La valeur enregistrée pour chaque semaine correspond à l'état de vos jauges à la fin de cette semaine. Les 15 dernières semaines sont affichées.</p>
+           <p style="color:var(--muted);font-size:12px;">L'historique commence à la semaine où vous avez mis à jour cette version de l'application.</p>`
   },
   'loose-mode': {
     title: 'Mode YOLO !',
@@ -3219,7 +3261,7 @@ function showStatsScreen() {
   renderHeatmap(s);
   renderMasteryHeatmap(s);
   renderStalenessHeatmap(s);
-  renderHistory(s);
+  renderWeeklyHistory(s);
 }
 
 
@@ -3518,38 +3560,65 @@ function renderStalenessHeatmap(s) {
 }
 
 
-function renderHistory(s) {
-  const list = document.getElementById('history-list');
-  if (!list) return;
-  if (!s.sessionHistory.length) {
-    list.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:12px 0;font-family:DM Mono,monospace">Aucune session enregistrée</div>';
+function weeklyScoreColor(v) {
+  const pct = Math.max(0, Math.min(100, v)) / 100;
+  const lerp = (a, b, t) => [
+    Math.round(a[0] + (b[0]-a[0])*t),
+    Math.round(a[1] + (b[1]-a[1])*t),
+    Math.round(a[2] + (b[2]-a[2])*t),
+  ];
+  const red = [240,86,110], yellow = [245,200,66], green = [62,207,122];
+  const [r,g,b] = pct < 0.5 ? lerp(red, yellow, pct/0.5) : lerp(yellow, green, (pct-0.5)/0.5);
+  return `rgb(${r},${g},${b})`;
+}
+
+function setWeeklyMode(mode) {
+  weeklyHistoryMode = mode;
+  document.querySelectorAll('.wh-mode-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', (i === 0 && mode === 'worked') || (i === 1 && mode === 'global'));
+  });
+  renderWeeklyHistory(loadStats());
+}
+
+function renderWeeklyHistory(s) {
+  const wrap = document.getElementById('weekly-history-wrap');
+  if (!wrap) return;
+  const history = (s.weeklyHistory || []).slice(-15).reverse(); // 15 dernières, récentes en tête
+  if (!history.length) {
+    wrap.innerHTML = '<div class="wh-empty">Aucune donnée — les semaines s\'accumuleront au fil de vos sessions.</div>';
     return;
   }
-  list.innerHTML = s.sessionHistory.slice(0, 20).map(h => {
-    const pct = Math.round(h.score / h.total * 100);
-    const col = gradColor(pct);
-    const isThematic = String(h.mode).startsWith('Thématique');
-    const modeLabel = h.mode === 'random' ? 'Aléatoire' : isThematic ? String(h.mode).replace('Thématique · ', 'Thème : ') : `Fiche ${h.mode}`;
-    const pips = (h.pips || []).map(ok =>
-      `<span style="background:${ok ? gradColor(100) : gradColor(0)}"></span>`).join('');
-    let clickAttr = '';
-    if (h.mode === 'random') {
-      clickAttr = `onclick="startRandom()" title="Relancer un quiz aléatoire"`;
-    } else if (isThematic) {
-      const themeName = String(h.mode).replace('Thématique · ', '');
-      const themeKey = Object.keys(THEMES).find(k => THEMES[k].name === themeName);
-      if (themeKey) clickAttr = `onclick="startThematic('${themeKey}')" title="Relancer : ${themeName}"`;
+  const rows = history.map((entry, i) => {
+    const val  = weeklyHistoryMode === 'worked' ? entry.worked : entry.global;
+    const prev = i < history.length - 1 ? (weeklyHistoryMode === 'worked' ? history[i+1].worked : history[i+1].global) : null;
+    let trendHtml = '';
+    if (prev !== null) {
+      const diff = val - prev;
+      if (diff > 0)      trendHtml = `<span class="wh-trend up">▲ +${diff}%</span>`;
+      else if (diff < 0) trendHtml = `<span class="wh-trend down">▼ ${diff}%</span>`;
+      else               trendHtml = `<span class="wh-trend flat">– 0%</span>`;
     } else {
-      clickAttr = `onclick="startFiche(${h.mode})" title="Relancer la fiche ${h.mode}"`;
+      trendHtml = `<span class="wh-trend flat">–</span>`;
     }
-    const isClickable = !!clickAttr;
-    return `<div class="history-item${isClickable ? ' clickable' : ''}" ${clickAttr}>
-      <span class="hi-mode">${modeLabel}</span>
-      <span class="hi-pips">${pips}</span>
-      <span class="hi-score" style="color:${col}">${h.score}/${h.total}</span>
-      <span class="hi-date">${h.ts}</span>
-    </div>`;
+    const color = weeklyScoreColor(val);
+    return `<tr>
+      <td><span class="wh-week-label">Sem.&nbsp;${String(entry.w).padStart(2,'0')} · ${entry.y}</span></td>
+      <td><span class="wh-sessions">${entry.sessions}</span></td>
+      <td>
+        <div class="wh-score-cell">
+          <div class="wh-bar-wrap"><div class="wh-bar-fill" style="width:${val}%;background:${color}"></div></div>
+          <span class="wh-score-val" style="color:${color}">${val}%</span>
+        </div>
+      </td>
+      <td>${trendHtml}</td>
+    </tr>`;
   }).join('');
+  wrap.innerHTML = `<table class="wh-table">
+    <thead><tr>
+      <th>Semaine</th><th>Sessions</th><th>Score</th><th>Évolution</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
 }
 
 
@@ -3693,6 +3762,7 @@ function init() {
   }
   updateRecommendedFiches();
   updateMasteryKpi();
+  snapshotWeeklyGauges(loadStats(), false);
 
   document.addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
