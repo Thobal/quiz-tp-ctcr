@@ -2167,7 +2167,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.2';
+const APP_VERSION = '1.3.3';
 
 const FICHES = {
   1: [
@@ -2759,14 +2759,16 @@ function generateFakeStats() {
     const ficheRates = {
       2: 0.18, 9: 0.28, 19: 0.23,   // très mauvais (différents)
       4: 0.48, 12: 0.55, 17: 0.43,  // moyens (différents)
-      5: 0.78, 11: 0.83, 18: 0.75   // plutôt bons (différents)
+      5: 0.78, 11: 0.83, 18: 0.75,  // plutôt bons (différents)
+      7: 1.00                        // score parfait
     };
     FICHES.forEach(f => {
       const fn = String(f);
       const baseRate = ficheRates[f] !== undefined ? ficheRates[f] : targetRate;
       s.ficheHistory[fn] = [];
       for (let i = 0; i < 5; i++) {
-        const rate = Math.max(0, Math.min(1, baseRate + rand(-0.05, 0.05)));
+        const noise = baseRate === 1.00 ? 0 : rand(-0.05, 0.05);
+        const rate = Math.max(0, Math.min(1, baseRate + noise));
         s.ficheHistory[fn].push({ score: Math.round(rate * 10), total: 10 });
       }
     });
