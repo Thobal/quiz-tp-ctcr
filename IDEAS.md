@@ -11,9 +11,6 @@
 3. **Lecture audio des questions**
    Ajouter un bouton sur chaque question de quiz pour faire lire la question à voix haute via l'API Web Speech (intégrée dans tous les navigateurs modernes, aucune dépendance). Utile sur mobile pour s'entraîner mains libres.
 
-4. **Graphique comparatif des scores par fiche**
-   Un graphique en barres horizontales affichant le score moyen (5 dernières sessions) de chaque fiche travaillée, triées par score croissant. Permet d'identifier d'un coup d'œil les fiches les plus faibles sans parcourir la heatmap.
-
 ---
 
 ## Réalisées
@@ -80,3 +77,5 @@
 - **Mode examen blanc** — Un mode simulant les conditions réelles de l'examen, sans feedback immédiat et avec un seuil de réussite.
 
 - **Signaler une erreur** — Un bouton sur chaque question pour signaler une imprécision, avec un message copié dans le presse-papier.
+
+- **Graphique comparatif des scores par fiche** — Un graphique en barres horizontales affichant le score moyen (5 dernières sessions) de chaque fiche travaillée, triées par score croissant. Permet d'identifier d'un coup d'œil les fiches les plus faibles sans parcourir la heatmap.
