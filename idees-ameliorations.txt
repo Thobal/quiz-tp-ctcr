@@ -11,6 +11,31 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    spécifique. Utile pour cibler une révision sur une fiche précise sans être
    distrait par les erreurs des autres fiches.
 
+3. Lecture audio des questions
+   Ajouter un bouton sur chaque question de quiz pour faire lire la question à
+   voix haute via l'API Web Speech (intégrée dans tous les navigateurs modernes,
+   aucune dépendance). Utile sur mobile pour s'entraîner mains libres.
+
+4. Barre de progression visuelle pendant le quiz
+   Afficher une barre de progression (ex : "Question 4 / 10") sous forme de barre
+   graphique en haut de l'écran de quiz, en plus du compteur textuel. Donne une
+   meilleure perception de l'avancement restant.
+
+5. Vue mensuelle des scores dans les statistiques
+   Dans l'écran statistiques, ajouter un tableau ou graphique regroupant les sessions
+   par mois (score moyen, nombre de sessions). Permet de suivre sa progression sur
+   le long terme au-delà des 30 dernières sessions.
+
+6. Graphique comparatif des scores par fiche
+   Un graphique en barres horizontales affichant le score moyen (5 dernières sessions)
+   de chaque fiche travaillée, triées par score croissant. Permet d'identifier d'un
+   coup d'œil les fiches les plus faibles sans parcourir la heatmap.
+
+7. Questions marquées comme favorites
+   Dans l'écran de révision, permettre de marquer des questions d'une étoile pour
+   constituer une liste personnelle de questions à retravailler en priorité.
+   Un filtre "Favoris uniquement" permettrait de n'afficher que ces questions.
+
 ── IDÉES RÉALISÉES ───────────────────────────────────────────────────────────
 
 [RÉALISÉ] Partage des statistiques PDF
