@@ -5,10 +5,7 @@
 1. **Tri des fiches sur l'accueil**
    Un sélecteur pour trier les fiches par score croissant, par date de dernière session, ou par ordre numérique. Aide à prioriser les révisions sans avoir à chercher dans les stats.
 
-2. **Mise en évidence des questions jamais tombées**
-   Dans l'écran de révision, marquer visuellement les questions que l'utilisateur n'a jamais eu dans un quiz. Permet de cibler les angles morts de sa préparation.
-
-3. **Comparaison du score par rapport à sa propre moyenne**
+2. **Comparaison du score par rapport à sa propre moyenne**
    Sur l'écran de résultats, indiquer si le score est au-dessus ou en dessous de sa moyenne habituelle sur cette fiche (ex : "Au-dessus de votre moyenne de 6.8/10 sur cette fiche").
 
 ---
@@ -99,3 +96,5 @@
 - **Dernière date de jeu sur les boutons de fiche** — Afficher la date de dernière session sous chaque fiche. Information déjà accessible dans les statistiques, doublon peu justifié.
 
 - **Export d'une session en image** — Générer une image PNG du récapitulatif en fin de quiz. Complexité d'implémentation (canvas) élevée pour un usage occasionnel.
+
+- **Mise en évidence des questions jamais tombées** — Marquer dans l'écran de révision les questions jamais tirées en quiz. Non rétroactif : tous les utilisateurs existants verraient toutes leurs questions marquées comme jamais vues.
