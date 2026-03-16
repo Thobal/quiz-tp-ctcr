@@ -1976,6 +1976,12 @@
         Importer statistiques
       </button>
     </div>
+    <!-- [TEMP] Données de démonstration -->
+    <div style="margin-top:16px;padding:14px 16px;background:rgba(245,200,66,0.06);border:1px dashed rgba(245,200,66,0.3);border-radius:10px;">
+      <div style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--accent);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;">⚙ Données de démo [temporaire]</div>
+      <button onclick="generateFakeStats()" style="font-family:'DM Mono',monospace;font-size:0.78rem;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 14px;border-radius:8px;cursor:pointer;">Générer 500 sessions de démonstration</button>
+    </div>
+
     <div class="stats-action-row">
     <button class="export-stats-btn" id="export-pdf-btn" onclick="exportStatsPDF()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 309.267 309.267" width="28" height="28" style="margin-right:8px;flex-shrink:0"><path fill="#E2574C" d="M38.658,0h164.23l87.049,86.711v203.227c0,10.679-8.659,19.329-19.329,19.329H38.658c-10.67,0-19.329-8.65-19.329-19.329V19.329C19.329,8.65,27.989,0,38.658,0z"/><path fill="#B53629" d="M289.658,86.981h-67.372c-10.67,0-19.329-8.659-19.329-19.329V0.193L289.658,86.981z"/><path fill="#FFFFFF" d="M217.434,146.544c3.238,0,4.823-2.822,4.823-5.557c0-2.832-1.653-5.567-4.823-5.567h-18.44c-3.605,0-5.615,2.986-5.615,6.282v45.317c0,4.04,2.3,6.282,5.412,6.282c3.093,0,5.403-2.242,5.403-6.282v-12.438h11.153c3.46,0,5.19-2.832,5.19-5.644c0-2.754-1.73-5.49-5.19-5.49h-11.153v-16.903H217.434z M155.107,135.42h-13.492c-3.663,0-6.263,2.513-6.263,6.243v45.395c0,4.629,3.74,6.079,6.417,6.079h14.159c16.758,0,27.824-11.027,27.824-28.047C183.743,147.095,173.325,135.42,155.107,135.42z M155.755,181.946h-8.225v-35.334h7.413c11.221,0,16.101,7.529,16.101,17.918C171.044,174.253,166.25,181.946,155.755,181.946z M106.33,135.42H92.964c-3.779,0-5.886,2.493-5.886,6.282v45.317c0,4.04,2.416,6.282,5.663,6.282s5.663-2.242,5.663-6.282v-13.231h8.379c10.341,0,18.875-7.326,18.875-19.107C125.659,143.152,117.425,135.42,106.33,135.42z M106.108,163.158h-7.703v-17.097h7.703c4.755,0,7.78,3.711,7.78,8.553C113.878,159.447,110.863,163.158,106.108,163.158z"/></svg>Rapport statistiques PDF</button>
     <button class="reset-stats-btn" id="reset-stats-btn" onclick="resetStats()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.99 511.99" width="28" height="28" style="margin-right:8px;flex-shrink:0"><path fill="#37BC9B" d="M437.175,136.909L415.849,8.914C414.99,3.774 410.537,0.009 405.319,0.009H106.673c-5.219,0-9.672,3.765-10.516,8.905L74.814,136.909c-0.516,3.094 0.359,6.25 2.391,8.641c2.016,2.406 5,3.781 8.14,3.781h341.316c3.123,0 6.107-1.375 8.123-3.781C436.815,143.159 437.69,140.003 437.175,136.909z"/><path fill="#E6E9ED" d="M434.69,174.298c-2.031-2.312-4.969-3.64-8.029-3.64H85.345c-3.078,0-5.999,1.328-8.03,3.64s-2.953,5.391-2.547,8.438l42.67,319.988c0.703,5.297 5.219,9.266 10.562,9.266h255.99c5.344,0 9.859-3.969 10.578-9.266l42.653-319.988C437.628,179.689 436.706,176.611 434.69,174.298z"/><path fill="#48CFAD" d="M458.659,128.003H53.347c-5.891,0-10.672,4.766-10.672,10.656v42.67c0,5.891 4.781,10.671 10.672,10.671h405.312c5.875,0 10.656-4.781 10.656-10.671v-42.67C469.315,132.769 464.534,128.003 458.659,128.003z"/><path fill="#434A54" d="M327.508,312.09c-0.531-1.156-1.234-2.219-2.188-3.171c-4.156-4.156-10.906-4.156-15.077,0c-3.203,3.202-3.922,7.905-2.234,11.812c9.921,19.952 6.562,44.873-10.031,61.467c-13.077,13.077-31.311,17.921-48.217,14.53c2.719-3.031 3.562-7.515 1.781-11.468c-2.406-5.375-8.719-7.781-14.094-5.359l-19.468,8.734c-4.702,2.125-7.124,7.218-6.03,12.062c0.156,0.688 0.375,1.375 0.672,2.047l8.733,19.452c2.438,5.375 8.75,7.78 14.124,5.359c4.281-1.922 6.656-6.327 6.219-10.749c24.719,6.312 52.03-0.188 71.373-19.516C336.117,374.228 340.898,339.886 327.508,312.09z"/><path fill="#434A54" d="M214.012,300.45c13.078-13.093 31.312-17.921 48.218-14.546c-2.719,3.047-3.562,7.516-1.781,11.484c2.406,5.374 8.734,7.78 14.094,5.358l19.468-8.749c5.374-2.406 7.78-8.719 5.358-14.094l-8.733-19.469c-2.438-5.358-8.75-7.765-14.124-5.343c-4.281,1.922-6.656,6.312-6.219,10.749c-24.719-6.328-52.03,0.172-71.373,19.516c-23.046,23.046-27.827,57.403-14.438,85.199c0.531,1.141 1.25,2.219 2.188,3.156c4.156,4.172 10.906,4.172 15.078,0c3.203-3.188 3.922-7.906 2.234-11.797C194.059,341.948 197.419,317.043 214.012,300.45z"/><rect x="159.995" fill="#E6E9ED" width="191.99" height="63.997"/></svg>Réinitialiser toutes les statistiques</button>
@@ -2161,7 +2167,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.2.4';
+const APP_VERSION = '1.2.5';
 
 const FICHES = {
   1: [
@@ -2613,6 +2619,123 @@ function computeWorkedMastery(s) {
     sessions.forEach(h => { cor += h.score; tot += h.total; });
   }
   return { cor, tot, rate: tot > 0 ? cor / tot : null };
+}
+
+// ── [TEMPORAIRE] Génération de données de démonstration ──────────────────────
+function generateFakeStats() {
+  if (!confirm('Cela va effacer toutes vos données et les remplacer par 500 sessions de démonstration sur 15 semaines.\n\nContinuer ?')) return;
+
+  const EXCLUDED = new Set([3, 10, 15]);
+  const FICHES = Array.from({length: 20}, (_, i) => i + 1).filter(f => !EXCLUDED.has(f)); // 17 fiches
+  const NUM_WEEKS = 15;
+  const TOTAL_SESSIONS = 500;
+  const rand  = (min, max) => min + Math.random() * (max - min);
+  const randInt = (min, max) => Math.floor(rand(min, max + 0.999));
+
+  // Réinitialisation
+  const s = {
+    totalSessions: 0, totalQuestions: 0, totalCorrect: 0,
+    ficheCount: {}, ficheCorrect: {}, ficheTotal: {},
+    ficheHistory: {}, ficheLastPlayed: {},
+    sessionHistory: [], scoreHistory: [], wrongHistory: [],
+    weeklyHistory: []
+  };
+
+  // Lundi de la semaine ISO courante
+  const today = new Date();
+  const curDay = today.getDay() || 7;
+  const currentMonday = new Date(today);
+  currentMonday.setHours(0, 0, 0, 0);
+  currentMonday.setDate(today.getDate() - (curDay - 1));
+
+  // Répartition des 500 sessions (~33/semaine ± légère variation)
+  const sessionsPerWeek = [];
+  let remaining = TOTAL_SESSIONS;
+  for (let w = 0; w < NUM_WEEKS; w++) {
+    if (w === NUM_WEEKS - 1) {
+      sessionsPerWeek.push(remaining);
+    } else {
+      const base = Math.round(TOTAL_SESSIONS / NUM_WEEKS) + randInt(-3, 3);
+      const capped = Math.min(base, remaining - (NUM_WEEKS - 1 - w));
+      sessionsPerWeek.push(Math.max(1, capped));
+      remaining -= sessionsPerWeek[w];
+    }
+  }
+
+  for (let w = 0; w < NUM_WEEKS; w++) {
+    // w=0 : semaine la plus ancienne (14 semaines en arrière), w=14 : semaine courante
+    const weekBase = 45 + (w / (NUM_WEEKS - 1)) * 40; // 45 % → 85 %
+
+    // Lundi de la semaine w
+    const weekMonday = new Date(currentMonday);
+    weekMonday.setDate(currentMonday.getDate() - (NUM_WEEKS - 1 - w) * 7);
+
+    const n = sessionsPerWeek[w];
+    for (let si = 0; si < n; si++) {
+      const fiche = FICHES[randInt(0, FICHES.length - 1)];
+      const fn = String(fiche);
+      const noise = rand(-12, 12);
+      const pct   = Math.max(30, Math.min(100, weekBase + noise));
+      const total = 10;
+      const score = Math.round(pct / 100 * total);
+
+      const sessionDate = new Date(weekMonday);
+      sessionDate.setDate(weekMonday.getDate() + randInt(0, 6));
+      sessionDate.setHours(randInt(8, 21), randInt(0, 59), 0, 0);
+      const ts = sessionDate.toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
+
+      // Pips mélangés
+      const pips = [...Array(score).fill(true), ...Array(total - score).fill(false)];
+      for (let i = pips.length - 1; i > 0; i--) {
+        const j = randInt(0, i);
+        [pips[i], pips[j]] = [pips[j], pips[i]];
+      }
+
+      s.totalSessions++;
+      s.totalQuestions += total;
+      s.totalCorrect   += score;
+      s.ficheCount[fn]   = (s.ficheCount[fn]   || 0) + 1;
+      s.ficheCorrect[fn] = (s.ficheCorrect[fn] || 0) + score;
+      s.ficheTotal[fn]   = (s.ficheTotal[fn]   || 0) + total;
+      if (!s.ficheHistory[fn]) s.ficheHistory[fn] = [];
+      s.ficheHistory[fn].unshift({ score, total });
+      if (s.ficheHistory[fn].length > 5) s.ficheHistory[fn].pop();
+      s.ficheLastPlayed[fn] = sessionDate.getTime();
+      s.sessionHistory.unshift({ mode: fn, score, total, ts, pips });
+      if (s.sessionHistory.length > 50) s.sessionHistory.pop();
+      s.scoreHistory.unshift(Math.round(score / total * 100));
+      if (s.scoreHistory.length > 30) s.scoreHistory.pop();
+    }
+
+    // Snapshot des jauges pour cette semaine (mercredi de la semaine)
+    const snapDate = new Date(weekMonday);
+    snapDate.setDate(weekMonday.getDate() + 2);
+    const { y, w: iw } = isoWeekOf(snapDate);
+    const { rate: r } = computeWorkedMastery(s);
+    const workedPct = r != null ? Math.round(r * 100) : 0;
+    let sumMastery = 0;
+    for (let i = 1; i <= 20; i++) {
+      const sessions = s.ficheHistory[String(i)] || [];
+      const tot = sessions.reduce((a, h) => a + h.total, 0);
+      const cor = sessions.reduce((a, h) => a + h.score, 0);
+      sumMastery += tot > 0 ? cor / tot : 0;
+    }
+    const globalPct = Math.round(sumMastery / 20 * 100);
+    let entry = s.weeklyHistory.find(e => e.y === y && e.w === iw);
+    if (!entry) {
+      entry = { y, w: iw, sessions: n, worked: workedPct, global: globalPct };
+      s.weeklyHistory.push(entry);
+    } else {
+      entry.sessions += n;
+      entry.worked = workedPct;
+      entry.global = globalPct;
+    }
+  }
+
+  s.weeklyHistory.sort((a, b) => a.y !== b.y ? a.y - b.y : a.w - b.w);
+  saveStats(s);
+  showStatsScreen();
+  alert('✓ 500 sessions de démonstration générées !');
 }
 
 // ── ISO week (norme ISO 8601) ───────────────────────────────────────────────
