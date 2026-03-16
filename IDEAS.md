@@ -5,6 +5,9 @@
 1. **Chronomètre de session**
    Mesurer le temps total passé sur un quiz et l'afficher dans les résultats en fin de session. Permet de suivre si l'on répond plus vite au fil de l'entraînement, en plus du score.
 
+2. **Raccourcis clavier pendant le quiz**
+   Permettre de répondre et naviguer entièrement au clavier (Entrée pour valider, flèches pour se déplacer entre les choix). Gain de fluidité significatif sur ordinateur.
+
 ---
 
 ## Réalisées
@@ -77,3 +80,11 @@
 - **Lecture audio des questions** — Bouton pour faire lire la question à voix haute via l'API Web Speech. Impact limité (usage bureau majoritaire, voix de synthèse peu adaptée aux termes techniques).
 
 - **Filtre par fiche dans "Mes 20 dernières erreurs"** — Sélecteur pour n'afficher que les erreurs d'une fiche spécifique. Utile pour cibler une révision sur une fiche précise sans être distrait par les autres.
+
+- **Résumé de toutes les explications en fin de quiz** — Section "Explications" listant les explications de chaque question y compris les bonnes réponses, pas seulement les erreurs.
+
+- **Recherche textuelle dans l'écran de révision** — Champ de recherche pour trouver rapidement une question contenant un mot-clé précis.
+
+- **Performance par thème dans les statistiques** — Regrouper les résultats par thème transversal (signalisation, temps de repos, chronotachygraphe…) plutôt que seulement par fiche.
+
+- **Comparaison avec la session précédente sur l'écran de résultats** — Badge +X / −X points par rapport à la dernière session jouée sur la même fiche.
