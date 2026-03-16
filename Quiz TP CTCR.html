@@ -1746,7 +1746,7 @@
       <strong>Fonctionnement</strong><br>
       Choisissez une fiche pour démarrer une session de <strong>10 questions</strong>. Vous pouvez aussi lancer un <strong>Quiz Aléatoire</strong> pour piocher 10 questions au hasard dans toutes les fiches, ou un <strong>Quiz Thématique</strong> pour cibler un thème précis (signalisation, temps de repos, chronotachygraphe…). Saisissez vos réponses et validez — un récapitulatif complet s'affiche à la fin.
     </div>
-    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.0.5</p>
+    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.0.6</p>
 
   </div>
 
@@ -2727,16 +2727,32 @@ function hideInfoModal() {
   document.getElementById('info-modal').classList.remove('open');
 }
 
-function exportStatsJSON() {
+async function exportStatsJSON() {
   const data = {
     quizStats: localStorage.getItem('quizStats'),
     quizLooseMode: localStorage.getItem('quizLooseMode')
   };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const json = JSON.stringify(data, null, 2);
+  const suggestedName = 'quiz-stats-' + new Date().toISOString().slice(0, 10) + '.json';
+  if (window.showSaveFilePicker) {
+    try {
+      const fileHandle = await window.showSaveFilePicker({
+        suggestedName,
+        types: [{ description: 'Fichier JSON', accept: { 'application/json': ['.json'] } }]
+      });
+      const writable = await fileHandle.createWritable();
+      await writable.write(json);
+      await writable.close();
+      return;
+    } catch(e) {
+      if (e.name === 'AbortError') return;
+    }
+  }
+  const blob = new Blob([json], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'quiz-stats-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.download = suggestedName;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
