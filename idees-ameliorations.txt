@@ -26,11 +26,6 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
    de chaque fiche travaillée, triées par score croissant. Permet d'identifier d'un
    coup d'œil les fiches les plus faibles sans parcourir la heatmap.
 
-6. Questions marquées comme favorites
-   Dans l'écran de révision, permettre de marquer des questions d'une étoile pour
-   constituer une liste personnelle de questions à retravailler en priorité.
-   Un filtre "Favoris uniquement" permettrait de n'afficher que ces questions.
-
 ── IDÉES RÉALISÉES ───────────────────────────────────────────────────────────
 
 [RÉALISÉ] Barre de progression pendant le quiz
@@ -49,6 +44,10 @@ IDÉES D'AMÉLIORATION — Quiz TP CTCR
 
 ── IDÉES REJETÉES ─────────────────────────────────────────────────────────────
    (conservées pour mémoire — ne pas reproposer)
+
+[REJETÉ] Questions marquées comme favorites
+   Dans l'écran de révision, marquer des questions d'une étoile pour constituer
+   une liste personnelle de questions à retravailler en priorité.
 
 [REJETÉ] Mise en évidence des différences dans les corrections
    Dans "Mes 20 dernières erreurs" et dans la correction immédiate, mettre en
