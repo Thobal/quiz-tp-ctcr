@@ -1766,7 +1766,7 @@
       <strong>Fonctionnement</strong><br>
       Choisissez une fiche pour démarrer une session de <strong>10 questions</strong>. Vous pouvez aussi lancer un <strong>Quiz Aléatoire</strong> pour piocher 10 questions au hasard dans toutes les fiches, ou un <strong>Quiz Thématique</strong> pour cibler un thème précis (signalisation, temps de repos, chronotachygraphe…). Saisissez vos réponses et validez — un récapitulatif complet s'affiche à la fin.
     </div>
-    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.1.6</p>
+    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.1.7</p>
 
   </div>
 
@@ -3021,10 +3021,15 @@ class MiniPDF {
 }
 
 // ── EXPORT PDF ─────────────────────────────────────────────────────
-const PDF_FILENAME = 'quiz-ctcr-statistiques.pdf';
+function getPDFFilename() {
+  const d = new Date();
+  const p = n => String(n).padStart(2, '0');
+  return `Rapport-TP-CTCR-${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}-${p(d.getHours())}-${p(d.getMinutes())}.pdf`;
+}
 
 function exportStatsPDF() {
   const blob = generateStatsPDF();
+  const PDF_FILENAME = getPDFFilename();
   const file = new File([blob], PDF_FILENAME, { type: 'application/pdf' });
   if (typeof navigator.share === 'function') {
     window._pdfShareFile = file;
