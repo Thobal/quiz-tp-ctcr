@@ -2167,7 +2167,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.2.6';
+const APP_VERSION = '1.2.7';
 
 const FICHES = {
   1: [
@@ -2623,12 +2623,15 @@ function computeWorkedMastery(s) {
 
 // ── [TEMPORAIRE] Génération de données de démonstration ──────────────────────
 function generateFakeStats() {
-  if (!confirm('Cela va effacer toutes vos données et les remplacer par 500 sessions de démonstration sur 15 semaines.\n\nContinuer ?')) return;
+  const input = prompt('Combien de sessions voulez-vous générer ?', '500');
+  if (input === null) return;
+  const TOTAL_SESSIONS = parseInt(input, 10);
+  if (isNaN(TOTAL_SESSIONS) || TOTAL_SESSIONS < 1) { alert('Nombre invalide.'); return; }
+  if (!confirm(`Cela va effacer toutes vos données et les remplacer par ${TOTAL_SESSIONS} sessions de démonstration sur 15 semaines.\n\nContinuer ?`)) return;
 
   const EXCLUDED = new Set([3, 10, 15]);
   const FICHES = Array.from({length: 20}, (_, i) => i + 1).filter(f => !EXCLUDED.has(f)); // 17 fiches
   const NUM_WEEKS = 15;
-  const TOTAL_SESSIONS = 500;
   const rand  = (min, max) => min + Math.random() * (max - min);
   const randInt = (min, max) => Math.floor(rand(min, max + 0.999));
 
@@ -2735,7 +2738,7 @@ function generateFakeStats() {
   s.weeklyHistory.sort((a, b) => a.y !== b.y ? a.y - b.y : a.w - b.w);
   saveStats(s);
   showStatsScreen();
-  alert('✓ 500 sessions de démonstration générées !');
+  alert(`✓ ${TOTAL_SESSIONS} sessions de démonstration générées !`);
 }
 
 // ── ISO week (norme ISO 8601) ───────────────────────────────────────────────
