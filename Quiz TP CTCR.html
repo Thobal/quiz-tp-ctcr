@@ -1452,6 +1452,26 @@
     color: rgb(44,169,188);
     background: rgba(44,169,188,0.06);
   }
+  .export-badge-wrap { position: relative; display: inline-flex; }
+  .export-badge {
+    position: absolute; top: -6px; right: -6px;
+    min-width: 18px; height: 18px; border-radius: 9px;
+    background: var(--red); color: #fff;
+    font-size: 10px; font-weight: 700; font-family: 'DM Mono', monospace;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 4px; pointer-events: none; z-index: 2;
+    box-shadow: 0 0 0 2px var(--surface);
+  }
+  .export-badge-wrap .export-badge-tooltip {
+    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #1c2235; border: 1px solid var(--border);
+    color: var(--text); font-size: 11px; font-family: 'DM Mono', monospace;
+    padding: 6px 10px; border-radius: 8px; z-index: 100;
+    pointer-events: none; line-height: 1.5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .export-badge-wrap:hover .export-badge-tooltip { display: block; }
   .export-stats-btn {
     flex: 1;
     margin-top: 0;
@@ -1747,7 +1767,7 @@
       <strong>Fonctionnement</strong><br>
       Choisissez une fiche pour démarrer une session de <strong>10 questions</strong>. Vous pouvez aussi lancer un <strong>Quiz Aléatoire</strong> pour piocher 10 questions au hasard dans toutes les fiches, ou un <strong>Quiz Thématique</strong> pour cibler un thème précis (signalisation, temps de repos, chronotachygraphe…). Saisissez vos réponses et validez — un récapitulatif complet s'affiche à la fin.
     </div>
-    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.1.3</p>
+    <p class="copyright">© 2025 Christophe S. — Tous droits réservés. Utilisation autorisée à des fins pédagogiques et non commerciales uniquement. Toute revente, redistribution commerciale ou intégration dans un produit payant est strictement interdite. — Version 1.1.4</p>
 
   </div>
 
@@ -1951,7 +1971,11 @@
     </div>
 
     <div class="stats-action-row">
-      <button class="transfer-stats-btn" onclick="exportStatsJSON()">
+      <button class="transfer-stats-btn" onclick="exportStatsJSON()" style="position:relative;">
+        <span class="export-badge-wrap" id="export-badge-wrap" style="display:none;">
+          <span class="export-badge" id="export-badge"></span>
+          <span class="export-badge-tooltip" id="export-badge-tooltip"></span>
+        </span>
         <svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21,2H15a1,1,0,0,0,0,2h3.59l-8.3,8.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L20,5.41V9a1,1,0,0,0,2,0V3A1,1,0,0,0,21,2Z" style="fill:rgb(44,169,188)"/><path d="M20,22H4a2,2,0,0,1-2-2V4A2,2,0,0,1,4,2h7a1,1,0,0,1,0,2H4V20H20V13a1,1,0,0,1,2,0v7A2,2,0,0,1,20,22Z" style="fill:rgb(224,228,239)"/></svg>
         Exporter statistiques
       </button>
@@ -2729,6 +2753,35 @@ function hideInfoModal() {
   document.getElementById('info-modal').classList.remove('open');
 }
 
+function updateExportBadge() {
+  const s = loadStats();
+  const currentCount = s.scoreHistory.length;
+  const lastExportCount = parseInt(localStorage.getItem('quizLastExportCount') || '-1', 10);
+  const wrap = document.getElementById('export-badge-wrap');
+  const badge = document.getElementById('export-badge');
+  const tooltip = document.getElementById('export-badge-tooltip');
+  if (!wrap || !badge || !tooltip) return;
+  if (lastExportCount === -1) {
+    // Jamais exporté
+    if (currentCount > 0) {
+      wrap.style.display = 'inline-flex';
+      badge.textContent = currentCount;
+      tooltip.innerHTML = `${currentCount} session${currentCount > 1 ? 's' : ''} non sauvegardée${currentCount > 1 ? 's' : ''}.<br>Pensez à exporter vos statistiques.`;
+    } else {
+      wrap.style.display = 'none';
+    }
+  } else {
+    const newSessions = currentCount - lastExportCount;
+    if (newSessions > 0) {
+      wrap.style.display = 'inline-flex';
+      badge.textContent = newSessions;
+      tooltip.innerHTML = `${newSessions} nouvelle${newSessions > 1 ? 's' : ''} session${newSessions > 1 ? 's' : ''} depuis le dernier export.<br>Pensez à sauvegarder vos statistiques.`;
+    } else {
+      wrap.style.display = 'none';
+    }
+  }
+}
+
 async function exportStatsJSON() {
   const data = {
     quizStats: localStorage.getItem('quizStats'),
@@ -2745,6 +2798,8 @@ async function exportStatsJSON() {
       const writable = await fileHandle.createWritable();
       await writable.write(json);
       await writable.close();
+      localStorage.setItem('quizLastExportCount', loadStats().scoreHistory.length);
+      updateExportBadge();
       return;
     } catch(e) {
       if (e.name === 'AbortError') return;
@@ -2759,6 +2814,8 @@ async function exportStatsJSON() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+  localStorage.setItem('quizLastExportCount', loadStats().scoreHistory.length);
+  updateExportBadge();
 }
 
 function importStatsJSON() {
@@ -3124,6 +3181,7 @@ function generateStatsPDF() {
 function showStatsScreen() {
   closeThematicPanel();
   showScreen('stats-screen');
+  updateExportBadge();
   const s = loadStats();
   renderGauge(s);
   renderSparkline(s);
