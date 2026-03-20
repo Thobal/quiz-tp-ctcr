@@ -2,15 +2,6 @@
 
 ## À réaliser
 
-- **Numérotation des cartes dans "Mes 25 dernières erreurs"** — Ajouter un numéro (1 à 25) sur chaque carte d'erreur pour pouvoir les référencer facilement. Simple et non-intrusif.
-
-- **Indicateur du type de question dans l'écran de révision** — Sur chaque question, un petit badge discret indique le format de réponse attendu ("Vrai/Faux", "Oui/Non", "Texte libre") pour anticiper avant de répondre.
-
-- **Mise en évidence de la meilleure semaine dans le tableau de progression** — Surligner la ligne correspondant au score le plus élevé jamais atteint, pour garder en tête son pic de performance. Distinct de la semaine courante.
-
-- **Aperçu des 3 dernières erreurs sur l'accueil** — Une section discrète affichant les 3 questions les plus récemment ratées (question + bonne réponse) directement sur l'écran d'accueil, pour un rappel immédiat sans naviguer vers l'écran dédié.
-
-- **Delta de progression affiché dans les statistiques** — Sous les jauges, une ligne "Progression depuis la semaine 1 : +X pts" calculée entre la première et la dernière entrée du tableau hebdomadaire. Donne une vision globale du chemin parcouru.
 
 
 ---
@@ -95,6 +86,16 @@
 - **Régularité : nombre moyen de sessions par semaine** — Le tableau hebdomadaire permet déjà de lire cette régularité semaine par semaine ; un indicateur agrégé supplémentaire surchargerait l'écran des statistiques pour un apport limité.
 
 - **Questions incorrectes affichées en premier dans les résultats** — L'écran de résultats est court (10 questions max) ; réordonner les questions briserait la cohérence chronologique sans gain de lisibilité significatif.
+
+- **Numérotation des cartes dans "Mes 25 dernières erreurs"** — L'ordre chronologique suffit à repérer les erreurs récentes ; une numérotation n'apporte pas de valeur référentielle dans un usage solo.
+
+- **Indicateur du type de question dans l'écran de révision** — Le format de réponse est immédiatement perceptible à la lecture de la question ; un badge supplémentaire surchargerait visuellement l'écran de révision.
+
+- **Mise en évidence de la meilleure semaine dans le tableau de progression** — Le tableau étant trié par ordre chronologique, la meilleure semaine est déjà repérable visuellement grâce aux couleurs ; un surlignage supplémentaire serait redondant.
+
+- **Aperçu des 3 dernières erreurs sur l'accueil** — L'accueil doit rester épuré et centré sur le lancement de quiz ; dupliquer des erreurs déjà accessibles en un tap fragmenterait l'interface sans gain de temps significatif.
+
+- **Delta de progression affiché dans les statistiques** — Information déjà lisible directement dans le tableau hebdomadaire en comparant la première et la dernière ligne ; un indicateur agrégé serait redondant.
 
 - **Masquage des fiches maîtrisées sur l'accueil** — Le tri par score existant suffit à identifier les fiches prioritaires ; masquer complètement les fiches maîtrisées risque de donner une vision incomplète de la progression globale.
 
