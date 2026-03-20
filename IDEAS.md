@@ -2,17 +2,6 @@
 
 ## À réaliser
 
-1. **Rappel de sauvegarde dans l'écran des statistiques** — Afficher discrètement sous le bouton d'export JSON la date du dernier export effectué (ex : "Dernier export : il y a 5 jours"), pour inciter à sauvegarder régulièrement.
-
-2. **Taux de réussite dans "Mes 25 dernières erreurs"** — En en-tête de la liste d'erreurs, afficher le taux de réussite global calculé sur les dernières questions posées, pour avoir une vue synthétique sans aller dans les statistiques.
-
-3. **Animation de confirmation sur la bonne réponse** — Une brève animation (légère pulsation verte) sur le feedback en cas de bonne réponse, pour un ressenti plus satisfaisant qu'un simple changement de couleur statique.
-
-4. **Nombre de questions posées par fiche dans les statistiques** — Dans la heatmap des statistiques, afficher pour chaque fiche le nombre total de questions posées toutes sessions confondues, en complément du score moyen.
-
-5. **Fermeture du toast d'export au clic** — Permettre à l'utilisateur de faire disparaître le toast de confirmation d'export en cliquant dessus, sans attendre les 5 secondes.
-
-
 
 
 ---
@@ -77,6 +66,16 @@
 
 ## Rejetées
 *(conservées pour mémoire — ne pas reproposer)*
+
+- **Rappel de sauvegarde dans l'écran des statistiques** — La pastille d'export (badge avec le nombre de sessions non sauvegardées) remplit déjà ce rôle de manière plus compacte et précise.
+
+- **Taux de réussite dans "Mes 25 dernières erreurs"** — Information déjà accessible dans les statistiques ; l'en-tête de la liste d'erreurs n'est pas le lieu adapté pour ce KPI.
+
+- **Animation de confirmation sur la bonne réponse** — Le feedback visuel existant (couleur verte + texte) est suffisant ; une animation supplémentaire risquerait d'être perçue comme distrayante lors d'une révision rapide.
+
+- **Nombre de questions posées par fiche dans les statistiques** — La heatmap est déjà dense ; ajouter un compteur de questions par cellule surchargerait visuellement l'écran sans apport décisionnel significatif.
+
+- **Fermeture du toast d'export au clic** — Le toast disparaît automatiquement en 5 secondes ; permettre de le fermer au clic représente une complexité d'interaction pour un gain de confort marginal.
 
 - **Badge "Fiche N" sur les cartes d'erreur** — Le numéro de fiche source sur les cartes d'erreur apporte peu de valeur ; l'utilisateur reconnaît généralement la question sans avoir besoin de ce repère.
 
