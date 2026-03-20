@@ -2,7 +2,15 @@
 
 ## À réaliser
 
-*(aucune idée en attente)*
+1. **Rappel de sauvegarde dans l'écran des statistiques** — Afficher discrètement sous le bouton d'export JSON la date du dernier export effectué (ex : "Dernier export : il y a 5 jours"), pour inciter à sauvegarder régulièrement.
+
+2. **Taux de réussite dans "Mes 25 dernières erreurs"** — En en-tête de la liste d'erreurs, afficher le taux de réussite global calculé sur les dernières questions posées, pour avoir une vue synthétique sans aller dans les statistiques.
+
+3. **Animation de confirmation sur la bonne réponse** — Une brève animation (légère pulsation verte) sur le feedback en cas de bonne réponse, pour un ressenti plus satisfaisant qu'un simple changement de couleur statique.
+
+4. **Nombre de questions posées par fiche dans les statistiques** — Dans la heatmap des statistiques, afficher pour chaque fiche le nombre total de questions posées toutes sessions confondues, en complément du score moyen.
+
+5. **Fermeture du toast d'export au clic** — Permettre à l'utilisateur de faire disparaître le toast de confirmation d'export en cliquant dessus, sans attendre les 5 secondes.
 
 
 
