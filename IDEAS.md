@@ -4,13 +4,7 @@
 
 - **Compte à rebours avant l'examen** — Saisie unique d'une date d'examen (mémorisée dans le localStorage). Un bandeau discret sur l'accueil affiche "J−42 avant l'examen" pour garder l'échéance en tête sans effort.
 
-- **Export des statistiques au format CSV** — En complément du JSON existant, un bouton "Export CSV" dans l'écran des statistiques pour télécharger l'historique des sessions (date, fiche, score) au format tableur, exploitable dans Excel ou Numbers.
-
 - **Score médian dans le tableau hebdomadaire** — Colonne supplémentaire dans le tableau de progression affichant la médiane des scores sur les semaines précédentes, pour comparer chaque semaine à sa propre médiane historique.
-
-- **Toggle de désactivation du retour haptique** — Sans objet : le retour haptique a été entièrement supprimé de l'application.
-
-- **Rappel du mode YOLO actif sur l'accueil** — Lorsque le mode YOLO est actif, afficher un badge ou une indication visible sur l'accueil (ex : bandeau ou icône ⚡ sur les boutons de fiche) pour rappeler que les scores seront biaisés et éviter d'oublier que ce mode est en cours.
 
 ---
 
@@ -74,6 +68,10 @@
 
 ## Rejetées
 *(conservées pour mémoire — ne pas reproposer)*
+
+- **Export des statistiques au format CSV** — L'export JSON existant couvre déjà le besoin de sauvegarde ; un format CSV supplémentaire représente une complexité disproportionnée pour un usage marginal.
+
+- **Rappel du mode YOLO actif sur l'accueil** — Le switch YOLO est visible dans l'en-tête du quiz et son activation déclenche déjà un message explicatif ; un rappel supplémentaire sur l'accueil serait redondant.
 
 - **Rappel de sauvegarde dans l'écran des statistiques** — La pastille d'export (badge avec le nombre de sessions non sauvegardées) remplit déjà ce rôle de manière plus compacte et précise.
 
