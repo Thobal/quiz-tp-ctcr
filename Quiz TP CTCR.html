@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quiz TP CTCR — Permis D</title>
+<!-- PWA -->
+<meta name="theme-color" content="#0d0f14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Quiz CTCR">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -2264,7 +2269,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.46';
+const APP_VERSION = '1.3.47';
 
 const FICHES = {
   1: [
@@ -4004,7 +4009,27 @@ function showRevisionFiche(n) {
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
+function registerPWA() {
+  const icon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="80" fill="#0d0f14"/><text x="256" y="370" font-size="320" text-anchor="middle" fill="#f5c842" font-family="sans-serif" font-weight="800">Q</text></svg>`;
+  const manifest = {
+    name: 'Quiz TP CTCR — Permis D',
+    short_name: 'Quiz CTCR',
+    description: 'Application de révision pour le TP CTCR et le permis D',
+    start_url: './',
+    display: 'standalone',
+    background_color: '#0d0f14',
+    theme_color: '#0d0f14',
+    icons: [{ src: 'data:image/svg+xml,' + encodeURIComponent(icon), sizes: 'any', type: 'image/svg+xml' }]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+  const link = document.createElement('link');
+  link.rel = 'manifest';
+  link.href = URL.createObjectURL(blob);
+  document.head.appendChild(link);
+}
+
 function init() {
+  registerPWA();
   const versionEl = document.getElementById('app-version-display');
   if (versionEl) versionEl.textContent = 'Version ' + APP_VERSION;
 
