@@ -2232,6 +2232,7 @@
           <button class="revision-nav-btn" id="revision-next-btn" onclick="navigateRevisionFiche(1)" aria-label="Fiche suivante">›</button>
         </div>
       </div>
+      <div id="revision-scroll-sentinel"></div>
       <div id="revision-qa-list"></div>
     </div>
 
@@ -2367,7 +2368,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.55';
+const APP_VERSION = '1.3.56';
 
 const FICHES = {
   1: [
@@ -4040,6 +4041,8 @@ function switchRevMode(mode) {
 }
 
 function showRevisionSelector() {
+  _scrollTopObserver.disconnect();
+  _scrollTopBtn.classList.remove('visible');
   switchRevMode('fiches');
 }
 
@@ -4134,7 +4137,11 @@ function showRevisionFiche(n) {
   document.getElementById('revision-qa-list').innerHTML = html;
   document.getElementById('revision-selector').classList.add('hidden');
   document.getElementById('revision-content').classList.remove('hidden');
+  _scrollTopBtn.classList.remove('visible');
+  _scrollTopObserver.disconnect();
   window.scrollTo({ top: 0, behavior: 'instant' });
+  const sentinel = document.getElementById('revision-scroll-sentinel');
+  if (sentinel) _scrollTopObserver.observe(sentinel);
 }
 
 function registerPWA() {
@@ -4854,12 +4861,11 @@ function attachChartTooltips(svgEl, data) {
 
 init();
 
-window.addEventListener('scroll', () => {
-  const btn = document.getElementById('scroll-top-btn');
-  if (!btn) return;
-  const revisionVisible = !document.getElementById('revision-screen').classList.contains('hidden');
-  btn.classList.toggle('visible', revisionVisible && window.scrollY > 250);
-});
+const _scrollTopBtn = document.getElementById('scroll-top-btn');
+const _scrollTopObserver = new IntersectionObserver(
+  ([entry]) => { _scrollTopBtn.classList.toggle('visible', !entry.isIntersecting); },
+  { threshold: 0 }
+);
 </script>
 <div id="chart-tooltip"></div>
 </body>
