@@ -4,13 +4,13 @@
 
 1. **Filtrage du glossaire par lettre initiale** — Index A–Z cliquable au-dessus du glossaire pour sauter directement aux termes commençant par une lettre donnée, en complément du tri alphabétique existant.
 
-2. **Surbrillance du terme recherché dans le glossaire** — Mettre en évidence les occurrences du mot saisi dans le champ de recherche directement dans les titres et définitions affichés.
-
 
 
 ---
 
 ## Réalisées
+
+- **Surbrillance du terme recherché dans le glossaire** — Les occurrences du mot saisi dans le champ de recherche sont mises en évidence (fond bleu translucide) dans les titres et définitions affichés.
 
 - **Compteur de termes dans l'en-tête du glossaire** — Affiche le nombre total de termes et, quand un filtre de recherche est actif, le nombre de résultats correspondants (ex : "5 / 42 termes").
 
