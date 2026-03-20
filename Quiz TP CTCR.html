@@ -2239,7 +2239,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.39';
+const APP_VERSION = '1.3.40';
 
 const FICHES = {
   1: [
@@ -2961,6 +2961,7 @@ const INFO_TEXTS = {
     body: `<p>Ce graphique lisse vos performances en calculant, pour chaque point, la <strong>moyenne de vos 10 dernières sessions</strong> à ce moment-là.</p>
            <p>Cela permet de visualiser votre tendance générale sans être perturbé par les variations d'une session à l'autre.</p>
            <p style="color:var(--muted);font-size:12px;">Une courbe qui monte indique une progression réelle et durable.</p>
+           <p style="color:var(--muted);font-size:12px;">⚠ Ce graphique ne s'affiche qu'à partir de la 11ᵉ session, afin que chaque point soit calculé sur une fenêtre complète de 10 sessions.</p>
            <p style="color:var(--muted);font-size:12px;">✓ Les quiz aléatoires et thématiques sont inclus.</p>`
   },
   'fiches-travaillees': {
