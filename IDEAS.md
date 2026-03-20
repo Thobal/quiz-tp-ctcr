@@ -2,7 +2,9 @@
 
 ## À réaliser
 
-*(aucune pour le moment)*
+1. **Ordre aléatoire des questions dans un quiz de fiche** — Lors du lancement d'un quiz sur une fiche, mélanger l'ordre des 10 questions à chaque session pour éviter la mémorisation par position et varier l'expérience. Par défaut les questions sont posées dans l'ordre ; un toggle 🔀 placé à côté du sélecteur de tri sur l'accueil ("N° de fiche" / "Score ↑"), mémorisé dans le localStorage, permet d'activer le mode aléatoire pour tous les quiz de fiche suivants.
+2. **Réduction de la taille du fichier** — Minifier le HTML, le CSS et le JavaScript, et optimiser les SVG des panneaux de signalisation, afin de réduire le poids de l'application sans modifier aucune fonctionnalité ni l'apparence visuelle.
+
 
 ---
 
@@ -17,6 +19,10 @@
 - **Taux de maîtrise global affiché sur l'accueil** — Sous le titre, un chiffre synthétique affiche le pourcentage de maîtrise moyen sur l'ensemble des fiches travaillées (basé sur les 5 dernières sessions par fiche).
 
 - **Vue hebdomadaire des scores dans les statistiques** — Tableau affichant semaine par semaine les valeurs des deux jauges (fiches travaillées / maîtrise globale), avec évolution et barres de couleur. Remplace le bloc "Dernières sessions".
+
+- **Fiche source affichée pendant un quiz aléatoire ou thématique** — Déjà implémenté : le bandeau affiche "Quiz aléatoire · Question X — Fiche Y" ou "Thématique · … · Question X — Fiche Y".
+
+- **Retour haptique sur mobile** — Légère vibration en cas de mauvaise réponse (double pulse [80, 50, 80]) ou de réponse sauvée par le mode YOLO (double pulse atténué [40, 30, 40]) via `navigator.vibrate()`. Ignoré silencieusement sur iOS/Safari.
 
 ---
 
@@ -98,3 +104,45 @@
 - **Mise en évidence des questions jamais tombées** — Marquer dans l'écran de révision les questions jamais tirées en quiz. Non rétroactif : tous les utilisateurs existants verraient toutes leurs questions marquées comme jamais vues.
 
 - **Comparaison du score par rapport à sa propre moyenne** — Sur l'écran de résultats, indiquer si le score est au-dessus ou en dessous de sa moyenne habituelle sur cette fiche.
+- **Taille de police ajustable pour les questions** — Un sélecteur petit / moyen / grand pour adapter la taille du texte des questions.
+
+- **Copier une question dans le presse-papier** — Sur l'écran de révision, un petit bouton pour copier la question et sa réponse en texte brut, pratique pour étudier dans une autre appli.
+
+- **Affichage des explications après une bonne réponse** — Option pour afficher également l'explication lorsque la réponse est correcte, pas seulement en cas d'erreur.
+
+- **Filtre par maîtrise dans l'écran de révision** — Sélecteur pour n'afficher que les fiches en dessous d'un seuil de score (ex. < 50 %, < 70 %). Le tri par score existant sur l'accueil couvre déjà ce besoin de manière plus élégante.
+
+- **Nombre de questions par fiche affiché sur l'accueil** — Inutile : toutes les fiches ont exactement 10 questions.
+
+- **Statistiques de régularité : jours actifs par semaine** — Colonne dans le tableau de progression hebdomadaire. Redondant avec le nombre de fiches travaillées pour un usage solo.
+
+- **Mini-résumé des erreurs sur l'écran de résultats** — Les erreurs sont déjà accessibles immédiatement dans "Mes 20 dernières erreurs" sur l'écran de révision.
+
+- **Panneaux de signalisation affichés dans l'écran de révision** — Déjà implémenté : le panneau SVG est affiché pour chaque question qui en possède un (ligne ~3962).
+
+- **Réorganisation manuelle des fiches par glisser-déposer** — Complexité d'implémentation (drag & drop natif ou bibliothèque) disproportionnée par rapport au bénéfice ; les tris par numéro et par score couvrent l'essentiel.
+
+- **KPI "Questions vues"** — Nécessiterait de journaliser chaque question tirée individuellement, ce qui alourdirait les données stockées pour un apport limité.
+
+- **Aide-mémoire PDF par fiche** — L'écran de révision remplit déjà ce rôle ; générer un PDF depuis une page HTML mono-fichier est complexe sans bibliothèque externe.
+
+- **Mode plein écran pendant le quiz** — L'API Fullscreen est peu fiable sur mobile (iOS ne la supporte pas) et le gain est négligeable sur les usages principaux.
+
+- **Annotation personnelle sur une question** — Complexité de l'interface d'édition inline et risque de pollution visuelle dans l'écran de révision.
+
+- **KPI "Total de sessions jouées"** — Information disponible indirectement via le tableau de progression hebdomadaire ; apport limité en tant que KPI isolé.
+
+- **Indicateur visuel "jouée aujourd'hui"** — Redondant avec le tri par score et la heatmap d'ancienneté ; la valeur ajoutée ne justifie pas la complexité.
+
+- **Affichage des explications dans l'écran de révision** — Alourdit visuellement les cartes, surtout pour les explications longues ; l'écran de révision doit rester aéré.
+
+- **Ordre aléatoire des réponses dans les QCM** — Inapplicable : le quiz ne contient aucune question QCM, uniquement du texte libre, Vrai/Faux et Oui/Non.
+
+- **Objectif de score personnalisable** — Seuil cible visible sur les jauges et boutons de fiche. Complexité de paramétrage peu justifiée pour un usage personnel.
+
+- **Partage du score par message** — Bouton "Partager mon score" via API Clipboard ou Web Share. L'export PDF existant couvre déjà le besoin de partage de statistiques.
+
+- **Thème clair / sombre** — Basculer entre thème sombre et thème clair. L'application étant utilisée principalement sur mobile, le thème sombre est déjà bien adapté ; la complexité de maintenance d'un second thème n'est pas justifiée.
+- **Zoom sur les panneaux de signalisation** — Les panneaux sont déjà suffisamment lisibles sur les écrans modernes et sont également visibles dans l'écran de révision.
+- **Record personnel affiché sur l'écran de résultats** — En fin de quiz de fiche, indiquer si le score obtenu est le meilleur jamais réalisé sur cette fiche.
+- **Compteur de fiches maîtrisées sur l'accueil** — L'information est déjà partiellement couverte par le taux de maîtrise global affiché sous le titre.
