@@ -2,13 +2,15 @@
 
 ## À réaliser
 
-1. **Historique des erreurs étendu à 50** — Conserver les 50 dernières erreurs au lieu de 20, sans modifier l'interface existante. Permet de travailler sur un plus large éventail de questions manquées récentes.
-2. **Manifeste PWA pour l'installation sur l'écran d'accueil** — Injecter un manifeste via balise `<link>` et enregistrer un service worker minimaliste (Blob URL) pour permettre l'ajout de l'application à l'écran d'accueil mobile, avec icône et mode standalone. Améliore l'accès quotidien sans avoir à ouvrir le navigateur.
 
 
 ---
 
 ## Réalisées
+
+- **Historique des erreurs étendu à 25** — Limite portée de 20 à 25 entrées dans `wrongHistory`. Le bouton "Mes 20 dernières erreurs" renommé en "Mes 25 dernières erreurs".
+
+- **Manifeste PWA pour l'installation sur l'écran d'accueil** — Meta tags Apple (standalone, theme-color, titre) et manifeste injecté dynamiquement via Blob URL avec icône SVG. Installation possible sur Android (bannière Chrome) et iOS (Partager → Sur l'écran d'accueil).
 
 - **Réduction de la taille du fichier** — Suppression des attributs inutiles (`version`, `xmlns`, `xmlns:xlink`) des SVG inline et arrondi des coordonnées à 2 décimales. Factorisation du calcul de maîtrise globale dupliqué (`computeGlobalMastery`). Fichier réduit de ~373 Ko à ~359 Ko.
 

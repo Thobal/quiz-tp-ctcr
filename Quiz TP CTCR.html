@@ -2121,7 +2121,7 @@
     <!-- Switch -->
     <div class="rev-switch" id="rev-switch">
       <button class="rev-switch-btn active" id="rev-btn-fiches" onclick="switchRevMode('fiches')">Réviser les fiches</button>
-      <button class="rev-switch-btn" id="rev-btn-errors" onclick="switchRevMode('errors')">Mes 20 dernières erreurs</button>
+      <button class="rev-switch-btn" id="rev-btn-errors" onclick="switchRevMode('errors')">Mes 25 dernières erreurs</button>
     </div>
 
     <!-- Fiche selector -->
@@ -2269,7 +2269,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.47';
+const APP_VERSION = '1.3.48';
 
 const FICHES = {
   1: [
@@ -2695,7 +2695,7 @@ function loadStats() {
     ficheLastPlayed: {}, // {ficheNum: timestamp_ms} date of last fiche session
     sessionHistory: [],  // [{mode, score, total, ts}] last 50
     scoreHistory: [],    // [score/10 * 100] last 30 sessions for sparkline
-    wrongHistory: []     // [{q, userAns, correct, fiche, qNum, panel, ts}] last 20 wrong answers
+    wrongHistory: []     // [{q, userAns, correct, fiche, qNum, panel, ts}] last 25 wrong answers
   }));
 }
 
@@ -3035,8 +3035,8 @@ function recordWrongAnswer(q, userAns, prettyAnswers) {
   s.wrongHistory = s.wrongHistory.filter(e => e.q !== q.q);
   // Ajouter en tête
   s.wrongHistory.unshift({ q: q.q, userAns, correct: prettyAnswers, fiche: ficheNum, qNum, panel: q.panel || null, ts, source: currentFiche });
-  // Garder les 20 dernières
-  if (s.wrongHistory.length > 20) s.wrongHistory = s.wrongHistory.slice(0, 20);
+  // Garder les 25 dernières
+  if (s.wrongHistory.length > 25) s.wrongHistory = s.wrongHistory.slice(0, 25);
   saveStats(s);
 }
 
