@@ -2,6 +2,15 @@
 
 ## À réaliser
 
+- **Terme du glossaire aléatoire sur l'accueil** — Afficher discrètement un terme du glossaire tiré au hasard avec sa définition sur l'écran d'accueil, renouvelé à chaque visite. Un rappel passif du vocabulaire sans effort supplémentaire.
+
+- **Export des questions ratées en texte copiable** — Sur l'écran de résultats, un bouton pour copier dans le presse-papier les questions incorrectes avec leur bonne réponse, au format texte simple. Utile pour réviser dans une autre application.
+
+- **Numéro de session affiché sur l'écran de résultats** — En bas de l'écran de résultats, afficher "Session n°X sur cette fiche" pour visualiser l'investissement cumulé sur une fiche donnée.
+
+- **Option pour désactiver toutes les animations** — Un toggle mémorisé dans le localStorage permettant de désactiver les animations CSS (transitions, jauges, fadeUp). Utile sur appareils peu performants ou pour les utilisateurs sensibles aux animations.
+
+- **Semaines d'inactivité affichées dans le tableau de progression** — Afficher explicitement les semaines sans session (ligne grisée "Aucune session") dans le tableau hebdomadaire, pour visualiser les coupures dans la régularité.
 
 ---
 
