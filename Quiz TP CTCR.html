@@ -2239,7 +2239,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.34';
+const APP_VERSION = '1.3.35';
 
 const FICHES = {
   1: [
@@ -3511,7 +3511,7 @@ function renderGauge(s) {
     fill.style.strokeDashoffset = arc - (arc * rate);
     fill.style.transition = 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)';
   }
-  document.getElementById('gauge-pct').textContent = totalTot > 0 ? Math.round(rate * 100) + '%' : '—%';
+  document.getElementById('gauge-pct').textContent = Math.round(rate * 100) + '%';
   document.getElementById('gauge-sub').textContent = totalTot > 0
     ? `${totalCor} bonnes réponses sur ${totalTot}`
     : 'Aucune donnée';
