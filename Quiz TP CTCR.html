@@ -2257,6 +2257,8 @@
 
 </div>
 
+<button id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Retour en haut">↑</button>
+
 <script>
 const GLOSSAIRE = [
   { term: "ABS (Antiblocage des roues)", def: "L'ABS (Antiblockiersystem) est un syst\u00e8me \u00e9lectronique qui emp\u00eache le blocage des roues lors d'un freinage d'urgence en modulant rapidement la pression de frein plusieurs fois par seconde. Son principal avantage est de permettre au conducteur de maintenir le contr\u00f4le directionnel du v\u00e9hicule m\u00eame lors d'un freinage intense, contrairement \u00e0 un freinage avec roues bloqu\u00e9es qui prive de toute ma\u00eetrise de trajectoire. Il ne r\u00e9duit pas syst\u00e9matiquement la distance de freinage, notamment sur sol meuble ou gravier, mais pr\u00e9serve toujours la ma\u00eetrise du volant. L'ABS est obligatoire sur les v\u00e9hicules neufs dans l'Union europ\u00e9enne depuis 2004, et son bon fonctionnement est v\u00e9rifi\u00e9 lors du contr\u00f4le technique. Sur un autocar \u00e9quip\u00e9 d'ABS et d'un PTAC sup\u00e9rieur \u00e0 10 t, la vitesse maximale autoris\u00e9e sur autoroute est relev\u00e9e \u00e0 100 km/h." },
@@ -2366,7 +2368,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.57';
+const APP_VERSION = '1.3.58';
 
 const FICHES = {
   1: [
@@ -4866,6 +4868,5 @@ const _scrollTopObserver = new IntersectionObserver(
 );
 </script>
 <div id="chart-tooltip"></div>
-<button id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Retour en haut">↑</button>
 </body>
 </html>
