@@ -2264,7 +2264,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.45';
+const APP_VERSION = '1.3.46';
 
 const FICHES = {
   1: [
@@ -4418,13 +4418,21 @@ function showResults() {
   showScreen('results-screen');
 }
 
+function scoreColor(pct) {
+  const t = Math.max(0, Math.min(100, pct)) / 100;
+  const r0 = [0xf0, 0x56, 0x6e], r1 = [0xf5, 0xc8, 0x42], r2 = [0x3e, 0xcf, 0x7a];
+  const [a, b, u] = t < 0.5 ? [r0, r1, t * 2] : [r1, r2, (t - 0.5) * 2];
+  const c = a.map((v, i) => Math.round(v + (b[i] - v) * u));
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+
 function updateMasteryKpi() {
   const s = loadStats();
   const block = document.getElementById('kpi-block');
   // KPI 1 : maîtrise des fiches travaillées (même calcul que la jauge stats)
   const { cor: totalScore, tot: totalQuestions, rate: workedRate } = computeWorkedMastery(s);
   const pct = totalQuestions === 0 ? 0 : Math.round((workedRate ?? 0) * 100);
-  const color = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--accent)' : 'var(--red)';
+  const color = scoreColor(pct);
   document.getElementById('kpi-fill').style.width      = pct + '%';
   document.getElementById('kpi-fill').style.background = color;
   document.getElementById('kpi-value').textContent     = pct + ' %';
@@ -4432,7 +4440,7 @@ function updateMasteryKpi() {
 
   // KPI 2 : maîtrise globale (fiches non travaillées comptent pour 0 %)
   const { pct: pctGlobal } = computeGlobalMastery(s);
-  const colorG = pctGlobal >= 70 ? 'var(--green)' : pctGlobal >= 50 ? 'var(--accent)' : 'var(--red)';
+  const colorG = scoreColor(pctGlobal);
   document.getElementById('kpi-fill-global').style.width      = pctGlobal + '%';
   document.getElementById('kpi-fill-global').style.background = colorG;
   document.getElementById('kpi-value-global').textContent     = pctGlobal + ' %';
