@@ -2,13 +2,9 @@
 
 ## À réaliser
 
-1. **Raccourci vers le glossaire depuis l'écran de révision** — Bouton discret dans l'en-tête de l'écran de révision permettant d'ouvrir directement le glossaire sans repasser par l'accueil.
+1. **Animation d'expansion des cartes du glossaire** — Remplacer l'affichage instantané de la définition par une animation CSS fluide (transition sur max-height), pour un rendu plus soigné à l'ouverture et à la fermeture.
 
-2. **Nombre de termes sur le bouton "Glossaire" de l'accueil** — Afficher le nombre total de termes directement sur le bouton d'accès au glossaire (ex : "Glossaire · 42 termes"), pour informer l'utilisateur sans qu'il ait à ouvrir l'écran.
-
-3. **Animation d'expansion des cartes du glossaire** — Remplacer l'affichage instantané de la définition par une animation CSS fluide (transition sur max-height), pour un rendu plus soigné à l'ouverture et à la fermeture.
-
-4. **Infobulle sur les boutons de thème du quiz thématique** — Au survol (desktop) d'un bouton de thème, afficher une infobulle indiquant le nombre de questions disponibles dans ce thème.
+2. **Infobulle sur les boutons de thème du quiz thématique** — Au survol (desktop) d'un bouton de thème, afficher une infobulle indiquant le nombre de questions disponibles dans ce thème.
 
 
 
@@ -79,6 +75,10 @@
 - **Badge "Fiche N" sur les cartes d'erreur** — Le numéro de fiche source sur les cartes d'erreur apporte peu de valeur ; l'utilisateur reconnaît généralement la question sans avoir besoin de ce repère.
 
 - **Bouton de partage du lien de l'application** — L'URL de l'application est fixe et facile à retrouver ; un bouton dédié représente une complexité d'interface disproportionnée pour un usage très occasionnel.
+
+- **Raccourci vers le glossaire depuis l'écran de révision** — L'accueil est accessible en un tap depuis n'importe quel écran ; le détour par l'accueil pour atteindre le glossaire représente une friction négligeable.
+
+- **Nombre de termes sur le bouton "Glossaire" de l'accueil** — Information de faible valeur ajoutée ; le nombre de termes n'aide pas l'utilisateur à décider d'ouvrir le glossaire.
 
 - **Tri du glossaire mémorisé dans le localStorage** — Sans objet : le glossaire est systématiquement affiché par ordre alphabétique, il n'y a pas de tri à mémoriser.
 
