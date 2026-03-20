@@ -2,11 +2,14 @@
 
 ## À réaliser
 
+1. **Navigation entre fiches dans l'écran de révision** — Flèches "‹ Fiche précédente" / "Fiche suivante ›" pour passer d'une fiche à l'autre sans revenir à l'accueil à chaque fois.
 
 
 ---
 
 ## Réalisées
+
+- **Panneaux de signalisation dans "Mes 25 dernières erreurs"** — Pour les questions ayant un panneau associé, le SVG du panneau est affiché dans la carte d'erreur. Le champ `panel` est stocké dans `wrongHistory`.
 
 - **Infobulles explicatives sur les barres de KPI de l'accueil** — Au survol (desktop) ou tap (mobile), une infobulle explique le calcul de chaque indicateur : "Maîtrise des fiches travaillées" (ratio bonnes réponses / questions posées sur les fiches jouées) et "Maîtrise globale" (moyenne sur les 20 fiches, non-jouées à 0 %).
 
@@ -205,9 +208,25 @@
 
 - **Retour haptique discret sur bonne réponse** — Le retour positif est déjà assuré visuellement (✅ vert) ; ajouter une vibration sur les bonnes réponses risque d'être perçu comme intrusif.
 
+- **Scores des sessions précédentes sur l'écran de résultats** — Information déjà accessible dans le tableau hebdomadaire des statistiques et via la heatmap ; ajouter une ligne de scores sous l'anneau surchargerait l'écran de résultats.
+
+- **Date de la première session dans les statistiques** — Apport informationnel faible ; la date de première session n'est pas actionnable et l'écran de statistiques est déjà dense.
+
+- **Numéro de question (Q1–Q10) dans l'écran de révision** — Les questions sont déjà présentées dans l'ordre ; ajouter un label numérique n'apporte pas de valeur fonctionnelle.
+
+- **Compteur de fiches jamais pratiquées dans les statistiques** — Information redondante avec la grille de l'accueil qui distingue déjà visuellement les fiches non pratiquées (score "—" en mode tri par score).
+
+- **Indicateur de récurrence dans "Mes 25 dernières erreurs"** — L'historique étant limité à 25 entrées, la récurrence d'une même question y est déjà visible à l'œil ; un badge chiffré ajouterait de la complexité pour un gain limité.
+
 - **Colorisation des cellules du tableau de progression hebdomadaire** — Déjà implémenté : `weeklyScoreColor()` applique le dégradé rouge→vert à la barre et à la valeur textuelle dans `renderWeeklyHistory()`.
 
 - **KPI "Total de questions répondues (all-time)"** — Information peu actionnable ; l'utilisateur ne peut pas agir dessus, contrairement aux taux de maîtrise.
+
+- **Bouton "Tester cette fiche" dans l'écran de révision** — Le bouton de démarrage de quiz sur l'accueil est suffisamment accessible ; ajouter un second point d'entrée dans la révision fragmenterait le parcours utilisateur.
+
+- **Détection automatique de nouvelle version** — L'application est un fichier statique unique ; la gestion du cache navigateur et le rechargement manuel suffisent pour ce cas d'usage.
+
+- **Étiquette thématique sur les boutons de fiche** — Nécessiterait d'ajouter des métadonnées thématiques pour les 20 fiches ; la numérotation est déjà mémorisée par l'utilisateur régulier et le quiz thématique existant couvre le besoin d'accès par thème.
 
 - **Mise à jour du titre de l'onglet avec le taux de maîtrise** — Apport cosmétique limité ; l'application est généralement ouverte dans un onglet dédié et le titre n'est pratiquement jamais lu.
 

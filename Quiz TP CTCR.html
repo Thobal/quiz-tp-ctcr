@@ -1109,6 +1109,25 @@
     font-size: 18px;
     font-weight: 800;
   }
+  .revision-nav-btns {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+  }
+  .revision-nav-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .revision-nav-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .revision-nav-btn:disabled { opacity: 0.25; cursor: default; }
 
   .qa-card {
     background: var(--surface);
@@ -2186,6 +2205,10 @@
       <div class="revision-content-header">
         <button class="back-btn" onclick="showRevisionSelector()">← Fiches</button>
         <h3 id="revision-fiche-title">Fiche 1</h3>
+        <div class="revision-nav-btns">
+          <button class="revision-nav-btn" id="revision-prev-btn" onclick="navigateRevisionFiche(-1)" aria-label="Fiche précédente">‹</button>
+          <button class="revision-nav-btn" id="revision-next-btn" onclick="navigateRevisionFiche(1)" aria-label="Fiche suivante">›</button>
+        </div>
       </div>
       <div id="revision-qa-list"></div>
     </div>
@@ -2320,7 +2343,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.53';
+const APP_VERSION = '1.3.54';
 
 const FICHES = {
   1: [
@@ -2665,6 +2688,7 @@ let randomQuestions = null;
 let justAnswered = false;
 let looseMode = false;
 let weeklyHistoryMode = 'worked';
+let currentRevisionFiche = 1;
 let currentFicheSort = 'num';
 
 // INIT
@@ -4051,9 +4075,17 @@ function renderWrongHistory() {
   }).join('');
 }
 
+function navigateRevisionFiche(delta) {
+  const next = currentRevisionFiche + delta;
+  if (next >= 1 && next <= 20) showRevisionFiche(next);
+}
+
 function showRevisionFiche(n) {
+  currentRevisionFiche = n;
   const questions = FICHES[n];
   document.getElementById('revision-fiche-title').textContent = `Fiche ${n}`;
+  document.getElementById('revision-prev-btn').disabled = n <= 1;
+  document.getElementById('revision-next-btn').disabled = n >= 20;
 
   let html = '';
   questions.forEach((q, i) => {
