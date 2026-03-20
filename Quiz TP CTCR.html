@@ -1048,6 +1048,23 @@
     font-size: 13px;
     padding: 40px 0;
   }
+  .wrong-history-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+  }
+  .clear-history-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .clear-history-btn:hover { border-color: var(--red); color: var(--red); }
 
   .revision-intro {
     font-size: 13px;
@@ -2279,7 +2296,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.50';
+const APP_VERSION = '1.3.51';
 
 const FICHES = {
   1: [
@@ -3954,6 +3971,14 @@ function showRevisionSelector() {
   switchRevMode('fiches');
 }
 
+function clearWrongHistory() {
+  if (!confirm('Effacer l\'historique des 25 dernières erreurs ?')) return;
+  const s = loadStats();
+  s.wrongHistory = [];
+  saveStats(s);
+  renderWrongHistory();
+}
+
 function renderWrongHistory() {
   const list = document.getElementById('revision-errors-list');
   const s = loadStats();
@@ -3962,7 +3987,8 @@ function renderWrongHistory() {
     list.innerHTML = '<div class="wrong-empty">Aucune erreur enregistrée pour le moment.<br>Répondez à des questions pour les voir apparaître ici.</div>';
     return;
   }
-  list.innerHTML = wh.map(e => {
+  const header = `<div class="wrong-history-header"><button class="clear-history-btn" onclick="clearWrongHistory()">Effacer l'historique</button></div>`;
+  list.innerHTML = header + wh.map(e => {
     const src = e.source !== undefined ? String(e.source) : String(e.fiche);
     const ficheLabel = src === 'aléatoire' ? 'Quiz aléatoire'
       : src.startsWith('Thématique') ? src.replace('Thématique · ', 'Thème : ')

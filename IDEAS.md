@@ -2,13 +2,13 @@
 
 ## À réaliser
 
-1. **Animation de transition entre les écrans** — Ajouter un léger fondu CSS lors des changements d'écran (accueil ↔ quiz, quiz → résultats, etc.) pour fluidifier la navigation perçue.
-2. **Bouton de réinitialisation de l'historique des erreurs** — Dans la section "Mes 25 dernières erreurs", un bouton permettant d'effacer cet historique sans affecter les scores des fiches.
 
 
 ---
 
 ## Réalisées
+
+- **Bouton de réinitialisation de l'historique des erreurs** — Bouton "Effacer l'historique" affiché en haut de la liste des 25 erreurs (avec confirmation), visible uniquement quand la liste n'est pas vide.
 
 - **Date et heure de la dernière session dans les statistiques** — `s.lastSessionAt = Date.now()` enregistré à chaque session. Affiché sous le titre "Statistiques" : "Dernière session : le JJ/MM/YYYY à HH:MM".
 
@@ -202,6 +202,8 @@
 - **Mémorisation du dernier onglet actif dans les statistiques** — L'écran des statistiques est court à parcourir ; le gain de confort ne justifie pas la complexité de persistance.
 
 - **Retour haptique discret sur bonne réponse** — Le retour positif est déjà assuré visuellement (✅ vert) ; ajouter une vibration sur les bonnes réponses risque d'être perçu comme intrusif.
+
+- **Animation de transition entre les écrans** — Même à 33 ms, l'effet est imperceptible ; au-delà, il ralentit la navigation. Le gain visuel ne justifie pas l'ajout.
 
 - **Mise en page améliorée sur tablette** — L'usage principal est mobile ; optimiser pour tablette représente une complexité de maintenance disproportionnée par rapport à l'usage réel.
 
