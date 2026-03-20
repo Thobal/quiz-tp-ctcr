@@ -2238,7 +2238,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.30';
+const APP_VERSION = '1.3.31';
 
 const FICHES = {
   1: [
@@ -2854,7 +2854,7 @@ function isoWeekOf(date) {
 
 // Snapshot des valeurs des deux jauges pour la semaine ISO courante.
 // incrementSessions=true uniquement lors d'une vraie session jouée.
-function snapshotWeeklyGauges(s, incrementSessions) {
+function snapshotWeeklyGauges(s, incrementSessions, mode) {
   if (!incrementSessions && s.totalSessions === 0) return;
   if (!s.weeklyHistory) s.weeklyHistory = [];
 
@@ -2882,7 +2882,8 @@ function snapshotWeeklyGauges(s, incrementSessions) {
   }
   entry.worked = workedPct;
   entry.global = globalPct;
-  if (incrementSessions) entry.sessions++;
+  const isFicheQuiz = incrementSessions && mode !== 'random' && !String(mode).startsWith('Thématique');
+  if (isFicheQuiz) entry.sessions++;
 
   // Tri croissant, plafond 104 semaines (2 ans)
   s.weeklyHistory.sort((a, b) => a.y !== b.y ? a.y - b.y : a.w - b.w);
@@ -2921,7 +2922,7 @@ function recordSession(mode, score, total, results) {
   if (s.scoreHistory.length > 30) s.scoreHistory.pop();
 
   saveStats(s);
-  snapshotWeeklyGauges(s, true);
+  snapshotWeeklyGauges(s, true, mode);
 }
 
 
