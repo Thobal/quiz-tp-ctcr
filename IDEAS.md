@@ -2,8 +2,6 @@
 
 ## À réaliser
 
-- **Réinitialisation complète des données** — Bouton dans l'écran des statistiques (avec double confirmation) pour effacer intégralement toutes les données localStorage : scores, historique d'erreurs, sessions, paramètres. Utile pour repartir de zéro ou prêter l'appareil à quelqu'un d'autre.
-
 - **Liens glossaire dans les questions de révision** — Dans l'écran de révision, les mots présents à la fois dans la question et dans le glossaire sont soulignés. Au tap/clic, une infobulle affiche la définition sans quitter l'écran, réduisant les allers-retours.
 
 - **Compteur de sessions du jour sur l'accueil** — Un indicateur discret sous les KPI affichant le nombre de sessions jouées aujourd'hui (ex : "3 sessions aujourd'hui"), pour encourager une pratique quotidienne sans système de streak.
@@ -40,6 +38,8 @@
 - **Panneaux de signalisation dans "Mes 25 dernières erreurs"** — Pour les questions ayant un panneau associé, le SVG du panneau est affiché dans la carte d'erreur. Le champ `panel` est stocké dans `wrongHistory`.
 
 - **Infobulles explicatives sur les barres de KPI de l'accueil** — Au survol (desktop) ou tap (mobile), une infobulle explique le calcul de chaque indicateur : "Maîtrise des fiches travaillées" (ratio bonnes réponses / questions posées sur les fiches jouées) et "Maîtrise globale" (moyenne sur les 20 fiches, non-jouées à 0 %).
+
+- **Réinitialisation complète des données** — Bouton dans l'écran des statistiques (avec double confirmation) pour effacer intégralement toutes les données localStorage : scores, historique d'erreurs, sessions, paramètres.
 
 - **Bouton de réinitialisation de l'historique des erreurs** — Bouton "Effacer l'historique" affiché en haut de la liste des 25 erreurs (avec confirmation), visible uniquement quand la liste n'est pas vide.
 
