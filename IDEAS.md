@@ -2,7 +2,6 @@
 
 ## À réaliser
 
-- **Liens glossaire dans les questions de révision** — Dans l'écran de révision, les mots présents à la fois dans la question et dans le glossaire sont soulignés. Au tap/clic, une infobulle affiche la définition sans quitter l'écran, réduisant les allers-retours.
 
 
 
@@ -76,6 +75,8 @@
 - **Compte à rebours avant l'examen** — La date d'examen est connue de l'utilisateur ; un compteur de jours restants apporte peu de valeur dans un outil centré sur la révision active.
 
 - **Compteur de sessions du jour sur l'accueil** — L'accueil affiche déjà la date et l'heure de la dernière session ; un compteur journalier apporterait une information redondante pour un apport motivationnel limité.
+
+- **Liens glossaire dans les questions de révision** — La détection automatique des correspondances entre questions et termes du glossaire est trop fragile (faux positifs, formes fléchies) ; un tagging manuel sur 200 questions représente un effort de contenu disproportionné.
 
 - **Masquage des fiches maîtrisées sur l'accueil** — Le tri par score existant suffit à identifier les fiches prioritaires ; masquer complètement les fiches maîtrisées risque de donner une vision incomplète de la progression globale.
 
