@@ -6,9 +6,6 @@
 
 2. **Surbrillance du terme recherché dans le glossaire** — Mettre en évidence les occurrences du mot saisi dans le champ de recherche directement dans les titres et définitions affichés.
 
-3. **Badge "Fiche N" sur les cartes d'erreur** — Afficher un petit badge indiquant le numéro de fiche source sur chaque carte dans "Mes 25 dernières erreurs", avec un tap/clic qui ouvre directement la fiche de révision correspondante.
-
-4. **Bouton de partage du lien de l'application** — Un bouton discret permettant de partager l'URL de l'application via l'API Web Share (mobile) ou de la copier dans le presse-papier (desktop), pour la diffuser facilement à des collègues préparant le même examen.
 
 
 ---
@@ -69,6 +66,10 @@
 
 ## Rejetées
 *(conservées pour mémoire — ne pas reproposer)*
+
+- **Badge "Fiche N" sur les cartes d'erreur** — Le numéro de fiche source sur les cartes d'erreur apporte peu de valeur ; l'utilisateur reconnaît généralement la question sans avoir besoin de ce repère.
+
+- **Bouton de partage du lien de l'application** — L'URL de l'application est fixe et facile à retrouver ; un bouton dédié représente une complexité d'interface disproportionnée pour un usage très occasionnel.
 
 - **Mise en évidence de la semaine en cours dans le tableau de progression** — La semaine courante est toujours la première ligne du tableau ; la surligner n'apporterait aucune valeur.
 
