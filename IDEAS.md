@@ -2,7 +2,7 @@
 
 ## À réaliser
 
-
+1. **Infobulle d'explication sur les barres de KPI de l'accueil** — Au survol (desktop) ou tap (mobile), une infobulle explique ce que représente chaque indicateur (maîtrise fiches travaillées, maîtrise globale) et comment il est calculé.
 
 ---
 
@@ -202,6 +202,14 @@
 - **Mémorisation du dernier onglet actif dans les statistiques** — L'écran des statistiques est court à parcourir ; le gain de confort ne justifie pas la complexité de persistance.
 
 - **Retour haptique discret sur bonne réponse** — Le retour positif est déjà assuré visuellement (✅ vert) ; ajouter une vibration sur les bonnes réponses risque d'être perçu comme intrusif.
+
+- **Colorisation des cellules du tableau de progression hebdomadaire** — Déjà implémenté : `weeklyScoreColor()` applique le dégradé rouge→vert à la barre et à la valeur textuelle dans `renderWeeklyHistory()`.
+
+- **KPI "Total de questions répondues (all-time)"** — Information peu actionnable ; l'utilisateur ne peut pas agir dessus, contrairement aux taux de maîtrise.
+
+- **Mise à jour du titre de l'onglet avec le taux de maîtrise** — Apport cosmétique limité ; l'application est généralement ouverte dans un onglet dédié et le titre n'est pratiquement jamais lu.
+
+- **Fiche la plus faible mise en avant sur l'accueil** — Le tri par score existant sur l'accueil remplit déjà ce rôle de manière plus complète en classant toutes les fiches par niveau de maîtrise.
 
 - **Animation de transition entre les écrans** — Même à 33 ms, l'effet est imperceptible ; au-delà, il ralentit la navigation. Le gain visuel ne justifie pas l'ajout.
 
