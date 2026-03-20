@@ -2442,13 +2442,13 @@ function toggleGloLetter(l) {
 
 function filterGlossaire(query) {
   const q = query.toLowerCase().trim();
+  if (q) _gloLetter = '';
   let filtered = GLOSSAIRE;
   if (q) filtered = filtered.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q));
   if (_gloLetter) filtered = filtered.filter(g => g.term[0].toUpperCase() === _gloLetter);
   renderGlossaire(filtered, q);
-  const withQuery = q ? new Set(GLOSSAIRE.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q)).map(g => g.term[0].toUpperCase())) : null;
   document.querySelectorAll('.glo-alpha-btn').forEach(btn => {
-    btn.disabled = withQuery ? !withQuery.has(btn.textContent) : false;
+    btn.disabled = false;
     btn.classList.toggle('active', btn.textContent === _gloLetter);
   });
 }
@@ -2480,7 +2480,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.69';
+const APP_VERSION = '1.3.70';
 
 const FICHES = {
   1: [
