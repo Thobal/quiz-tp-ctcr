@@ -2,8 +2,6 @@
 
 ## À réaliser
 
-- **Compte à rebours avant l'examen** — Saisie unique d'une date d'examen (mémorisée dans le localStorage). Un bandeau discret sur l'accueil affiche "J−42 avant l'examen" pour garder l'échéance en tête sans effort.
-
 - **Score médian dans le tableau hebdomadaire** — Colonne supplémentaire dans le tableau de progression affichant la médiane des scores sur les semaines précédentes, pour comparer chaque semaine à sa propre médiane historique.
 
 ---
@@ -68,6 +66,8 @@
 
 ## Rejetées
 *(conservées pour mémoire — ne pas reproposer)*
+
+- **Compte à rebours avant l'examen** — La date d'examen est connue de l'utilisateur ; un compteur de jours restants apporte peu de valeur dans un outil centré sur la révision active.
 
 - **Export des statistiques au format CSV** — L'export JSON existant couvre déjà le besoin de sauvegarde ; un format CSV supplémentaire représente une complexité disproportionnée pour un usage marginal.
 
