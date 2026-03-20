@@ -2238,6 +2238,7 @@
 
     <!-- Mes erreurs -->
     <div class="hidden" id="revision-errors">
+      <div id="revision-errors-sentinel"></div>
       <div id="revision-errors-list"></div>
     </div>
   </div>
@@ -2249,6 +2250,7 @@
       <button class="back-btn" onclick="goHome()">← Accueil</button>
       <h2>Glossaire</h2>
     </div>
+    <div id="glossaire-scroll-sentinel"></div>
     <input class="glossaire-search" id="glossaire-search" type="text" placeholder="Rechercher un terme…" oninput="filterGlossaire(this.value)">
     <div class="glossaire-count" id="glossaire-count"></div>
     <div class="glossaire-list" id="glossaire-list"></div>
@@ -2335,6 +2337,7 @@ function showGlossaireScreen() {
   closeThematicPanel();
   showScreen('glossaire-screen');
   renderGlossaire(GLOSSAIRE);
+  _scrollTopConnect('glossaire-scroll-sentinel');
   const input = document.getElementById('glossaire-search');
   if (input) { input.value = ''; }
 }
@@ -2368,7 +2371,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.61';
+const APP_VERSION = '1.3.62';
 
 const FICHES = {
   1: [
@@ -4036,13 +4039,15 @@ function switchRevMode(mode) {
     btnFiches.classList.remove('active');
     btnErrors.classList.add('active');
     renderWrongHistory();
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    _scrollTopConnect('revision-errors-sentinel');
+    return;
   }
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 function showRevisionSelector() {
-  _scrollTopObserver.disconnect();
-  _scrollTopBtn.classList.remove('visible');
+  _scrollTopConnect(''); // déconnecte et masque
   switchRevMode('fiches');
 }
 
@@ -4137,11 +4142,8 @@ function showRevisionFiche(n) {
   document.getElementById('revision-qa-list').innerHTML = html;
   document.getElementById('revision-selector').classList.add('hidden');
   document.getElementById('revision-content').classList.remove('hidden');
-  _scrollTopBtn.classList.remove('visible');
-  _scrollTopObserver.disconnect();
   window.scrollTo({ top: 0, behavior: 'instant' });
-  const sentinel = document.getElementById('revision-scroll-sentinel');
-  if (sentinel) _scrollTopObserver.observe(sentinel);
+  _scrollTopConnect('revision-scroll-sentinel');
 }
 
 function registerPWA() {
@@ -4868,6 +4870,12 @@ const _scrollTopObserver = new IntersectionObserver(
   ([entry]) => { _scrollTopBtn.classList.toggle('visible', !entry.isIntersecting); },
   { threshold: 0 }
 );
+function _scrollTopConnect(sentinelId) {
+  _scrollTopObserver.disconnect();
+  _scrollTopBtn.classList.remove('visible');
+  const el = document.getElementById(sentinelId);
+  if (el) _scrollTopObserver.observe(el);
+}
 </script>
 <div id="chart-tooltip"></div>
 </body>
