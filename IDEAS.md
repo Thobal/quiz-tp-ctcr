@@ -6,9 +6,9 @@
 
 - **Export des statistiques au format CSV** — En complément du JSON existant, un bouton "Export CSV" dans l'écran des statistiques pour télécharger l'historique des sessions (date, fiche, score) au format tableur, exploitable dans Excel ou Numbers.
 
-- **Toggle de désactivation du retour haptique** — Petit interrupteur mémorisé dans le localStorage permettant de désactiver la vibration sur mobile. Utile dans les environnements où la vibration est gênante (bibliothèque, réunion).
-
 - **Score médian dans le tableau hebdomadaire** — Colonne supplémentaire dans le tableau de progression affichant la médiane des scores sur les semaines précédentes, pour comparer chaque semaine à sa propre médiane historique.
+
+- **Toggle de désactivation du retour haptique** — Sans objet : le retour haptique a été entièrement supprimé de l'application.
 
 - **Rappel du mode YOLO actif sur l'accueil** — Lorsque le mode YOLO est actif, afficher un badge ou une indication visible sur l'accueil (ex : bandeau ou icône ⚡ sur les boutons de fiche) pour rappeler que les scores seront biaisés et éviter d'oublier que ce mode est en cours.
 
@@ -68,7 +68,7 @@
 
 - **Fiche source affichée pendant un quiz aléatoire ou thématique** — Déjà implémenté : le bandeau affiche "Quiz aléatoire · Question X — Fiche Y" ou "Thématique · … · Question X — Fiche Y".
 
-- **Retour haptique sur mobile** — Légère vibration en cas de mauvaise réponse (double pulse [80, 50, 80]) ou de réponse sauvée par le mode YOLO (double pulse atténué [40, 30, 40]) via `navigator.vibrate()`. Ignoré silencieusement sur iOS/Safari.
+- **Retour haptique sur mobile** — ~~Supprimé~~ : fonctionnalité jugée plus gênante qu'utile.
 
 ---
 
