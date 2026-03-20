@@ -2,15 +2,6 @@
 
 ## À réaliser
 
-- **Raccourci "Statistiques" depuis l'écran de résultats** — Sur l'écran de fin de quiz, un bouton direct permettant d'accéder aux statistiques sans repasser par l'accueil. Utile pour consulter sa progression immédiatement après une session.
-
-- **Raccourci "Réviser cette fiche" depuis l'écran de résultats** — Après un quiz de fiche, un bouton permettant d'ouvrir directement la fiche de révision correspondante sans repasser par l'accueil. Facilite l'enchaînement quiz → révision.
-
-- **Indicateur de série de baisses dans le tableau hebdomadaire** — Si le score diminue 3 semaines consécutives ou plus, mettre en évidence cette tendance négative par une couleur distincte sur les lignes concernées, pour alerter sans être intrusif.
-
-- **Option pour inverser l'ordre du tableau hebdomadaire** — Un bouton bascule permettant d'afficher les semaines de la plus ancienne à la plus récente (ordre chronologique naturel), plutôt que la plus récente en tête.
-
-- **Encouragement après 3 semaines de progression** — Si les 3 dernières entrées du tableau hebdomadaire montrent une progression continue, afficher un indicateur visuel discret (ex : ✦ ou une teinte verte sur le bloc) pour souligner la dynamique positive.
 
 ---
 
@@ -104,6 +95,16 @@
 - **Aperçu des 3 dernières erreurs sur l'accueil** — L'accueil doit rester épuré et centré sur le lancement de quiz ; dupliquer des erreurs déjà accessibles en un tap fragmenterait l'interface sans gain de temps significatif.
 
 - **Delta de progression affiché dans les statistiques** — Information déjà lisible directement dans le tableau hebdomadaire en comparant la première et la dernière ligne ; un indicateur agrégé serait redondant.
+
+- **Raccourci "Statistiques" depuis l'écran de résultats** — L'accueil est accessible en un tap depuis l'écran de résultats ; le détour est négligeable et ajouter des boutons supplémentaires surchargerait cet écran.
+
+- **Raccourci "Réviser cette fiche" depuis l'écran de résultats** — Même raison : l'accueil est accessible en un tap et le sélecteur de révision en deux ; la friction est trop faible pour justifier un bouton dédié.
+
+- **Indicateur de série de baisses dans le tableau hebdomadaire** — Les couleurs existantes (rouge/vert) et les flèches de tendance permettent déjà de repérer visuellement une régression ; un indicateur supplémentaire serait redondant.
+
+- **Option pour inverser l'ordre du tableau hebdomadaire** — L'ordre "récent en tête" est le plus utile au quotidien ; ajouter un toggle pour un cas d'usage marginal complexifie inutilement l'interface.
+
+- **Encouragement après 3 semaines de progression** — Le feedback positif est déjà assuré par les couleurs vertes du tableau et les scores croissants ; un indicateur supplémentaire n'apporterait pas de valeur significative.
 
 - **Masquage des fiches maîtrisées sur l'accueil** — Le tri par score existant suffit à identifier les fiches prioritaires ; masquer complètement les fiches maîtrisées risque de donner une vision incomplète de la progression globale.
 
