@@ -2,7 +2,15 @@
 
 ## À réaliser
 
-*(aucune idée en attente)*
+1. **Raccourci vers le glossaire depuis l'écran de révision** — Bouton discret dans l'en-tête de l'écran de révision permettant d'ouvrir directement le glossaire sans repasser par l'accueil.
+
+2. **Nombre de termes sur le bouton "Glossaire" de l'accueil** — Afficher le nombre total de termes directement sur le bouton d'accès au glossaire (ex : "Glossaire · 42 termes"), pour informer l'utilisateur sans qu'il ait à ouvrir l'écran.
+
+3. **Animation d'expansion des cartes du glossaire** — Remplacer l'affichage instantané de la définition par une animation CSS fluide (transition sur max-height), pour un rendu plus soigné à l'ouverture et à la fermeture.
+
+4. **Tri du glossaire mémorisé dans le localStorage** — Mémoriser le dernier tri choisi (alphabétique ou par défaut) afin qu'il soit automatiquement appliqué à la prochaine visite de l'écran.
+
+5. **Infobulle sur les boutons de thème du quiz thématique** — Au survol (desktop) d'un bouton de thème, afficher une infobulle indiquant le nombre de questions disponibles dans ce thème.
 
 
 
