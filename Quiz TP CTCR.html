@@ -1863,20 +1863,45 @@
     font-weight: 800;
     flex: 1;
   }
+  .glossaire-search-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
   .glossaire-search {
     width: 100%;
-    padding: 12px 16px;
+    padding: 12px 42px 12px 16px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
     color: var(--fg);
     font-family: 'DM Mono', monospace;
     font-size: 14px;
-    margin-bottom: 16px;
     outline: none;
     transition: border-color 0.2s;
+    box-sizing: border-box;
   }
   .glossaire-search:focus { border-color: var(--accent); }
+  .glossaire-search-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none;
+    color: var(--muted);
+    font-size: 11px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+    line-height: 1;
+  }
+  .glossaire-search-clear.visible { display: flex; }
+  .glossaire-search-clear:hover { background: var(--surface2); color: var(--text); }
   .glossaire-count-row {
     display: flex;
     align-items: center;
@@ -2342,7 +2367,10 @@
       <h2>Glossaire</h2>
     </div>
     <div id="glossaire-scroll-sentinel"></div>
-    <input class="glossaire-search" id="glossaire-search" type="text" placeholder="Rechercher un terme…" oninput="filterGlossaire(this.value)">
+    <div class="glossaire-search-wrap">
+      <input class="glossaire-search" id="glossaire-search" type="text" placeholder="Rechercher un terme…" oninput="filterGlossaire(this.value)">
+      <button class="glossaire-search-clear" id="glossaire-search-clear" onclick="clearGlossaireSearch()" aria-label="Effacer la recherche">✕</button>
+    </div>
     <div class="glossaire-count-row">
       <div class="glossaire-count" id="glossaire-count"></div>
       <div class="glo-alpha-index" id="glo-alpha-index"></div>
@@ -2442,6 +2470,7 @@ function showGlossaireScreen() {
   _scrollTopConnect('glossaire-scroll-sentinel');
   const input = document.getElementById('glossaire-search');
   if (input) { input.value = ''; }
+  document.getElementById('glossaire-search-clear').classList.remove('visible');
 }
 
 function _gloInitAlpha() {
@@ -2458,8 +2487,15 @@ function toggleGloLetter(l) {
   filterGlossaire('');
 }
 
+function clearGlossaireSearch() {
+  const input = document.getElementById('glossaire-search');
+  if (input) input.value = '';
+  filterGlossaire('');
+}
+
 function filterGlossaire(query) {
   const q = query.toLowerCase().trim();
+  document.getElementById('glossaire-search-clear').classList.toggle('visible', q.length > 0);
   if (q) _gloLetter = '';
   let filtered = GLOSSAIRE;
   if (q) filtered = filtered.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q));
@@ -2505,7 +2541,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.72';
+const APP_VERSION = '1.3.73';
 
 const FICHES = {
   1: [
