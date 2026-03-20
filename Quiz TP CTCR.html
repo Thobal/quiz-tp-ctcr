@@ -2279,7 +2279,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.49';
+const APP_VERSION = '1.3.50';
 
 const FICHES = {
   1: [
@@ -2890,6 +2890,7 @@ function generateFakeStats() {
     lastEntry.global = computeGlobalMastery(s).pct;
   }
 
+  s.lastSessionAt = Date.now();
   saveStats(s);
   showStatsScreen();
   alert(`✓ ${TOTAL_SESSIONS} sessions de démonstration générées !`);
