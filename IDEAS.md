@@ -6,7 +6,6 @@
 
 - **Mode "révision express" (1 question par fiche)** — Un mode de quiz rapide qui pioche automatiquement une question dans chacune des 20 fiches, pour un tour complet en 20 questions. Idéal pour une révision quotidienne sans cibler une fiche en particulier.
 
-- **Tri des questions par taux d'échec dans l'écran de révision** — Une option pour afficher les questions d'une fiche triées par taux d'échec personnel (calculé sur l'historique), afin de commencer la révision par les plus difficiles.
 
 
 ---
@@ -81,6 +80,8 @@
 - **Compteur de sessions du jour sur l'accueil** — L'accueil affiche déjà la date et l'heure de la dernière session ; un compteur journalier apporterait une information redondante pour un apport motivationnel limité.
 
 - **Liens glossaire dans les questions de révision** — La détection automatique des correspondances entre questions et termes du glossaire est trop fragile (faux positifs, formes fléchies) ; un tagging manuel sur 200 questions représente un effort de contenu disproportionné.
+
+- **Tri des questions par taux d'échec dans l'écran de révision** — L'ordre fixe des questions favorise une progression méthodique ; trier par taux d'échec nécessite un historique par question suffisant et complexifie l'interface pour un bénéfice incertain.
 
 - **Régularité : nombre moyen de sessions par semaine** — Le tableau hebdomadaire permet déjà de lire cette régularité semaine par semaine ; un indicateur agrégé supplémentaire surchargerait l'écran des statistiques pour un apport limité.
 
