@@ -2,11 +2,13 @@
 
 ## À réaliser
 
-1. **Message de confirmation après un export réussi** — Afficher un bref message "✓ Export téléchargé" sous le bouton après un export JSON ou PDF réussi, pour confirmer visuellement l'action.
+*(aucune idée en attente)*
 
 ---
 
 ## Réalisées
+
+- **Message de confirmation après un export réussi** — Toast en sur-impression avec barre de progression se vidant en 5 secondes, affiché après un export JSON ou PDF réussi.
 
 - **Tri alphabétique optionnel dans le glossaire** — Bouton bascule pour trier les termes du glossaire par ordre alphabétique (ou dans l'ordre d'apparition par défaut).
 
