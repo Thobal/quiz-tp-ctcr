@@ -2,7 +2,7 @@
 
 ## À réaliser
 
-1. **Animation d'expansion des cartes du glossaire** — Remplacer l'affichage instantané de la définition par une animation CSS fluide (transition sur max-height), pour un rendu plus soigné à l'ouverture et à la fermeture.
+*(aucune idée en attente)*
 
 
 
@@ -73,6 +73,8 @@
 - **Badge "Fiche N" sur les cartes d'erreur** — Le numéro de fiche source sur les cartes d'erreur apporte peu de valeur ; l'utilisateur reconnaît généralement la question sans avoir besoin de ce repère.
 
 - **Bouton de partage du lien de l'application** — L'URL de l'application est fixe et facile à retrouver ; un bouton dédié représente une complexité d'interface disproportionnée pour un usage très occasionnel.
+
+- **Animation d'expansion des cartes du glossaire** — Ouverture et fermeture animées via `grid-template-rows: 0fr → 1fr` pour une transition parfaitement fluide quelle que soit la hauteur de la définition.
 
 - **Infobulle sur les boutons de thème du quiz thématique** — Redondant : le nombre de questions disponibles par thème est déjà affiché directement à l'écran.
 

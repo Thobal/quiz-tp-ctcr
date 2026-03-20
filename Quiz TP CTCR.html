@@ -1984,19 +1984,22 @@
     line-height: 1;
   }
   .glossaire-card.open .glo-chevron { transform: rotate(180deg); }
+  .glossaire-card .glo-def-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.32s ease;
+  }
+  .glossaire-card.open .glo-def-wrap {
+    grid-template-rows: 1fr;
+  }
   .glossaire-card .glo-def {
     font-size: 13.5px;
     line-height: 1.6;
     color: var(--muted);
     overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    transition: none;
   }
   .glossaire-card.open .glo-def {
-    display: block;
-    -webkit-line-clamp: unset;
+    padding-top: 4px;
   }
 
 </style>
@@ -2530,7 +2533,9 @@ function renderGlossaire(items, q) {
         <span>${_gloHighlight(g.term, q)}</span>
         <span class="glo-chevron">▼</span>
       </div>
-      <div class="glo-def">${_gloHighlight(g.def, q)}</div>
+      <div class="glo-def-wrap">
+        <div class="glo-def">${_gloHighlight(g.def, q)}</div>
+      </div>
     </div>
   `).join('');
 }
@@ -2541,7 +2546,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.73';
+const APP_VERSION = '1.3.74';
 
 const FICHES = {
   1: [
