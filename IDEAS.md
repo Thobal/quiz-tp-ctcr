@@ -2,7 +2,7 @@
 
 ## À réaliser
 
-- **Score médian dans le tableau hebdomadaire** — Colonne supplémentaire dans le tableau de progression affichant la médiane des scores sur les semaines précédentes, pour comparer chaque semaine à sa propre médiane historique.
+
 
 ---
 
@@ -66,6 +66,8 @@
 
 ## Rejetées
 *(conservées pour mémoire — ne pas reproposer)*
+
+- **Score médian dans le tableau hebdomadaire** — Le tableau est déjà chargé sur mobile ; la médiane apporte peu de valeur supplémentaire par rapport à la lecture directe des valeurs semaine par semaine.
 
 - **Compte à rebours avant l'examen** — La date d'examen est connue de l'utilisateur ; un compteur de jours restants apporte peu de valeur dans un outil centré sur la révision active.
 
