@@ -2,13 +2,15 @@
 
 ## À réaliser
 
-1. **Ordre aléatoire des questions dans un quiz de fiche** — Lors du lancement d'un quiz sur une fiche, mélanger l'ordre des 10 questions à chaque session pour éviter la mémorisation par position et varier l'expérience. Par défaut les questions sont posées dans l'ordre ; un toggle 🔀 placé à côté du sélecteur de tri sur l'accueil ("N° de fiche" / "Score ↑"), mémorisé dans le localStorage, permet d'activer le mode aléatoire pour tous les quiz de fiche suivants.
-2. **Réduction de la taille du fichier** — Minifier le HTML, le CSS et le JavaScript, et optimiser les SVG des panneaux de signalisation, afin de réduire le poids de l'application sans modifier aucune fonctionnalité ni l'apparence visuelle.
+1. **Historique des erreurs étendu à 50** — Conserver les 50 dernières erreurs au lieu de 20, sans modifier l'interface existante. Permet de travailler sur un plus large éventail de questions manquées récentes.
+2. **Manifeste PWA pour l'installation sur l'écran d'accueil** — Injecter un manifeste via balise `<link>` et enregistrer un service worker minimaliste (Blob URL) pour permettre l'ajout de l'application à l'écran d'accueil mobile, avec icône et mode standalone. Améliore l'accès quotidien sans avoir à ouvrir le navigateur.
 
 
 ---
 
 ## Réalisées
+
+- **Réduction de la taille du fichier** — Suppression des attributs inutiles (`version`, `xmlns`, `xmlns:xlink`) des SVG inline et arrondi des coordonnées à 2 décimales. Factorisation du calcul de maîtrise globale dupliqué (`computeGlobalMastery`). Fichier réduit de ~373 Ko à ~359 Ko.
 
 - **Tri des fiches sur l'accueil** — Sélecteur permettant de trier les fiches par numéro ou par score croissant (fiches non travaillées en premier). Animation FLIP lors du réordonnancement. Le score s'affiche sur chaque bouton en mode tri par score. Les badges "À prioriser" sont masqués en mode score (redondants). La grille est recalculée à chaque retour sur l'accueil pour refléter les scores mis à jour. Le tri choisi est mémorisé dans le localStorage.
 
@@ -146,3 +148,41 @@
 - **Zoom sur les panneaux de signalisation** — Les panneaux sont déjà suffisamment lisibles sur les écrans modernes et sont également visibles dans l'écran de révision.
 - **Record personnel affiché sur l'écran de résultats** — En fin de quiz de fiche, indiquer si le score obtenu est le meilleur jamais réalisé sur cette fiche.
 - **Compteur de fiches maîtrisées sur l'accueil** — L'information est déjà partiellement couverte par le taux de maîtrise global affiché sous le titre.
+
+- **Badges de niveau par fiche (Bronze / Argent / Or)** — Dimension gamifiée peu adaptée à un outil de révision professionnel ; le score affiché en mode tri par score couvre déjà ce besoin.
+
+- **Filtre par thématique sur l'accueil** — Complexité d'interface (sélecteur supplémentaire) disproportionnée ; le quiz thématique existant permet déjà de cibler un thème précis.
+
+- **Synthèse des erreurs par thème en fin de quiz** — Les erreurs sont déjà accessibles dans "Mes 20 dernières erreurs" ; un tableau par thème ajouterait de la complexité pour un apport limité.
+
+- **Raccourci "Reprendre la dernière fiche"** — La grille étant limitée à 20 fiches, retrouver visuellement la dernière fiche jouée ne représente pas de friction significative.
+
+- **Indicateur visuel de maîtrise sur les boutons en mode tri par numéro** — Redondant avec le mode tri par score qui affiche déjà le niveau de maîtrise ; ajouter une information supplémentaire en mode numéro surcharge inutilement l'interface.
+
+- **Couleur dégradée sur l'anneau de score de l'écran de résultats** — L'anneau a déjà sa propre logique de couleur ; appliquer scoreColor() serait une cohérence cosmétique de faible valeur ajoutée.
+
+- **Résumé de la semaine courante sur l'accueil** — L'information est déjà accessible dans le tableau de progression hebdomadaire des statistiques ; la dupliquer sur l'accueil serait redondant.
+
+- **Normalisation des accents et de la casse pour la validation des réponses libres** — Déjà implémenté : la fonction `normalize()` applique `toLowerCase()` + suppression des accents sur toutes les validations de réponses.
+
+- **Confirmation avant de quitter un quiz en cours** — Un quiz se termine en quelques minutes et la perte de progression est anecdotique ; la modale ajouterait une friction inutile à chaque retour accidentel.
+
+- **Ordre aléatoire des questions dans un quiz de fiche** — Difficulté de mise en œuvre du toggle sans surcharger l'interface ; l'ordre fixe favorise une progression méthodique par fiche.
+
+- **Compte à rebours optionnel par question** — Risque d'ajouter du stress contre-productif lors de la révision ; le mode examen blanc (déjà rejeté) couvrait ce besoin plus complètement.
+
+- **Mode entraînement sans impact sur les statistiques** — Complexité de maintenance d'un double chemin de code (avec/sans enregistrement) pour un usage occasionnel ; effacer les données d'une session via l'import/export existant couvre déjà ce besoin.
+
+- **Swipe horizontal pour passer à la question suivante sur mobile** — Le bouton "Question suivante" est suffisamment accessible ; le swipe introduit un risque de déclenchement accidentel pendant la saisie.
+
+- **Distinction visuelle des fiches jamais jouées sur l'accueil** — En mode tri par score, les fiches non jouées affichent déjà "—" ce qui les distingue clairement ; ajouter une opacité différente en mode numéro serait redondant.
+
+- **Score coloré sur les boutons de fiche en mode tri par score** — Déjà implémenté : la fonction `scoreCouleur()` applique le même dégradé continu rouge→vert à la valeur affichée sur chaque bouton.
+
+- **Affichage de la bonne réponse dans le feedback en mode YOLO** — Déjà implémenté : le feedback affiche "⚡ Sauvé par le mode YOLO — en mode strict, la réponse attendue était : …" lorsqu'une mauvaise réponse est sauvée.
+
+- **Indicateur de progression par points colorés** — La barre de progression et le texte "Question X / 10" existants sont suffisants ; ajouter 10 cercles surchargerait le bandeau sans apport significatif.
+
+- **Défilement automatique vers la carte après validation** — Le problème ne se produit pas en pratique, notamment grâce à l'affichage du panneau à droite de la question qui réduit la hauteur de la carte.
+
+- **Résumé du score par type de question sur l'écran de résultats** — La répartition Vrai/Faux / Oui/Non / texte libre est déséquilibrée selon les fiches, rendant la comparaison peu fiable ; l'apport analytique ne justifie pas la complexité.
