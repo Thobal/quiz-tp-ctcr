@@ -2239,7 +2239,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.38';
+const APP_VERSION = '1.3.39';
 
 const FICHES = {
   1: [
@@ -3607,12 +3607,14 @@ function renderRollingAvg(s) {
   }
 
   // Calcul de la moyenne glissante sur les 10 dernières sessions
+  // Seuls les points avec une fenêtre complète de 10 sessions sont conservés.
   const WINDOW = 10;
-  const data = history.map((_, i) => {
-    const start = Math.max(0, i - WINDOW + 1);
-    const window = history.slice(start, i + 1);
-    return Math.round(window.reduce((a, b) => a + b, 0) / window.length);
-  });
+  const data = history
+    .map((_, i) => {
+      const window = history.slice(i - WINDOW + 1, i + 1);
+      return Math.round(window.reduce((a, b) => a + b, 0) / window.length);
+    })
+    .slice(WINDOW - 1);
 
   const W = 400, H = 80, padL = 32, padR = 10, padV = 10;
   const xStep = (W - padL - padR) / (data.length - 1);
