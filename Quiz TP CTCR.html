@@ -2238,7 +2238,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.27';
+const APP_VERSION = '1.3.28';
 
 const FICHES = {
   1: [
@@ -2639,15 +2639,6 @@ function renderStorageInfo() {
         </div>
         <div class="storage-bar-track">
           <div class="storage-bar-fill" style="width:${lsPct}%;background:${lsColor}"></div>
-        </div>
-      </div>
-      <div class="storage-row">
-        <div class="storage-row-header">
-          <span>Données Quiz TP CTCR</span>
-          <strong>${fmt(quizBytes)}</strong>
-        </div>
-        <div class="storage-bar-track">
-          <div class="storage-bar-fill" style="width:${quizPct}%;background:${quizColor}"></div>
         </div>
       </div>
       ${quotaRow}
