@@ -8,9 +8,8 @@
 
 3. **Animation d'expansion des cartes du glossaire** — Remplacer l'affichage instantané de la définition par une animation CSS fluide (transition sur max-height), pour un rendu plus soigné à l'ouverture et à la fermeture.
 
-4. **Tri du glossaire mémorisé dans le localStorage** — Mémoriser le dernier tri choisi (alphabétique ou par défaut) afin qu'il soit automatiquement appliqué à la prochaine visite de l'écran.
+4. **Infobulle sur les boutons de thème du quiz thématique** — Au survol (desktop) d'un bouton de thème, afficher une infobulle indiquant le nombre de questions disponibles dans ce thème.
 
-5. **Infobulle sur les boutons de thème du quiz thématique** — Au survol (desktop) d'un bouton de thème, afficher une infobulle indiquant le nombre de questions disponibles dans ce thème.
 
 
 
@@ -80,6 +79,8 @@
 - **Badge "Fiche N" sur les cartes d'erreur** — Le numéro de fiche source sur les cartes d'erreur apporte peu de valeur ; l'utilisateur reconnaît généralement la question sans avoir besoin de ce repère.
 
 - **Bouton de partage du lien de l'application** — L'URL de l'application est fixe et facile à retrouver ; un bouton dédié représente une complexité d'interface disproportionnée pour un usage très occasionnel.
+
+- **Tri du glossaire mémorisé dans le localStorage** — Sans objet : le glossaire est systématiquement affiché par ordre alphabétique, il n'y a pas de tri à mémoriser.
 
 - **Mise en évidence de la semaine en cours dans le tableau de progression** — La semaine courante est toujours la première ligne du tableau ; la surligner n'apporterait aucune valeur.
 
