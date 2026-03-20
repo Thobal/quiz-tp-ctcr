@@ -4,7 +4,6 @@
 
 - **Liens glossaire dans les questions de révision** — Dans l'écran de révision, les mots présents à la fois dans la question et dans le glossaire sont soulignés. Au tap/clic, une infobulle affiche la définition sans quitter l'écran, réduisant les allers-retours.
 
-- **Compteur de sessions du jour sur l'accueil** — Un indicateur discret sous les KPI affichant le nombre de sessions jouées aujourd'hui (ex : "3 sessions aujourd'hui"), pour encourager une pratique quotidienne sans système de streak.
 
 
 ---
@@ -75,6 +74,8 @@
 - **Score médian dans le tableau hebdomadaire** — Le tableau est déjà chargé sur mobile ; la médiane apporte peu de valeur supplémentaire par rapport à la lecture directe des valeurs semaine par semaine.
 
 - **Compte à rebours avant l'examen** — La date d'examen est connue de l'utilisateur ; un compteur de jours restants apporte peu de valeur dans un outil centré sur la révision active.
+
+- **Compteur de sessions du jour sur l'accueil** — L'accueil affiche déjà la date et l'heure de la dernière session ; un compteur journalier apporterait une information redondante pour un apport motivationnel limité.
 
 - **Masquage des fiches maîtrisées sur l'accueil** — Le tri par score existant suffit à identifier les fiches prioritaires ; masquer complètement les fiches maîtrisées risque de donner une vision incomplète de la progression globale.
 
