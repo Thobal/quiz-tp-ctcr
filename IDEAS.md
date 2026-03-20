@@ -2,7 +2,6 @@
 
 ## À réaliser
 
-- **Graphique en courbe de la maîtrise globale** — Dans les statistiques, un graphique linéaire montrant l'évolution de la maîtrise globale semaine par semaine, en complément du tableau hebdomadaire. Plus visuel pour percevoir la tendance générale d'un coup d'œil.
 
 
 
@@ -79,6 +78,8 @@
 - **Compteur de sessions du jour sur l'accueil** — L'accueil affiche déjà la date et l'heure de la dernière session ; un compteur journalier apporterait une information redondante pour un apport motivationnel limité.
 
 - **Liens glossaire dans les questions de révision** — La détection automatique des correspondances entre questions et termes du glossaire est trop fragile (faux positifs, formes fléchies) ; un tagging manuel sur 200 questions représente un effort de contenu disproportionné.
+
+- **Graphique en courbe de la maîtrise globale** — Fait doublon avec le tableau de progression hebdomadaire qui affiche déjà les mêmes données sous forme tabulaire.
 
 - **Mode "révision express" (1 question par fiche)** — Le quiz aléatoire existant couvre déjà ce besoin ; un mode supplémentaire fragmenterait l'interface des modes de quiz pour un bénéfice marginal.
 
