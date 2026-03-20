@@ -2,7 +2,15 @@
 
 ## À réaliser
 
-*(aucune idée en attente)*
+1. **Filtrage du glossaire par lettre initiale** — Index A–Z cliquable au-dessus du glossaire pour sauter directement aux termes commençant par une lettre donnée, en complément du tri alphabétique existant.
+
+2. **Compteur de termes dans l'en-tête du glossaire** — Afficher le nombre total de termes et, quand un filtre de recherche est actif, le nombre de résultats correspondants (ex : "5 / 42 termes").
+
+3. **Surbrillance du terme recherché dans le glossaire** — Mettre en évidence les occurrences du mot saisi dans le champ de recherche directement dans les titres et définitions affichés.
+
+4. **Badge "Fiche N" sur les cartes d'erreur** — Afficher un petit badge indiquant le numéro de fiche source sur chaque carte dans "Mes 25 dernières erreurs", avec un tap/clic qui ouvre directement la fiche de révision correspondante.
+
+5. **Bouton de partage du lien de l'application** — Un bouton discret permettant de partager l'URL de l'application via l'API Web Share (mobile) ou de la copier dans le presse-papier (desktop), pour la diffuser facilement à des collègues préparant le même examen.
 
 ---
 
