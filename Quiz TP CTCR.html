@@ -2238,7 +2238,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.31';
+const APP_VERSION = '1.3.32';
 
 const FICHES = {
   1: [
@@ -2932,46 +2932,53 @@ const INFO_TEXTS = {
     body: `<p>Ces deux indicateurs représentent votre niveau de maîtrise <strong>actuel</strong>, basé sur les <strong>5 dernières sessions de chaque fiche</strong>.</p>
            <p><strong>Fiches travaillées</strong> — additionne les bonnes réponses obtenues sur ces sessions et les divise par le nombre total de questions posées. Seules les fiches déjà travaillées sont prises en compte.</p>
            <p><strong>Maîtrise globale</strong> — même calcul, mais ramené sur les 20 fiches. Reflète l'avancement sur l'ensemble du programme : plus vous couvrez de fiches, plus ce taux se rapproche du premier.</p>
-           <p style="color:var(--muted);font-size:12px;">Si vous progressez, vos scores s'améliorent rapidement : seules les 5 dernières sessions de chaque fiche comptent, les anciennes erreurs ne sont donc plus prises en compte dans le calcul.</p>`
+           <p style="color:var(--muted);font-size:12px;">Si vous progressez, vos scores s'améliorent rapidement : seules les 5 dernières sessions de chaque fiche comptent, les anciennes erreurs ne sont donc plus prises en compte dans le calcul.</p>
+           <p style="color:var(--muted);font-size:12px;">⚠ Les quiz aléatoires et thématiques ne sont pas pris en compte.</p>`
   },
   'derniers-scores': {
     title: 'Derniers scores',
     body: `<p>Ce graphique affiche l'évolution de votre score session par session, dans l'ordre chronologique.</p>
            <p>Chaque point représente le score obtenu lors d'une session (nombre de bonnes réponses sur 10), exprimé en pourcentage.</p>
-           <p style="color:var(--muted);font-size:12px;">Les 30 dernières sessions toutes fiches confondues sont affichées.</p>`
+           <p style="color:var(--muted);font-size:12px;">Les 30 dernières sessions toutes fiches confondues sont affichées.</p>
+           <p style="color:var(--muted);font-size:12px;">✓ Les quiz aléatoires et thématiques sont inclus.</p>`
   },
   'moyenne-glissante': {
     title: 'Moyenne glissante',
     body: `<p>Ce graphique lisse vos performances en calculant, pour chaque point, la <strong>moyenne de vos 10 dernières sessions</strong> à ce moment-là.</p>
            <p>Cela permet de visualiser votre tendance générale sans être perturbé par les variations d'une session à l'autre.</p>
-           <p style="color:var(--muted);font-size:12px;">Une courbe qui monte indique une progression réelle et durable.</p>`
+           <p style="color:var(--muted);font-size:12px;">Une courbe qui monte indique une progression réelle et durable.</p>
+           <p style="color:var(--muted);font-size:12px;">✓ Les quiz aléatoires et thématiques sont inclus.</p>`
   },
   'fiches-travaillees': {
     title: 'Fiches les moins travaillées',
     body: `<p>Cette grille colorée indique combien de fois vous avez travaillé chaque fiche, toutes sessions confondues.</p>
            <p>Plus la cellule est jaune et brillante, moins vous avez pratiqué cette fiche. Les cellules sombres correspondent aux fiches les plus travaillées.</p>
-           <p>💡 <strong>Chaque cellule est cliquable</strong> : appuyez dessus pour lancer directement le quiz de la fiche correspondante.</p>`
+           <p>💡 <strong>Chaque cellule est cliquable</strong> : appuyez dessus pour lancer directement le quiz de la fiche correspondante.</p>
+           <p style="color:var(--muted);font-size:12px;">⚠ Les quiz aléatoires et thématiques ne sont pas pris en compte.</p>`
   },
   'fiches-maitrisees': {
     title: 'Fiches les moins maîtrisées',
     body: `<p>Cette grille met en évidence les fiches sur lesquelles vous obtenez les moins bons résultats.</p>
            <p>Le score de chaque fiche est calculé sur vos <strong>5 dernières sessions</strong> pour cette fiche. Plus une cellule est rouge, plus votre taux de bonnes réponses est faible sur cette fiche récemment.</p>
            <p>Les fiches jamais jouées sont considérées comme non maîtrisées (score 0%).</p>
-           <p>💡 <strong>Chaque cellule est cliquable</strong> : appuyez dessus pour lancer directement le quiz de la fiche correspondante.</p>`
+           <p>💡 <strong>Chaque cellule est cliquable</strong> : appuyez dessus pour lancer directement le quiz de la fiche correspondante.</p>
+           <p style="color:var(--muted);font-size:12px;">⚠ Les quiz aléatoires et thématiques ne sont pas pris en compte.</p>`
   },
   'fiches-anciennete': {
     title: 'Fiches non travaillées depuis longtemps',
     body: `<p>Cette grille met en évidence les fiches que vous n'avez pas travaillées depuis le plus longtemps, afin de vous rappeler de les revoir avant de les oublier.</p>
            <p>Chaque cellule affiche la date de votre dernière session pour cette fiche. Plus la couleur bleue est <strong>vive et éclatante</strong>, plus la fiche est ancienne. Plus elle est <strong>sombre</strong>, plus vous l'avez travaillée récemment.</p>
            <p>Les fiches jamais étudiées affichent <em>« — »</em> et reçoivent la couleur la plus éclatante.</p>
-           <p>💡 <strong>Chaque cellule est cliquable</strong> : appuyez dessus pour lancer directement le quiz de la fiche correspondante.</p>`
+           <p>💡 <strong>Chaque cellule est cliquable</strong> : appuyez dessus pour lancer directement le quiz de la fiche correspondante.</p>
+           <p style="color:var(--muted);font-size:12px;">⚠ Les quiz aléatoires et thématiques ne sont pas pris en compte.</p>`
   },
 'weekly-history': {
     title: 'Progression hebdomadaire',
     body: `<p>Ce tableau affiche l'évolution de votre maîtrise semaine par semaine (les semaines commencent le lundi).</p>
            <p><strong>Fiches travaillées</strong> — niveau de maîtrise calculé uniquement sur les fiches que vous avez travaillées (identique à la jauge du même nom).</p>
            <p><strong>Maîtrise globale</strong> — même calcul, mais ramené sur les 20 fiches du programme. Les fiches non travaillées comptent pour 0 % et tirent ce score vers le bas.</p>
-           <p>La valeur enregistrée pour chaque semaine correspond à l'état de vos jauges à la fin de cette semaine. Les 15 dernières semaines sont affichées.</p>`
+           <p>La valeur enregistrée pour chaque semaine correspond à l'état de vos jauges à la fin de cette semaine. Les 15 dernières semaines sont affichées.</p>
+           <p style="color:var(--muted);font-size:12px;">⚠ Les quiz aléatoires et thématiques ne sont pas pris en compte.</p>`
   },
   'loose-mode': {
     title: 'Mode YOLO !',
