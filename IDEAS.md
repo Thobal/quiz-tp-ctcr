@@ -2,11 +2,17 @@
 
 ## À réaliser
 
+1. **Animation de transition entre les écrans** — Ajouter un léger fondu CSS lors des changements d'écran (accueil ↔ quiz, quiz → résultats, etc.) pour fluidifier la navigation perçue.
+2. **Bouton de réinitialisation de l'historique des erreurs** — Dans la section "Mes 25 dernières erreurs", un bouton permettant d'effacer cet historique sans affecter les scores des fiches.
 
 
 ---
 
 ## Réalisées
+
+- **Date et heure de la dernière session dans les statistiques** — `s.lastSessionAt = Date.now()` enregistré à chaque session. Affiché sous le titre "Statistiques" : "Dernière session : le JJ/MM/YYYY à HH:MM".
+
+- **Message d'encouragement contextuel en fin de quiz** — Déjà implémenté : 6 titres contextuels (`'À retravailler…'` → `'Excellent !'`) affichés selon le score via `score-title`.
 
 - **Historique des erreurs étendu à 25** — Limite portée de 20 à 25 entrées dans `wrongHistory`. Le bouton "Mes 20 dernières erreurs" renommé en "Mes 25 dernières erreurs".
 
@@ -188,3 +194,15 @@
 - **Défilement automatique vers la carte après validation** — Le problème ne se produit pas en pratique, notamment grâce à l'affichage du panneau à droite de la question qui réduit la hauteur de la carte.
 
 - **Résumé du score par type de question sur l'écran de résultats** — La répartition Vrai/Faux / Oui/Non / texte libre est déséquilibrée selon les fiches, rendant la comparaison peu fiable ; l'apport analytique ne justifie pas la complexité.
+
+- **Bandeau "Nouvelle version appliquée"** — Information de faible valeur ajoutée ; l'utilisateur n'a généralement pas besoin de savoir qu'une mise à jour a eu lieu.
+
+- **Indicateur de connexion perdue** — L'application étant une page statique sans fonctionnalités temps réel, la perte de connexion n'a d'impact que si l'utilisateur tente de recharger, ce qui est déjà géré par le navigateur.
+
+- **Mémorisation du dernier onglet actif dans les statistiques** — L'écran des statistiques est court à parcourir ; le gain de confort ne justifie pas la complexité de persistance.
+
+- **Retour haptique discret sur bonne réponse** — Le retour positif est déjà assuré visuellement (✅ vert) ; ajouter une vibration sur les bonnes réponses risque d'être perçu comme intrusif.
+
+- **Mise en page améliorée sur tablette** — L'usage principal est mobile ; optimiser pour tablette représente une complexité de maintenance disproportionnée par rapport à l'usage réel.
+
+- **Résumé textuel des statistiques copiable** — L'export PDF existant couvre déjà le besoin de partage ; un doublon texte apporterait peu de valeur supplémentaire.
