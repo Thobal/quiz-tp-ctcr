@@ -2239,7 +2239,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.36';
+const APP_VERSION = '1.3.37';
 
 const FICHES = {
   1: [
@@ -2836,6 +2836,19 @@ function generateFakeStats() {
         s.ficheHistory[fn].push({ score: Math.round(rate * 10), total: 10 });
       }
     });
+
+    // Recalcul des jauges de la dernière semaine depuis ficheHistory réécrit,
+    // pour que le tableau hebdomadaire et les jauges soient en accord.
+    const { cor: lCor, tot: lTot, rate: lRate } = computeWorkedMastery(s);
+    lastEntry.worked = lRate != null ? Math.round(lRate * 100) : 0;
+    let lSumMastery = 0;
+    for (let i = 1; i <= 20; i++) {
+      const sessions = s.ficheHistory[String(i)] || [];
+      const tot = sessions.reduce((a, h) => a + h.total, 0);
+      const cor = sessions.reduce((a, h) => a + h.score, 0);
+      lSumMastery += tot > 0 ? cor / tot : 0;
+    }
+    lastEntry.global = Math.round(lSumMastery / 20 * 100);
   }
 
   saveStats(s);
