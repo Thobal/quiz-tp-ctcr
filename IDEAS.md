@@ -2,12 +2,13 @@
 
 ## À réaliser
 
-1. **Navigation entre fiches dans l'écran de révision** — Flèches "‹ Fiche précédente" / "Fiche suivante ›" pour passer d'une fiche à l'autre sans revenir à l'accueil à chaque fois.
 
 
 ---
 
 ## Réalisées
+
+- **Navigation entre fiches dans l'écran de révision** — Boutons ‹ / › alignés à droite sur la ligne du titre, désactivés automatiquement sur la première et la dernière fiche.
 
 - **Panneaux de signalisation dans "Mes 25 dernières erreurs"** — Pour les questions ayant un panneau associé, le SVG du panneau est affiché dans la carte d'erreur. Le champ `panel` est stocké dans `wrongHistory`.
 
