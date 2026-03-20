@@ -1177,6 +1177,21 @@
     padding: 22px;
     margin-bottom: 16px;
   }
+  #chart-tooltip {
+    display: none;
+    position: fixed;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    pointer-events: none;
+    z-index: 200;
+    white-space: nowrap;
+  }
+
   .stat-block h3 {
     font-family: 'Syne', sans-serif;
     font-size: 13px;
@@ -2239,7 +2254,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.40';
+const APP_VERSION = '1.3.41';
 
 const FICHES = {
   1: [
@@ -3594,6 +3609,7 @@ function renderSparkline(s) {
     <polyline points="${ptsStr}" fill="none" stroke="#f5c842" stroke-width="2" stroke-linejoin="round"/>
     ${dots}
   `;
+  attachChartTooltips(svg, data);
 }
 
 function renderRollingAvg(s) {
@@ -3649,6 +3665,7 @@ function renderRollingAvg(s) {
     <polyline points="${ptsStr}" fill="none" stroke="#6abf88" stroke-width="2" stroke-linejoin="round"/>
     ${dots}
   `;
+  attachChartTooltips(svg, data);
 }
 
 function renderHeatmap(s) {
@@ -4669,7 +4686,26 @@ function showScreen(id) {
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
+function attachChartTooltips(svgEl, data) {
+  const tooltip = document.getElementById('chart-tooltip');
+  svgEl.querySelectorAll('circle').forEach((circle, i) => {
+    circle.style.cursor = 'default';
+    circle.addEventListener('mouseenter', () => {
+      tooltip.textContent = data[i] + ' %';
+      tooltip.style.display = 'block';
+    });
+    circle.addEventListener('mousemove', e => {
+      tooltip.style.left = (e.clientX + 14) + 'px';
+      tooltip.style.top  = (e.clientY - 34) + 'px';
+    });
+    circle.addEventListener('mouseleave', () => {
+      tooltip.style.display = 'none';
+    });
+  });
+}
+
 init();
 </script>
+<div id="chart-tooltip"></div>
 </body>
 </html>
