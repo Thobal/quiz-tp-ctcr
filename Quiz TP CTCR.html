@@ -2368,7 +2368,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.60';
+const APP_VERSION = '1.3.61';
 
 const FICHES = {
   1: [
@@ -4836,6 +4836,8 @@ function goHome() {
 }
 
 function showScreen(id) {
+  _scrollTopObserver.disconnect();
+  _scrollTopBtn.classList.remove('visible');
   document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'instant' });
@@ -4863,10 +4865,7 @@ init();
 
 const _scrollTopBtn = document.getElementById('scroll-top-btn');
 const _scrollTopObserver = new IntersectionObserver(
-  ([entry]) => {
-    const revisionVisible = !document.getElementById('revision-screen').classList.contains('hidden');
-    _scrollTopBtn.classList.toggle('visible', revisionVisible && !entry.isIntersecting);
-  },
+  ([entry]) => { _scrollTopBtn.classList.toggle('visible', !entry.isIntersecting); },
   { threshold: 0 }
 );
 </script>
