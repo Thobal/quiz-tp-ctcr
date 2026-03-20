@@ -1129,6 +1129,28 @@
   .revision-nav-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
   .revision-nav-btn:disabled { opacity: 0.25; cursor: default; }
 
+  #scroll-top-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    transition: border-color 0.2s, color 0.2s;
+    z-index: 50;
+  }
+  #scroll-top-btn.visible { display: flex; }
+  #scroll-top-btn:hover { border-color: var(--accent); color: var(--accent); }
+
   .qa-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -2217,6 +2239,8 @@
     <div class="hidden" id="revision-errors">
       <div id="revision-errors-list"></div>
     </div>
+
+    <button id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Retour en haut">↑</button>
   </div>
 
 
@@ -2343,7 +2367,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.54';
+const APP_VERSION = '1.3.55';
 
 const FICHES = {
   1: [
@@ -4829,6 +4853,13 @@ function attachChartTooltips(svgEl, data) {
 }
 
 init();
+
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top-btn');
+  if (!btn) return;
+  const revisionVisible = !document.getElementById('revision-screen').classList.contains('hidden');
+  btn.classList.toggle('visible', revisionVisible && window.scrollY > 250);
+});
 </script>
 <div id="chart-tooltip"></div>
 </body>

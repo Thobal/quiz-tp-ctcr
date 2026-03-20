@@ -2,11 +2,19 @@
 
 ## À réaliser
 
-
+1. **Bouton "Retour en haut" dans l'écran de révision** — Un bouton discret apparaissant après défilement pour remonter en tête de liste d'un tap, utile sur mobile après avoir parcouru les 10 questions d'une fiche.
 
 ---
 
 ## Réalisées
+
+- **Masquage des réponses dans l'écran de révision** — Proche du "Mode entraînement sans impact sur les statistiques" déjà rejeté ; s'auto-tester visuellement sans lancer de quiz représente une complexité d'interface pour un bénéfice limité.
+
+- **Import de statistiques par glisser-déposer** — Le bouton d'import existant couvre largement le besoin ; le drag-and-drop est un confort marginal peu justifié pour une action occasionnelle.
+
+- **Infobulle sur les cellules de la heatmap** — "Graphique de progression par fiche — Sur la heatmap, au clic sur une cellule" est déjà rejeté ; une infobulle date + score par cellule relève du même principe de sur-détail de la heatmap.
+
+- **Explication affichée dans le feedback de réponse** — Déjà implémenté : `explHtml` est injecté dans le feedback aussi bien en cas de bonne que de mauvaise réponse (via `.expl-text`).
 
 - **Navigation entre fiches dans l'écran de révision** — Boutons ‹ / › alignés à droite sur la ligne du titre, désactivés automatiquement sur la première et la dernière fiche.
 
