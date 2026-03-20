@@ -8,9 +8,6 @@
 
 - **Compteur de sessions du jour sur l'accueil** — Un indicateur discret sous les KPI affichant le nombre de sessions jouées aujourd'hui (ex : "3 sessions aujourd'hui"), pour encourager une pratique quotidienne sans système de streak.
 
-- **Masquage des fiches maîtrisées sur l'accueil** — Un toggle permettant de masquer les fiches ayant un score ≥ 80 % pour concentrer l'affichage sur celles encore à travailler. Différent du tri par score : ici les fiches maîtrisées disparaissent complètement de la vue.
-
-- **Progression du glossaire mémorisée** — Suivre dans le localStorage quelles définitions ont été ouvertes au moins une fois et afficher un compteur "X / 42 termes explorés" dans l'en-tête du glossaire, pour mesurer sa couverture du vocabulaire.
 
 ---
 
@@ -78,6 +75,10 @@
 - **Score médian dans le tableau hebdomadaire** — Le tableau est déjà chargé sur mobile ; la médiane apporte peu de valeur supplémentaire par rapport à la lecture directe des valeurs semaine par semaine.
 
 - **Compte à rebours avant l'examen** — La date d'examen est connue de l'utilisateur ; un compteur de jours restants apporte peu de valeur dans un outil centré sur la révision active.
+
+- **Masquage des fiches maîtrisées sur l'accueil** — Le tri par score existant suffit à identifier les fiches prioritaires ; masquer complètement les fiches maîtrisées risque de donner une vision incomplète de la progression globale.
+
+- **Progression du glossaire mémorisée** — Nécessite de tracer chaque ouverture de définition dans le localStorage, complexifiant le modèle de données pour un apport motivationnel limité.
 
 - **Export des statistiques au format CSV** — L'export JSON existant couvre déjà le besoin de sauvegarde ; un format CSV supplémentaire représente une complexité disproportionnée pour un usage marginal.
 
