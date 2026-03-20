@@ -2,8 +2,15 @@
 
 ## À réaliser
 
+- **Graphique en courbe de la maîtrise globale** — Dans les statistiques, un graphique linéaire montrant l'évolution de la maîtrise globale semaine par semaine, en complément du tableau hebdomadaire. Plus visuel pour percevoir la tendance générale d'un coup d'œil.
 
+- **Mode "révision express" (1 question par fiche)** — Un mode de quiz rapide qui pioche automatiquement une question dans chacune des 20 fiches, pour un tour complet en 20 questions. Idéal pour une révision quotidienne sans cibler une fiche en particulier.
 
+- **Tri des questions par taux d'échec dans l'écran de révision** — Une option pour afficher les questions d'une fiche triées par taux d'échec personnel (calculé sur l'historique), afin de commencer la révision par les plus difficiles.
+
+- **Régularité : nombre moyen de sessions par semaine** — Un indicateur dans les statistiques affichant "X sessions/semaine en moyenne" calculé sur les 4 dernières semaines actives, pour évaluer l'intensité de la préparation.
+
+- **Questions incorrectes affichées en premier dans les résultats** — Sur l'écran de fin de quiz, afficher les questions ratées en haut de la liste plutôt qu'en ordre chronologique, pour les identifier d'un seul regard sans parcourir toute la liste.
 
 ---
 
