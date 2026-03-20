@@ -2,11 +2,13 @@
 
 ## À réaliser
 
-1. **Infobulle d'explication sur les barres de KPI de l'accueil** — Au survol (desktop) ou tap (mobile), une infobulle explique ce que représente chaque indicateur (maîtrise fiches travaillées, maîtrise globale) et comment il est calculé.
+
 
 ---
 
 ## Réalisées
+
+- **Infobulles explicatives sur les barres de KPI de l'accueil** — Au survol (desktop) ou tap (mobile), une infobulle explique le calcul de chaque indicateur : "Maîtrise des fiches travaillées" (ratio bonnes réponses / questions posées sur les fiches jouées) et "Maîtrise globale" (moyenne sur les 20 fiches, non-jouées à 0 %).
 
 - **Bouton de réinitialisation de l'historique des erreurs** — Bouton "Effacer l'historique" affiché en haut de la liste des 25 erreurs (avec confirmation), visible uniquement quand la liste n'est pas vide.
 
