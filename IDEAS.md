@@ -2,7 +2,15 @@
 
 ## À réaliser
 
+- **Raccourci "Statistiques" depuis l'écran de résultats** — Sur l'écran de fin de quiz, un bouton direct permettant d'accéder aux statistiques sans repasser par l'accueil. Utile pour consulter sa progression immédiatement après une session.
 
+- **Raccourci "Réviser cette fiche" depuis l'écran de résultats** — Après un quiz de fiche, un bouton permettant d'ouvrir directement la fiche de révision correspondante sans repasser par l'accueil. Facilite l'enchaînement quiz → révision.
+
+- **Indicateur de série de baisses dans le tableau hebdomadaire** — Si le score diminue 3 semaines consécutives ou plus, mettre en évidence cette tendance négative par une couleur distincte sur les lignes concernées, pour alerter sans être intrusif.
+
+- **Option pour inverser l'ordre du tableau hebdomadaire** — Un bouton bascule permettant d'afficher les semaines de la plus ancienne à la plus récente (ordre chronologique naturel), plutôt que la plus récente en tête.
+
+- **Encouragement après 3 semaines de progression** — Si les 3 dernières entrées du tableau hebdomadaire montrent une progression continue, afficher un indicateur visuel discret (ex : ✦ ou une teinte verte sur le bloc) pour souligner la dynamique positive.
 
 ---
 
