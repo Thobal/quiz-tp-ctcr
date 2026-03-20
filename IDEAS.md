@@ -2,7 +2,15 @@
 
 ## À réaliser
 
+- **Réinitialisation complète des données** — Bouton dans l'écran des statistiques (avec double confirmation) pour effacer intégralement toutes les données localStorage : scores, historique d'erreurs, sessions, paramètres. Utile pour repartir de zéro ou prêter l'appareil à quelqu'un d'autre.
 
+- **Liens glossaire dans les questions de révision** — Dans l'écran de révision, les mots présents à la fois dans la question et dans le glossaire sont soulignés. Au tap/clic, une infobulle affiche la définition sans quitter l'écran, réduisant les allers-retours.
+
+- **Compteur de sessions du jour sur l'accueil** — Un indicateur discret sous les KPI affichant le nombre de sessions jouées aujourd'hui (ex : "3 sessions aujourd'hui"), pour encourager une pratique quotidienne sans système de streak.
+
+- **Masquage des fiches maîtrisées sur l'accueil** — Un toggle permettant de masquer les fiches ayant un score ≥ 80 % pour concentrer l'affichage sur celles encore à travailler. Différent du tri par score : ici les fiches maîtrisées disparaissent complètement de la vue.
+
+- **Progression du glossaire mémorisée** — Suivre dans le localStorage quelles définitions ont été ouvertes au moins une fois et afficher un compteur "X / 42 termes explorés" dans l'en-tête du glossaire, pour mesurer sa couverture du vocabulaire.
 
 ---
 
