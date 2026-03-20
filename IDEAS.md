@@ -2,8 +2,15 @@
 
 ## À réaliser
 
+- **Numérotation des cartes dans "Mes 25 dernières erreurs"** — Ajouter un numéro (1 à 25) sur chaque carte d'erreur pour pouvoir les référencer facilement. Simple et non-intrusif.
 
+- **Indicateur du type de question dans l'écran de révision** — Sur chaque question, un petit badge discret indique le format de réponse attendu ("Vrai/Faux", "Oui/Non", "Texte libre") pour anticiper avant de répondre.
 
+- **Mise en évidence de la meilleure semaine dans le tableau de progression** — Surligner la ligne correspondant au score le plus élevé jamais atteint, pour garder en tête son pic de performance. Distinct de la semaine courante.
+
+- **Aperçu des 3 dernières erreurs sur l'accueil** — Une section discrète affichant les 3 questions les plus récemment ratées (question + bonne réponse) directement sur l'écran d'accueil, pour un rappel immédiat sans naviguer vers l'écran dédié.
+
+- **Delta de progression affiché dans les statistiques** — Sous les jauges, une ligne "Progression depuis la semaine 1 : +X pts" calculée entre la première et la dernière entrée du tableau hebdomadaire. Donne une vision globale du chemin parcouru.
 
 
 ---
