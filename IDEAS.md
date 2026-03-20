@@ -2,13 +2,15 @@
 
 ## À réaliser
 
-1. **Filtrage du glossaire par lettre initiale** — Index A–Z cliquable au-dessus du glossaire pour sauter directement aux termes commençant par une lettre donnée, en complément du tri alphabétique existant.
+*(aucune idée en attente)*
 
 
 
 ---
 
 ## Réalisées
+
+- **Filtrage du glossaire par lettre initiale** — Index A–Z sur la même ligne que le compteur (calé à droite, wrap sur petit écran). Clic sur une lettre filtre les termes commençant par celle-ci ; combinable avec la recherche texte. Les lettres sans résultat sont grisées.
 
 - **Surbrillance du terme recherché dans le glossaire** — Les occurrences du mot saisi dans le champ de recherche sont mises en évidence (fond bleu translucide) dans les titres et définitions affichés.
 

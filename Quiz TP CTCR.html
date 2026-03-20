@@ -1877,14 +1877,41 @@
     transition: border-color 0.2s;
   }
   .glossaire-search:focus { border-color: var(--accent); }
+  .glossaire-count-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin-bottom: 12px;
+    padding-left: 18px;
+  }
   .glossaire-count {
     font-family: 'DM Mono', monospace;
     font-size: 14px;
     color: var(--muted);
-    margin-bottom: 12px;
-    text-align: left;
-    padding-left: 18px;
+    white-space: nowrap;
   }
+  .glo-alpha-index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-left: auto;
+  }
+  .glo-alpha-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    padding: 2px 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: color 0.15s;
+    line-height: 1.4;
+  }
+  .glo-alpha-btn:hover:not(:disabled) { color: var(--text); }
+  .glo-alpha-btn.active { color: var(--accent); font-weight: 700; }
+  .glo-alpha-btn:disabled { opacity: 0.22; cursor: default; }
   .glossaire-list { display: flex; flex-direction: column; gap: 10px; }
   .glo-hl { color: #fff; }
   .glossaire-card {
@@ -2300,7 +2327,10 @@
     </div>
     <div id="glossaire-scroll-sentinel"></div>
     <input class="glossaire-search" id="glossaire-search" type="text" placeholder="Rechercher un terme…" oninput="filterGlossaire(this.value)">
-    <div class="glossaire-count" id="glossaire-count"></div>
+    <div class="glossaire-count-row">
+      <div class="glossaire-count" id="glossaire-count"></div>
+      <div class="glo-alpha-index" id="glo-alpha-index"></div>
+    </div>
     <div class="glossaire-list" id="glossaire-list"></div>
   </div>
 
@@ -2385,21 +2415,42 @@ const GLOSSAIRE = [
 ];
 
 
+let _gloLetter = '';
+
 function showGlossaireScreen() {
   closeThematicPanel();
   showScreen('glossaire-screen');
+  _gloLetter = '';
+  _gloInitAlpha();
   renderGlossaire(GLOSSAIRE);
   _scrollTopConnect('glossaire-scroll-sentinel');
   const input = document.getElementById('glossaire-search');
   if (input) { input.value = ''; }
 }
 
+function _gloInitAlpha() {
+  const letters = [...new Set(GLOSSAIRE.map(g => g.term[0].toUpperCase()))].sort();
+  document.getElementById('glo-alpha-index').innerHTML = letters.map(l =>
+    `<button class="glo-alpha-btn" onclick="toggleGloLetter('${l}')">${l}</button>`
+  ).join('');
+}
+
+function toggleGloLetter(l) {
+  _gloLetter = (_gloLetter === l) ? '' : l;
+  filterGlossaire(document.getElementById('glossaire-search').value);
+}
+
 function filterGlossaire(query) {
   const q = query.toLowerCase().trim();
-  const filtered = q ? GLOSSAIRE.filter(g =>
-    g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q)
-  ) : GLOSSAIRE;
+  let filtered = GLOSSAIRE;
+  if (q) filtered = filtered.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q));
+  if (_gloLetter) filtered = filtered.filter(g => g.term[0].toUpperCase() === _gloLetter);
   renderGlossaire(filtered, q);
+  const withQuery = q ? new Set(GLOSSAIRE.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q)).map(g => g.term[0].toUpperCase())) : null;
+  document.querySelectorAll('.glo-alpha-btn').forEach(btn => {
+    btn.disabled = withQuery ? !withQuery.has(btn.textContent) : false;
+    btn.classList.toggle('active', btn.textContent === _gloLetter);
+  });
 }
 
 function _gloHighlight(text, q) {
@@ -2429,7 +2480,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.68';
+const APP_VERSION = '1.3.69';
 
 const FICHES = {
   1: [
