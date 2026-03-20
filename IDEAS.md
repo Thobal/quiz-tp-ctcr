@@ -2,10 +2,15 @@
 
 ## À réaliser
 
+1. **Message de confirmation après un export réussi** — Afficher un bref message "✓ Export téléchargé" sous le bouton après un export JSON ou PDF réussi, pour confirmer visuellement l'action.
 
 ---
 
 ## Réalisées
+
+- **Tri alphabétique optionnel dans le glossaire** — Bouton bascule pour trier les termes du glossaire par ordre alphabétique (ou dans l'ordre d'apparition par défaut).
+
+- **Infobulle explicative sur le switch Strict / Yolo** — Redondant avec le message affiché lors de l'activation du mode Yolo, qui explique déjà le comportement du mode.
 
 - **Masquage des réponses dans l'écran de révision** — Proche du "Mode entraînement sans impact sur les statistiques" déjà rejeté ; s'auto-tester visuellement sans lancer de quiz représente une complexité d'interface pour un bénéfice limité.
 
@@ -53,6 +58,10 @@
 
 ## Rejetées
 *(conservées pour mémoire — ne pas reproposer)*
+
+- **Mise en évidence de la semaine en cours dans le tableau de progression** — La semaine courante est toujours la première ligne du tableau ; la surligner n'apporterait aucune valeur.
+
+- **Persistance de la dernière fiche consultée en révision** — La grille étant limitée à 20 fiches, retrouver visuellement la dernière fiche consultée ne représente pas de friction significative.
 
 - **Questions marquées comme favorites** — Dans l'écran de révision, marquer des questions d'une étoile pour constituer une liste personnelle de questions à retravailler en priorité.
 
