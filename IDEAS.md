@@ -8,9 +8,6 @@
 
 - **Tri des questions par taux d'échec dans l'écran de révision** — Une option pour afficher les questions d'une fiche triées par taux d'échec personnel (calculé sur l'historique), afin de commencer la révision par les plus difficiles.
 
-- **Régularité : nombre moyen de sessions par semaine** — Un indicateur dans les statistiques affichant "X sessions/semaine en moyenne" calculé sur les 4 dernières semaines actives, pour évaluer l'intensité de la préparation.
-
-- **Questions incorrectes affichées en premier dans les résultats** — Sur l'écran de fin de quiz, afficher les questions ratées en haut de la liste plutôt qu'en ordre chronologique, pour les identifier d'un seul regard sans parcourir toute la liste.
 
 ---
 
@@ -84,6 +81,10 @@
 - **Compteur de sessions du jour sur l'accueil** — L'accueil affiche déjà la date et l'heure de la dernière session ; un compteur journalier apporterait une information redondante pour un apport motivationnel limité.
 
 - **Liens glossaire dans les questions de révision** — La détection automatique des correspondances entre questions et termes du glossaire est trop fragile (faux positifs, formes fléchies) ; un tagging manuel sur 200 questions représente un effort de contenu disproportionné.
+
+- **Régularité : nombre moyen de sessions par semaine** — Le tableau hebdomadaire permet déjà de lire cette régularité semaine par semaine ; un indicateur agrégé supplémentaire surchargerait l'écran des statistiques pour un apport limité.
+
+- **Questions incorrectes affichées en premier dans les résultats** — L'écran de résultats est court (10 questions max) ; réordonner les questions briserait la cohérence chronologique sans gain de lisibilité significatif.
 
 - **Masquage des fiches maîtrisées sur l'accueil** — Le tri par score existant suffit à identifier les fiches prioritaires ; masquer complètement les fiches maîtrisées risque de donner une vision incomplète de la progression globale.
 
