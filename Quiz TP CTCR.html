@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.6';
+const APP_VERSION = '1.4.7';
 
 const FICHES = {
   1: [
@@ -3543,6 +3543,137 @@ class MiniPDF {
     }
     if (cur) lines.push(cur);
     return lines.length ? lines : [''];
+  }
+
+  // ── Couleurs et trait ──────────────────────────────────────────────
+  setFillColor(r, g, b) {
+    this._pages[this._pi] += `${r.toFixed(3)} ${g.toFixed(3)} ${b.toFixed(3)} rg
+`;
+  }
+
+  setStrokeColor(r, g, b) {
+    this._pages[this._pi] += `${r.toFixed(3)} ${g.toFixed(3)} ${b.toFixed(3)} RG
+`;
+  }
+
+  setLineWidth(w) {
+    this._pages[this._pi] += `${w.toFixed(3)} w
+`;
+  }
+
+  // ── Primitives vectorielles ─────────────────────────────────────
+  line(x1mm, y1mm, x2mm, y2mm) {
+    const { _MM: mm, _PH: ph } = this;
+    const x1 = (x1mm * mm).toFixed(3), y1 = (ph - y1mm * mm).toFixed(3);
+    const x2 = (x2mm * mm).toFixed(3), y2 = (ph - y2mm * mm).toFixed(3);
+    this._pages[this._pi] += `${x1} ${y1} m ${x2} ${y2} l S\n`;
+  }
+
+  // style : 'S' = contour | 'f' = fond | 'B' = contour + fond
+  rect(xmm, ymm, wmm, hmm, style = 'S') {
+    const { _MM: mm, _PH: ph } = this;
+    const x = (xmm  * mm).toFixed(3);
+    const y = (ph - (ymm + hmm) * mm).toFixed(3);   // origine bas-gauche PDF
+    const w = (wmm  * mm).toFixed(3);
+    const h = (hmm  * mm).toFixed(3);
+    this._pages[this._pi] += `${x} ${y} ${w} ${h} re ${style}\n`;
+  }
+
+  // ── Tableau ─────────────────────────────────────────────────────
+  // headers  : string[]
+  // rows     : (string|number)[][]
+  // opts     : {
+  //   colWidths      — largeurs colonnes en mm (défaut : égales)
+  //   rowHeight      — hauteur ligne données (mm, déf 8)
+  //   headerHeight   — hauteur ligne en-tête (mm, déf 9)
+  //   fontSize       — taille police données (pt, déf 9)
+  //   headerFontSize — taille police en-tête (pt, déf 9)
+  //   padding        — marge intérieure gauche (mm, déf 2)
+  //   headerBg       — fond en-tête [r,g,b] 0-1 (déf bleu foncé)
+  //   headerFg       — texte en-tête [r,g,b] 0-1 (déf blanc)
+  //   borderColor    — couleur bordures [r,g,b] 0-1 (déf gris clair)
+  //   borderWidth    — épaisseur trait (pt, déf 0.25)
+  //   altRowBg       — fond lignes paires [r,g,b] 0-1 (null = désactivé)
+  //   pageBreakY     — seuil saut de page mm depuis haut (déf 277)
+  //   newPageY       — Y de départ sur nouvelle page mm (déf 15)
+  // }
+  // Retourne le Y (mm) après le tableau.
+  table(xmm, ymm, headers, rows, opts = {}) {
+    const cols = headers.length;
+    const {
+      colWidths     = Array(cols).fill((190 - xmm) / cols),
+      rowHeight     = 8,
+      headerHeight  = 9,
+      fontSize      = 9,
+      headerFontSize = 9,
+      padding       = 2,
+      headerBg      = [0.13, 0.16, 0.25],
+      headerFg      = [1,    1,    1   ],
+      borderColor   = [0.75, 0.75, 0.75],
+      borderWidth   = 0.25,
+      altRowBg      = [0.96, 0.96, 0.97],
+      pageBreakY    = 277,
+      newPageY      = 15,
+    } = opts;
+
+    const totalW  = colWidths.reduce((a, b) => a + b, 0);
+    const prevFn  = this._fn;
+    const prevFs  = this._fs;
+    let y = ymm;
+
+    // — En-tête —
+    this.setFillColor(...headerBg);
+    this.rect(xmm, y, totalW, headerHeight, 'f');
+    this.setStrokeColor(...borderColor);
+    this.setLineWidth(borderWidth);
+    this.rect(xmm, y, totalW, headerHeight, 'S');
+    let cx = xmm;
+    for (let c = 0; c < cols - 1; c++) {
+      cx += colWidths[c];
+      this.line(cx, y, cx, y + headerHeight);
+    }
+    this.setFont('helvetica', 'bold');
+    this.setFontSize(headerFontSize);
+    this.setFillColor(...headerFg);
+    cx = xmm;
+    for (let c = 0; c < cols; c++) {
+      this.text(String(headers[c]), cx + padding, y + headerHeight / 2 + headerFontSize * 0.176);
+      cx += colWidths[c];
+    }
+    y += headerHeight;
+
+    // — Lignes de données —
+    this.setFont('helvetica', 'normal');
+    this.setFontSize(fontSize);
+    for (let r = 0; r < rows.length; r++) {
+      if (y + rowHeight > pageBreakY) { this.addPage(); y = newPageY; }
+      if (r % 2 === 1 && altRowBg) {
+        this.setFillColor(...altRowBg);
+        this.rect(xmm, y, totalW, rowHeight, 'f');
+      }
+      this.setStrokeColor(...borderColor);
+      this.setLineWidth(borderWidth);
+      this.rect(xmm, y, totalW, rowHeight, 'S');
+      cx = xmm;
+      for (let c = 0; c < cols - 1; c++) {
+        cx += colWidths[c];
+        this.line(cx, y, cx, y + rowHeight);
+      }
+      this.setFillColor(0, 0, 0);
+      cx = xmm;
+      for (let c = 0; c < cols; c++) {
+        this.text(String(rows[r][c] ?? ''), cx + padding, y + rowHeight / 2 + fontSize * 0.176);
+        cx += colWidths[c];
+      }
+      y += rowHeight;
+    }
+
+    // — Restauration état graphique —
+    this._fn = prevFn;
+    this._fs = prevFs;
+    this.setFillColor(0, 0, 0);
+    this.setStrokeColor(0, 0, 0);
+    return y;
   }
 
   toBlob() {
