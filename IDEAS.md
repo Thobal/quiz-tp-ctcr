@@ -2,16 +2,6 @@
 
 ## À réaliser
 
-- **Badge "Jamais travaillée" sur les fiches vierges** — Sur l'accueil, distinguer visuellement les fiches n'ayant encore jamais été jouées (teinte ou badge spécifique) pour identifier d'un coup d'œil les domaines encore inexplorés.
-
-- **Temps moyen de réponse par fiche dans les statistiques** — Calculer et afficher le temps moyen passé par question sur chaque fiche travaillée, afin d'identifier les sujets qui demandent plus de réflexion.
-
-- **Compteur de série en mode YOLO** — Pendant un quiz en mode YOLO, afficher "Série : X bonne(s) d'affilée" pour rendre le mode plus engageant et motiver à battre son record.
-
-- **Scores récents affichés pendant la révision** — Au début de chaque fiche de révision, afficher discrètement les 3 derniers scores obtenus (ex : 70 % → 85 % → 92 %) pour visualiser sa progression sans ouvrir les statistiques.
-
-- **Regroupement des erreurs par thème en fin de quiz** — Dans l'écran de résultats, lister les domaines où se concentrent les erreurs (ex : "Signalisation ×3, Temps de conduite ×2") pour orienter efficacement la prochaine session de révision.
-
 ---
 
 ## Réalisées
@@ -82,6 +72,16 @@
 
 ## Rejetées
 *(conservées pour mémoire — ne pas reproposer)*
+
+- **Badge "Jamais travaillée" sur les fiches vierges** — Le système de recommandation existant ("À prioriser") couvre déjà ce besoin ; un badge supplémentaire surchargerait l'accueil.
+
+- **Temps moyen de réponse par fiche dans les statistiques** — Nécessite d'instrumenter chaque réponse avec un timestamp, complexité technique élevée pour un indicateur dont la valeur pédagogique reste limitée.
+
+- **Compteur de série en mode YOLO** — Le mode YOLO s'arrête à la première erreur ; la série est donc toujours visible implicitement (nombre de questions répondues). Un compteur explicite n'apporte pas grand-chose.
+
+- **Scores récents affichés pendant la révision** — L'écran de révision affiche déjà le score moyen par fiche dans chaque cellule ; afficher en plus les 3 derniers scores individuels surchargerait l'interface.
+
+- **Regroupement des erreurs par thème en fin de quiz** — Les fiches ne sont pas structurées par thème dans les données ; le regroupement nécessiterait une taxonomie supplémentaire difficile à maintenir.
 
 - **Indicateur de tendance sur les boutons de fiche** — L'accueil est déjà chargé en informations (score, badge "À prioriser", tri) ; une flèche de tendance supplémentaire sur chaque bouton surchargerait visuellement une zone déjà dense.
 
