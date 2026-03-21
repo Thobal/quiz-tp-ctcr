@@ -1250,6 +1250,46 @@
     padding-left: 2px;
   }
 
+  .expl-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .expl-toggle-btn:hover { color: var(--text); border-color: var(--muted); }
+  .expl-toggle-btn .expl-arrow {
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+  .expl-toggle-btn.open .expl-arrow { transform: rotate(90deg); }
+  .expl-accordion {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.25s ease, opacity 0.2s;
+  }
+  .expl-accordion.open { max-height: 300px; opacity: 1; }
+  .expl-accordion-inner {
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    border-left: 2px solid var(--accent);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
   /* Revision fiche grid — reuse heatmap-grid but clickable without color coding */
   #revision-fiche-grid .hm-cell {
     cursor: pointer;
@@ -2588,7 +2628,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.26';
+const APP_VERSION = '1.4.27';
 
 const FICHES = {
   1: [
@@ -4502,12 +4542,21 @@ function showRevisionFiche(n) {
     const panelHtml = panelSvg
       ? `<div class="qa-panel">${panelSvg}</div>`
       : '';
+    const explHtml = q.expl
+      ? `<button class="expl-toggle-btn" onclick="toggleRevExpl(this)">
+           <span class="expl-arrow">▶</span> Voir l'explication
+         </button>
+         <div class="expl-accordion">
+           <div class="expl-accordion-inner">${q.expl}</div>
+         </div>`
+      : '';
     html += `<div class="qa-card">
       <div class="qa-num">Question ${i + 1}</div>
       ${panelHtml}
       <div class="qa-question">${q.q}</div>
       <div class="qa-answer">${mainAnswer}</div>
       ${altHtml}
+      ${explHtml}
     </div>`;
   });
 
@@ -4516,6 +4565,16 @@ function showRevisionFiche(n) {
   document.getElementById('revision-content').classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'instant' });
   _scrollTopConnect('revision-scroll-sentinel');
+}
+
+function toggleRevExpl(btn) {
+  const accordion = btn.nextElementSibling;
+  const isOpen = accordion.classList.contains('open');
+  accordion.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.innerHTML = isOpen
+    ? '<span class="expl-arrow">▶</span> Voir l\'explication'
+    : '<span class="expl-arrow" style="transform:rotate(90deg)">▶</span> Masquer l\'explication';
 }
 
 function registerPWA() {
