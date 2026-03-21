@@ -2,6 +2,15 @@
 
 ## À réaliser
 
+- **Séparateurs alphabétiques dans le glossaire** — Quand le tri alphabétique est actif (mode par défaut), afficher des séparateurs de lettre (A, B, C…) entre les groupes de termes, pour repérer instantanément le groupe d'une lettre sans avoir à compter les cartes.
+
+- **Retour automatique à la fiche après consultation du glossaire** — Si l'utilisateur quitte l'écran de révision pour ouvrir le glossaire, le bouton "Retour" du glossaire le ramène directement à la fiche en cours de révision plutôt qu'à l'accueil.
+
+- **Indicateur visuel sur les questions ayant un panneau de signalisation** — Dans l'écran de révision et dans "Mes 25 dernières erreurs", une petite icône discrète signale qu'un panneau est associé à la question, avant même de scroller jusqu'à lui.
+
+- **Indicateur de chargement sur le bouton d'export** — Pendant la génération du fichier JSON, désactiver brièvement le bouton et afficher un spinner pour éviter les doubles clics et confirmer que l'action est en cours.
+
+- **Durée de préparation dans les statistiques** — Sous le titre "Statistiques", afficher "X jours de préparation" calculé entre la première session enregistrée et aujourd'hui. Plus parlant que la date brute pour mesurer l'investissement global.
 
 ---
 
