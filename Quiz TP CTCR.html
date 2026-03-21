@@ -2543,12 +2543,17 @@ function clearGlossaireSearch() {
   filterGlossaire('');
 }
 
+function _gloNorm(s) {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
 function filterGlossaire(query) {
   const q = query.toLowerCase().trim();
+  const qn = _gloNorm(q);
   document.getElementById('glossaire-search-clear').classList.toggle('visible', q.length > 0);
   if (q) _gloLetter = '';
   let filtered = GLOSSAIRE;
-  if (q) filtered = filtered.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q));
+  if (q) filtered = filtered.filter(g => _gloNorm(g.term).includes(qn) || _gloNorm(g.def).includes(qn));
   if (_gloLetter) filtered = filtered.filter(g => g.term[0].toUpperCase() === _gloLetter);
   renderGlossaire(filtered, q);
   document.querySelectorAll('.glo-alpha-btn').forEach(btn => {
@@ -2566,7 +2571,15 @@ function filterGlossaire(query) {
 
 function _gloHighlight(text, q) {
   if (!q) return text;
-  const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  // Build accent-agnostic regex so "boite" matches "boîte" etc.
+  const accentMap = { a:'[a\u00e0\u00e2\u00e4\u00e1\u00e3\u00e5]', e:'[e\u00e9\u00e8\u00ea\u00eb]',
+    i:'[i\u00ee\u00ef\u00ed\u00ec]', o:'[o\u00f4\u00f6\u00f3\u00f2\u00f5]',
+    u:'[u\u00f9\u00fb\u00fc\u00fa]', c:'[c\u00e7]', n:'[n\u00f1]', y:'[y\u00ff]' };
+  const pattern = _gloNorm(q).split('').map(c => {
+    const esc = c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return accentMap[esc] || `[${esc}${esc.toUpperCase()}]`;
+  }).join('');
+  const re = new RegExp('(' + pattern + ')', 'gi');
   return text.replace(re, '<span class="glo-hl">$1</span>');
 }
 
@@ -2602,7 +2615,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.36';
+const APP_VERSION = '1.4.37';
 
 const FICHES = {
   1: [
