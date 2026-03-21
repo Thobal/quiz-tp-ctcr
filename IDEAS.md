@@ -2,16 +2,6 @@
 
 ## À réaliser
 
-- **Affichage du score par thème dans les statistiques** — Ajouter un tableau montrant le score moyen pour les grands thèmes transversaux (signalisation, chronotachygraphe, repos, vitesses…) extrait automatiquement des données existantes. Permet d'identifier les domaines faibles sans analyser fiche par fiche.
-
-- **Mode "Quiz essai" sans impact sur les statistiques** — Un bouton permettant de jouer des sessions qui ne sont pas comptabilisées dans l'historique. Utile pour tester une fiche informellement ou en entraînement libre sans "polluer" ses statistiques.
-
-- **Compteur de questions jamais réussies par fiche** — Badge discret sur chaque bouton de fiche (ex : "3 ✗") indiquant le nombre de questions sur lesquelles l'utilisateur n'a jamais donné la bonne réponse. Aide à cibler les fiches prioritaires sans passer par les statistiques.
-
-- **Quiz restreint aux questions non maîtrisées** — Mode de quiz piochant automatiquement uniquement parmi les questions dont le taux de réussite personnel est inférieur à un seuil (ex : < 70 %). Garantit une révision concentrée sur les vraies lacunes.
-
-- **Historique des sessions par fiche** — Dans l'écran de révision, afficher sous chaque fiche la liste de ses dernières sessions avec date, score et durée, au lieu du seul score moyen actuel. Permet de visualiser sa courbe de progression fiche par fiche.
-
 ---
 
 ## Réalisées
@@ -82,6 +72,16 @@
 
 ## Rejetées
 *(conservées pour mémoire — ne pas reproposer)*
+
+- **Affichage du score par thème dans les statistiques** — Les fiches ne sont pas structurées par thème dans les données ; construire une taxonomie fiable demanderait un travail éditorial important pour un bénéfice incertain.
+
+- **Mode "Quiz essai" sans impact sur les statistiques** — Complexifie l'interface et la logique de sauvegarde ; l'utilisateur peut déjà rejouer une fiche autant de fois qu'il veut, les 5 dernières sessions glissantes limitent naturellement l'impact d'un mauvais essai.
+
+- **Compteur de questions jamais réussies par fiche** — Nécessite de tracer l'historique par question (pas seulement par fiche), ce qui représente une refonte significative du modèle de données pour un indicateur dont l'utilité reste marginale.
+
+- **Quiz restreint aux questions non maîtrisées** — Même problème que le compteur ci-dessus : pas de suivi par question dans les données actuelles ; impossible à implémenter proprement sans changer le modèle de données.
+
+- **Historique des sessions par fiche** — `ficheHistory` ne stocke que les 5 dernières sessions sans timestamp ni durée ; enrichir ce modèle de données serait une refonte importante et ne serait rétroactif pour aucune session déjà enregistrée.
 
 - **Badge "Jamais travaillée" sur les fiches vierges** — Le système de recommandation existant ("À prioriser") couvre déjà ce besoin ; un badge supplémentaire surchargerait l'accueil.
 
