@@ -2,6 +2,16 @@
 
 ## À réaliser
 
+- **Badge de contexte en haut du quiz** — Un badge coloré (bleu pour aléatoire, orange pour thématique, jaune pour fiche) visible dans la barre de progression rappelle instantanément le type de quiz en cours sans relire le texte.
+
+- **Durée estimée de révision par fiche** — Dans l'écran de sélection des fiches, afficher une estimation de durée sous chaque cellule (ex : "~ 5 min") basée sur 30 secondes par question, pour aider l'utilisateur à planifier sa session.
+
+- **Tri du glossaire par date d'ajout** — Ajouter une troisième option de tri dans le glossaire ("Récents en premier") pour retrouver rapidement les termes ajoutés lors des dernières mises à jour de l'application.
+
+- **Partage d'une question par lien** — Bouton discret sur chaque carte de révision générant une URL avec les paramètres de la question encodés, permettant de partager une question précise avec un formateur ou un autre candidat.
+
+- **Thème de couleur d'accent personnalisable** — Permettre à l'utilisateur de choisir la couleur d'accent (actuellement jaune #f5c842) parmi quelques options prédéfinies, sauvegardée dans le localStorage pour personnaliser l'interface.
+
 ---
 
 ## Réalisées
