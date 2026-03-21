@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.12';
+const APP_VERSION = '1.4.13';
 
 const FICHES = {
   1: [
@@ -3607,6 +3607,7 @@ class MiniPDF {
       fontSize      = 9,
       headerFontSize = 9,
       padding       = 2,
+      align         = Array(cols).fill('left'),
       headerBg      = [0.13, 0.16, 0.25],
       headerFg      = [1,    1,    1   ],
       borderColor   = [0.75, 0.75, 0.75],
@@ -3616,6 +3617,11 @@ class MiniPDF {
       newPageY      = 15,
     } = opts;
 
+    const cellX   = (cx, colW, str, a) => {
+      if (a === 'right')  return cx + colW - padding - this._tw(str) / this._MM;
+      if (a === 'center') return cx + (colW - this._tw(str) / this._MM) / 2;
+      return cx + padding;
+    };
     const totalW  = colWidths.reduce((a, b) => a + b, 0);
     const prevFn  = this._fn;
     const prevFs  = this._fs;
@@ -3637,7 +3643,8 @@ class MiniPDF {
     this.setFillColor(...headerFg);
     cx = xmm;
     for (let c = 0; c < cols; c++) {
-      this.text(String(headers[c]), cx + padding, y + headerHeight / 2 + headerFontSize * 0.176);
+      const tx = cellX(cx, colWidths[c], String(headers[c]), align[c]);
+      this.text(String(headers[c]), tx, y + headerHeight / 2 + headerFontSize * 0.176);
       cx += colWidths[c];
     }
     y += headerHeight;
@@ -3662,7 +3669,9 @@ class MiniPDF {
       this.setFillColor(0, 0, 0);
       cx = xmm;
       for (let c = 0; c < cols; c++) {
-        this.text(String(rows[r][c] ?? ''), cx + padding, y + rowHeight / 2 + fontSize * 0.176);
+        const str = String(rows[r][c] ?? '');
+        const tx  = cellX(cx, colWidths[c], str, align[c]);
+        this.text(str, tx, y + rowHeight / 2 + fontSize * 0.176);
         cx += colWidths[c];
       }
       y += rowHeight;
@@ -3919,13 +3928,15 @@ function generateStatsPDF() {
   title('Statistiques globales');
   y -= 4;
   line(`Le taux de réussite est basé sur les 5 dernières sessions par fiche. Les quiz aléatoires et thématiques ne sont pas pris en compte. Les fiches jamais étudiées sont exclues du calcul.`, 8);
-  y += 2;
+  y += 1;
   y = doc.table(margin, y, ['Indicateur', 'Valeur'], [
     ['Fiches étudiées',        String(ficheTotalSessions)],
     ['Questions répondues',    String(ficheTotalTot)],
     ['Taux de réussite global', `${pct} % (${ficheTotalCor} bonnes réponses / ${ficheTotalTot})`],
-  ], { colWidths: [120, 62], rowHeight: 7, headerHeight: 7 });
-  separator();
+  ], { colWidths: [60, 122], rowHeight: 7, headerHeight: 7,
+       headerBg: [0.5, 0.5, 0.5], headerFg: [0, 0, 0],
+       align: ['right', 'left'] });
+  y += 12;
 
   // ── Progression par fiche ──
   title('Progression par fiche');
