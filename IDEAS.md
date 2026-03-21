@@ -2,13 +2,6 @@
 
 ## À réaliser
 
-- **Copie rapide d'une définition du glossaire** — Une icône de copie sur chaque carte ouverte du glossaire permet de copier le terme et sa définition dans le presse-papier en un tap, sans avoir à sélectionner manuellement le texte.
-
-- **Affichage compact du glossaire** — Un toggle permettant de basculer entre la vue actuelle en cartes expansibles et une vue liste compacte (terme seul, sur une ligne), pour parcourir rapidement les 42 termes sans avoir à les ouvrir.
-
-- **Statistiques par jour de la semaine** — Dans l'écran des statistiques, un petit tableau ou graphique indiquant sur quels jours de la semaine les sessions sont habituellement jouées, pour identifier ses habitudes de travail.
-
-- **Navigation clavier dans l'écran de révision** — Les touches flèches gauche/droite permettent de passer à la fiche précédente/suivante depuis l'écran de révision, sans utiliser les boutons ‹ ›. Distinct des raccourcis clavier pendant le quiz (déjà rejetés).
 
 ---
 
@@ -124,6 +117,14 @@
 - **Rappel du mode YOLO actif sur l'accueil** — Le switch YOLO est visible dans l'en-tête du quiz et son activation déclenche déjà un message explicatif ; un rappel supplémentaire sur l'accueil serait redondant.
 
 - **Rappel de sauvegarde dans l'écran des statistiques** — La pastille d'export (badge avec le nombre de sessions non sauvegardées) remplit déjà ce rôle de manière plus compacte et précise.
+
+- **Copie rapide d'une définition du glossaire** — L'utilisateur peut déjà sélectionner et copier le texte manuellement ; une icône dédiée alourdit visuellement chaque carte pour un confort marginal.
+
+- **Affichage compact du glossaire** — Le tri alphabétique et la recherche permettent déjà de naviguer rapidement ; ajouter un second mode d'affichage complexifie l'interface pour un gain limité.
+
+- **Statistiques par jour de la semaine** — Nécessite de stocker le jour de chaque session (modification du modèle de données) pour une information anecdotique qui n'aide pas directement à la préparation de l'examen.
+
+- **Navigation clavier dans l'écran de révision** — Les boutons ‹ › sont déjà accessibles et suffisants ; les raccourcis clavier sont peu utilisés sur mobile (usage principal de l'app) et ont déjà été rejetés pour le quiz.
 
 - **Terme du glossaire aléatoire sur l'accueil** — L'accueil doit rester centré sur le lancement de quiz ; afficher du contenu passif (définition aléatoire) l'éloigne de son rôle principal sans apport pédagogique prouvé.
 
