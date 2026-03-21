@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.22';
+const APP_VERSION = '1.4.23';
 
 const FICHES = {
   1: [
@@ -3923,8 +3923,6 @@ function generateStatsPDF() {
   // ── KPIs ──
   title('Statistiques globales');
   y -= 4;
-  line(`Le taux de réussite est basé sur les 5 dernières sessions par fiche. Les quiz aléatoires et thématiques ne sont pas pris en compte. Les fiches jamais étudiées sont exclues du calcul.`, 8);
-  y += 1;
   y = doc.table(margin, y, ['Indicateur', 'Valeur'], [
     ['Fiches travaillées', workedPct !== null ? `${workedPct} %` : '—'],
     ['Maîtrise globale',   `${globalPct} %`],
