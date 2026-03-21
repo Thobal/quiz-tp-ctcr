@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.9';
+const APP_VERSION = '1.4.10';
 
 const FICHES = {
   1: [
@@ -3887,7 +3887,7 @@ function generateStatsPDF() {
   const pct = ficheTotalTot > 0 ? Math.round(ficheTotalCor / ficheTotalTot * 100) : 0;
 
   let y = 20;
-  const lh = 5.5; // line height
+  const lh = 2.75; // line height
   const pageH = 280;
   const margin = 14;
   const maxW = 182;
