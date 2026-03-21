@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.25';
+const APP_VERSION = '1.4.26';
 
 const FICHES = {
   1: [
@@ -3923,7 +3923,7 @@ function generateStatsPDF() {
   // ── KPIs ──
   title('Statistiques globales');
   y -= 4;
-  y = doc.table(margin, y, ['Indicateur', 'Valeur'], [
+  y = doc.table(margin, y, ['Indicateur', 'Score'], [
     ['Fiches travaillées', workedPct !== null ? `${workedPct} %` : '—'],
     ['Maîtrise globale',   `${globalPct} %`],
   ], { colWidths: [60, 122], rowHeight: 7, headerHeight: 7,
