@@ -2,6 +2,16 @@
 
 ## À réaliser
 
+- **Affichage du score par thème dans les statistiques** — Ajouter un tableau montrant le score moyen pour les grands thèmes transversaux (signalisation, chronotachygraphe, repos, vitesses…) extrait automatiquement des données existantes. Permet d'identifier les domaines faibles sans analyser fiche par fiche.
+
+- **Mode "Quiz essai" sans impact sur les statistiques** — Un bouton permettant de jouer des sessions qui ne sont pas comptabilisées dans l'historique. Utile pour tester une fiche informellement ou en entraînement libre sans "polluer" ses statistiques.
+
+- **Compteur de questions jamais réussies par fiche** — Badge discret sur chaque bouton de fiche (ex : "3 ✗") indiquant le nombre de questions sur lesquelles l'utilisateur n'a jamais donné la bonne réponse. Aide à cibler les fiches prioritaires sans passer par les statistiques.
+
+- **Quiz restreint aux questions non maîtrisées** — Mode de quiz piochant automatiquement uniquement parmi les questions dont le taux de réussite personnel est inférieur à un seuil (ex : < 70 %). Garantit une révision concentrée sur les vraies lacunes.
+
+- **Historique des sessions par fiche** — Dans l'écran de révision, afficher sous chaque fiche la liste de ses dernières sessions avec date, score et durée, au lieu du seul score moyen actuel. Permet de visualiser sa courbe de progression fiche par fiche.
+
 ---
 
 ## Réalisées
