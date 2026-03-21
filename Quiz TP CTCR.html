@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.20';
+const APP_VERSION = '1.4.21';
 
 const FICHES = {
   1: [
@@ -3608,6 +3608,7 @@ class MiniPDF {
       headerFontSize = 9,
       padding       = 2,
       align         = Array(cols).fill('left'),
+      headerAlign   = align,
       headerBg      = [0.13, 0.16, 0.25],
       headerFg      = [1,    1,    1   ],
       borderColor   = [0.75, 0.75, 0.75],
@@ -3643,7 +3644,7 @@ class MiniPDF {
     this.setFillColor(...headerFg);
     cx = xmm;
     for (let c = 0; c < cols; c++) {
-      const tx = cellX(cx, colWidths[c], String(headers[c]), align[c]);
+      const tx = cellX(cx, colWidths[c], String(headers[c]), headerAlign[c]);
       this.text(String(headers[c]), tx, y + headerHeight / 2 + headerFontSize * 0.176);
       cx += colWidths[c];
     }
@@ -3964,9 +3965,10 @@ function generateStatsPDF() {
   const TABLE_OPTS = {
     colWidths: [15, 22, 145], rowHeight: 6, headerHeight: 6,
     headerBg: [0.67, 0.67, 0.67], headerFg: [0, 0, 0],
-    align: ['center', 'right', 'left'],
+    align:       ['center', 'right', 'left'],
+    headerAlign: ['center', 'center', 'left'],
   };
-  const renderGroup = (fiches) => {
+  const renderGroup = (fiches, scoreHeader) => {
     if (fiches.length === 0) {
       line('Aucune fiche dans cette catégorie.', 9);
     } else {
@@ -3976,24 +3978,24 @@ function generateStatsPDF() {
           ? [num, '—', 'Jamais étudiée']
           : [num, String(count), `${avg} %`];
       });
-      y = doc.table(margin, y, ['Fiche', 'Sessions', 'Score moyen'], rows, TABLE_OPTS);
+      y = doc.table(margin, y, ['Fiche', 'Sessions', scoreHeader], rows, TABLE_OPTS);
     }
   };
 
   y += 6;
   title('Fiches parfaitement connues', 11);
   y -= 3;
-  renderGroup(parfaites);
+  renderGroup(parfaites, 'Score moyen (>= 95 %)');
   y += 8;
 
   title('Fiches à améliorer', 11);
   y -= 3;
-  renderGroup(ameliorer);
+  renderGroup(ameliorer, 'Score moyen (>= 75 %)');
   y += 8;
 
   title('Fiches à voir ou à revoir intégralement', 11);
   y -= 3;
-  renderGroup(revoir);
+  renderGroup(revoir, 'Score moyen (< 75 %)');
   separator();
 
   return doc.toBlob();
