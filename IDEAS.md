@@ -2,19 +2,23 @@
 
 ## À réaliser
 
-- **Séparateurs alphabétiques dans le glossaire** — Quand le tri alphabétique est actif (mode par défaut), afficher des séparateurs de lettre (A, B, C…) entre les groupes de termes, pour repérer instantanément le groupe d'une lettre sans avoir à compter les cartes.
+- **Badge "Jamais travaillée" sur les fiches vierges** — Sur l'accueil, distinguer visuellement les fiches n'ayant encore jamais été jouées (teinte ou badge spécifique) pour identifier d'un coup d'œil les domaines encore inexplorés.
 
-- **Retour automatique à la fiche après consultation du glossaire** — Si l'utilisateur quitte l'écran de révision pour ouvrir le glossaire, le bouton "Retour" du glossaire le ramène directement à la fiche en cours de révision plutôt qu'à l'accueil.
+- **Temps moyen de réponse par fiche dans les statistiques** — Calculer et afficher le temps moyen passé par question sur chaque fiche travaillée, afin d'identifier les sujets qui demandent plus de réflexion.
 
-- **Indicateur visuel sur les questions ayant un panneau de signalisation** — Dans l'écran de révision et dans "Mes 25 dernières erreurs", une petite icône discrète signale qu'un panneau est associé à la question, avant même de scroller jusqu'à lui.
+- **Compteur de série en mode YOLO** — Pendant un quiz en mode YOLO, afficher "Série : X bonne(s) d'affilée" pour rendre le mode plus engageant et motiver à battre son record.
 
-- **Indicateur de chargement sur le bouton d'export** — Pendant la génération du fichier JSON, désactiver brièvement le bouton et afficher un spinner pour éviter les doubles clics et confirmer que l'action est en cours.
+- **Scores récents affichés pendant la révision** — Au début de chaque fiche de révision, afficher discrètement les 3 derniers scores obtenus (ex : 70 % → 85 % → 92 %) pour visualiser sa progression sans ouvrir les statistiques.
 
-- **Durée de préparation dans les statistiques** — Sous le titre "Statistiques", afficher "X jours de préparation" calculé entre la première session enregistrée et aujourd'hui. Plus parlant que la date brute pour mesurer l'investissement global.
+- **Regroupement des erreurs par thème en fin de quiz** — Dans l'écran de résultats, lister les domaines où se concentrent les erreurs (ex : "Signalisation ×3, Temps de conduite ×2") pour orienter efficacement la prochaine session de révision.
 
 ---
 
 ## Réalisées
+
+- **Rappel de la bonne réponse en fin de quiz** — Dans l'écran de résultats, les questions ratées sont listées avec la bonne réponse et l'explication, permettant de réviser immédiatement ses erreurs sans retourner sur la fiche.
+
+- **Séparateurs alphabétiques dans le glossaire** — En vue par défaut (sans recherche ni filtre de lettre), des séparateurs A, B, C… sont insérés entre les groupes de termes. Disparaissent automatiquement lors d'une recherche ou d'un filtre par lettre initiale.
 
 - **Bouton "Retour en haut" sur l'écran des statistiques** — Le bouton ↑ déjà présent sur les écrans de révision et du glossaire est désormais actif sur l'écran des statistiques, avec le même comportement (sentinel sous le header, apparition après défilement).
 
@@ -78,6 +82,22 @@
 
 ## Rejetées
 *(conservées pour mémoire — ne pas reproposer)*
+
+- **Indicateur de tendance sur les boutons de fiche** — L'accueil est déjà chargé en informations (score, badge "À prioriser", tri) ; une flèche de tendance supplémentaire sur chaque bouton surchargerait visuellement une zone déjà dense.
+
+- **Filtre "Fiches à prioriser" sur l'accueil** — Le badge "À prioriser" existant et le tri par score couvrent déjà ce besoin ; un bouton bascule supplémentaire duplique la fonctionnalité.
+
+- **Synthèse de progression dans les statistiques** — Le tableau hebdomadaire affiche déjà les valeurs semaine par semaine ; un delta calculé sur 4 semaines apporte une information dérivée que l'utilisateur peut lire directement.
+
+- **Raccourcis clavier pour le quiz** — L'application est principalement utilisée sur mobile ; l'effort d'implémentation et de test des raccourcis clavier n'est pas justifié pour un usage desktop minoritaire.
+
+- **Retour automatique à la fiche après consultation du glossaire** — Navigation de retour trop contraignante à gérer proprement (historique de navigation, cas multiples d'entrée dans le glossaire) pour un confort marginal.
+
+- **Indicateur visuel sur les questions ayant un panneau de signalisation** — Le panneau s'affiche déjà naturellement dans la carte lors de la révision ; une icône anticipatrice supplémentaire alourdit l'interface sans apport pédagogique réel.
+
+- **Indicateur de chargement sur le bouton d'export** — L'export JSON est quasi-instantané ; un spinner serait imperceptible et la protection contre les doubles clics est déjà assurée par la rapidité de l'opération.
+
+- **Durée de préparation dans les statistiques** — L'information est déjà partiellement présente via la date de la dernière session ; "X jours de préparation" peut être trompeur (pauses, irrégularités) et apporte peu de valeur actionnable.
 
 - **Score médian dans le tableau hebdomadaire** — Le tableau est déjà chargé sur mobile ; la médiane apporte peu de valeur supplémentaire par rapport à la lecture directe des valeurs semaine par semaine.
 
