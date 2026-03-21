@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.14';
+const APP_VERSION = '1.4.15';
 
 const FICHES = {
   1: [
@@ -3921,7 +3921,7 @@ function generateStatsPDF() {
 
   // ── En-tête ──
   title('Quiz TP CTCR — Rapport de statistiques', 16);
-  y -= 3;
+  y -= 2;
   line(`Exporté le ${dateStr}`, 9);
   separator();
 
@@ -3935,7 +3935,7 @@ function generateStatsPDF() {
     ['Questions répondues',    String(ficheTotalTot)],
     ['Taux de réussite global', `${pct} % (${ficheTotalCor} bonnes réponses / ${ficheTotalTot})`],
   ], { colWidths: [60, 122], rowHeight: 7, headerHeight: 7,
-       headerBg: [0.33, 0.33, 0.33], headerFg: [0, 0, 0],
+       headerBg: [0.67, 0.67, 0.67], headerFg: [0, 0, 0],
        align: ['right', 'left'] });
   y += 12;
 
