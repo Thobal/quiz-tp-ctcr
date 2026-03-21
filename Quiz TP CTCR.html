@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.16';
+const APP_VERSION = '1.4.17';
 
 const FICHES = {
   1: [
@@ -3951,31 +3951,30 @@ function generateStatsPDF() {
     const count   = s.ficheCount[f] || 0;
     const history = s.ficheHistory[f] || [];
     if (history.length === 0) {
-      revoir.push({ f, count, label: null }); // jamais étudiée
+      revoir.push({ f, count, avg: null }); // jamais étudiée
     } else {
       const sum = history.reduce((a, h) => a + Math.round(h.score / h.total * 100), 0);
       const avg = Math.round(sum / history.length);
-      const label = `score moyen ${avg} %`;
-      if (avg >= 95)      parfaites.push({ f, count, label });
-      else if (avg >= 75) ameliorer.push({ f, count, label });
-      else                revoir.push({ f, count, label });
+      if (avg >= 95)      parfaites.push({ f, count, avg });
+      else if (avg >= 75) ameliorer.push({ f, count, avg });
+      else                revoir.push({ f, count, avg });
     }
   }
 
   const TABLE_OPTS = {
-    colWidths: [25, 45, 112], rowHeight: 7, headerHeight: 7,
+    colWidths: [15, 45, 122], rowHeight: 7, headerHeight: 7,
     headerBg: [0.67, 0.67, 0.67], headerFg: [0, 0, 0],
-    align: ['right', 'right', 'left'],
+    align: ['center', 'right', 'left'],
   };
   const renderGroup = (fiches) => {
     if (fiches.length === 0) {
       line('Aucune fiche dans cette catégorie.', 9);
     } else {
-      const rows = fiches.map(({ f, count, label }) => {
+      const rows = fiches.map(({ f, count, avg }) => {
         const num = String(f).padStart(2, '0');
-        return label === null
-          ? [`Fiche ${num}`, '—', 'Jamais étudiée']
-          : [`Fiche ${num}`, `${count} session(s)`, label];
+        return avg === null
+          ? [num, '—', 'Jamais étudiée']
+          : [num, String(count), `${avg} %`];
       });
       y = doc.table(margin, y, ['Fiche', 'Sessions', 'Score moyen'], rows, TABLE_OPTS);
     }
