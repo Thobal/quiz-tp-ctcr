@@ -10,11 +10,11 @@
 
 - **Navigation clavier dans l'écran de révision** — Les touches flèches gauche/droite permettent de passer à la fiche précédente/suivante depuis l'écran de révision, sans utiliser les boutons ‹ ›. Distinct des raccourcis clavier pendant le quiz (déjà rejetés).
 
-- **Onglets de statistiques fixes au défilement** — Sur l'écran des statistiques, la barre d'onglets reste visible en haut de l'écran lors du défilement vers le bas, évitant de remonter pour changer d'onglet.
-
 ---
 
 ## Réalisées
+
+- **Bouton "Retour en haut" sur l'écran des statistiques** — Le bouton ↑ déjà présent sur les écrans de révision et du glossaire est désormais actif sur l'écran des statistiques, avec le même comportement (sentinel sous le header, apparition après défilement).
 
 - **Filtrage du glossaire par lettre initiale** — Index A–Z sur la même ligne que le compteur (calé à droite, wrap sur petit écran). Clic sur une lettre filtre les termes commençant par celle-ci ; combinable avec la recherche texte. Les lettres sans résultat sont grisées.
 

@@ -2133,6 +2133,7 @@
       <h2>Statistiques</h2>
     </div>
     <div class="last-session-info" id="last-session-info"></div>
+    <div id="stats-scroll-sentinel"></div>
 
     <!-- Gauge taux de réussite -->
     <div class="stat-block" style="position:relative;">
@@ -2546,7 +2547,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.77';
+const APP_VERSION = '1.3.78';
 
 const FICHES = {
   1: [
@@ -3806,6 +3807,7 @@ function generateStatsPDF() {
 function showStatsScreen() {
   closeThematicPanel();
   showScreen('stats-screen');
+  _scrollTopConnect('stats-scroll-sentinel');
   updateExportBadge();
   const s = loadStats();
   const lastEl = document.getElementById('last-session-info');
