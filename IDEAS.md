@@ -2,15 +2,6 @@
 
 ## À réaliser
 
-- **Terme du glossaire aléatoire sur l'accueil** — Afficher discrètement un terme du glossaire tiré au hasard avec sa définition sur l'écran d'accueil, renouvelé à chaque visite. Un rappel passif du vocabulaire sans effort supplémentaire.
-
-- **Export des questions ratées en texte copiable** — Sur l'écran de résultats, un bouton pour copier dans le presse-papier les questions incorrectes avec leur bonne réponse, au format texte simple. Utile pour réviser dans une autre application.
-
-- **Numéro de session affiché sur l'écran de résultats** — En bas de l'écran de résultats, afficher "Session n°X sur cette fiche" pour visualiser l'investissement cumulé sur une fiche donnée.
-
-- **Option pour désactiver toutes les animations** — Un toggle mémorisé dans le localStorage permettant de désactiver les animations CSS (transitions, jauges, fadeUp). Utile sur appareils peu performants ou pour les utilisateurs sensibles aux animations.
-
-- **Semaines d'inactivité affichées dans le tableau de progression** — Afficher explicitement les semaines sans session (ligne grisée "Aucune session") dans le tableau hebdomadaire, pour visualiser les coupures dans la régularité.
 
 ---
 
@@ -124,6 +115,16 @@
 - **Rappel du mode YOLO actif sur l'accueil** — Le switch YOLO est visible dans l'en-tête du quiz et son activation déclenche déjà un message explicatif ; un rappel supplémentaire sur l'accueil serait redondant.
 
 - **Rappel de sauvegarde dans l'écran des statistiques** — La pastille d'export (badge avec le nombre de sessions non sauvegardées) remplit déjà ce rôle de manière plus compacte et précise.
+
+- **Terme du glossaire aléatoire sur l'accueil** — L'accueil doit rester centré sur le lancement de quiz ; afficher du contenu passif (définition aléatoire) l'éloigne de son rôle principal sans apport pédagogique prouvé.
+
+- **Export des questions ratées en texte copiable** — L'écran "Mes 25 dernières erreurs" affiche déjà questions et réponses correctes de façon lisible ; un export texte supplémentaire est un confort marginal pour un usage très occasionnel.
+
+- **Numéro de session affiché sur l'écran de résultats** — Cette information est déjà accessible dans le tableau hebdomadaire des statistiques ; l'afficher sur l'écran de résultats serait redondant et peu utile dans l'immédiat.
+
+- **Option pour désactiver toutes les animations** — Les animations sont légères et ne posent pas de problème de performance sur les appareils cibles ; ajouter un toggle de configuration complexifierait l'interface pour un cas d'usage très marginal.
+
+- **Semaines d'inactivité affichées dans le tableau de progression** — L'absence de ligne pour une semaine donnée signale déjà implicitement l'inactivité ; afficher des lignes "Aucune session" allongerait le tableau sans apport d'information supplémentaire.
 
 - **Taux de réussite dans "Mes 25 dernières erreurs"** — Information déjà accessible dans les statistiques ; l'en-tête de la liste d'erreurs n'est pas le lieu adapté pour ce KPI.
 
