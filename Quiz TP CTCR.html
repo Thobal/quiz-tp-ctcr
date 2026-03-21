@@ -2628,7 +2628,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.27';
+const APP_VERSION = '1.4.28';
 
 const FICHES = {
   1: [
@@ -4505,6 +4505,16 @@ function renderWrongHistory() {
       ? `<div class="wrong-card-panel-col">${PANEL_SVGS[e.panel]}</div>`
       : `<div class="wrong-card-panel-col"></div>`;
 
+    const expl = FICHES[e.fiche]?.[e.qNum - 1]?.expl;
+    const explHtml = expl
+      ? `<button class="expl-toggle-btn" onclick="toggleRevExpl(this)">
+           <span class="expl-arrow">▶</span> Voir l'explication
+         </button>
+         <div class="expl-accordion">
+           <div class="expl-accordion-inner">${expl}</div>
+         </div>`
+      : '';
+
     return `
       <div class="wrong-card">
         <div class="wrong-card-header">
@@ -4515,6 +4525,7 @@ function renderWrongHistory() {
           <div class="wrong-card-content">${questionContent}</div>
           ${panelCol}
         </div>
+        ${explHtml}
       </div>`;
   }).join('');
 }
