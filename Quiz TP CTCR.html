@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.5';
+const APP_VERSION = '1.4.6';
 
 const FICHES = {
   1: [
@@ -3039,10 +3039,7 @@ function computeGlobalMastery(s) {
   const hist = s.ficheHistory || {};
   let sum = 0;
   for (let i = 1; i <= 20; i++) {
-    const sessions = hist[String(i)] || [];
-    const tot = sessions.reduce((a, h) => a + h.total, 0);
-    const cor = sessions.reduce((a, h) => a + h.score, 0);
-    sum += tot > 0 ? cor / tot : 0;
+    sum += ficheScore(i, hist).rate ?? 0;
   }
   const rate = sum / 20;
   return { rate, pct: Math.round(rate * 100) };
@@ -4037,18 +4034,14 @@ function renderMasteryHeatmap(s) {
   const ficheHist = s.ficheHistory || {};
   const rates = [];
   for (let i = 1; i <= 20; i++) {
-    const history = ficheHist[String(i)] || [];
-    const tot = history.reduce((a, h) => a + h.total, 0);
-    const cor = history.reduce((a, h) => a + h.score, 0);
-    const sessions = history.length;
-    rates.push({ num: i, tot, sessions, rate: tot > 0 ? cor / tot : null });
+    rates.push({ num: i, rate: ficheScore(i, ficheHist).rate });
   }
 
   // Les fiches non jouées sont traitées comme un score de 0%
   const effectiveRates = rates.map(r => r.rate !== null ? r.rate : 0);
   const worstRate = Math.min(...effectiveRates);
 
-  for (const { num, tot, sessions, rate } of rates) {
+  for (const { num, rate } of rates) {
     const effective = rate !== null ? rate : 0;
     const pct = Math.round(effective * 100);
     // Dégradé rouge : #f0566e (0%) → #0a0b0e (100%)
@@ -4233,10 +4226,7 @@ function showRevisionScreen() {
   const s = loadStats();
   const ficheHistory = s.ficheHistory || {};
   for (let i = 1; i <= 20; i++) {
-    const hist = ficheHistory[String(i)] || [];
-    const tot = hist.reduce((a, h) => a + h.total, 0);
-    const cor = hist.reduce((a, h) => a + h.score, 0);
-    const score = tot > 0 ? Math.round(cor / tot * 100) : null;
+    const score = ficheScore(i, ficheHistory).pct;
     const scoreHtml = score !== null
       ? `<span class="hm-rev-score" style="color:${scoreCouleur(score)}">${score} %</span>`
       : `<span class="hm-rev-score" style="color:var(--muted)">—</span>`;
@@ -4837,6 +4827,14 @@ function updateMasteryKpi() {
 
 // ── TRI DES FICHES ──────────────────────────────────────────────────────────
 
+function ficheScore(ficheNum, ficheHistory) {
+  const hist = (ficheHistory || {})[String(ficheNum)] || [];
+  const tot  = hist.reduce((a, h) => a + h.total, 0);
+  const cor  = hist.reduce((a, h) => a + h.score, 0);
+  const rate = tot > 0 ? cor / tot : null;
+  return { rate, pct: rate !== null ? Math.round(rate * 100) : null };
+}
+
 function scoreCouleur(v) {
   if (v === null) return 'var(--muted)';
   const pct = Math.max(0, Math.min(100, v)) / 100;
@@ -4853,11 +4851,7 @@ function getSortedFiches(sort) {
   const ficheHistory = s.ficheHistory || {};
   const fiches = [];
   for (let i = 1; i <= 20; i++) {
-    const hist = ficheHistory[String(i)] || [];
-    const tot = hist.reduce((a, h) => a + h.total, 0);
-    const cor = hist.reduce((a, h) => a + h.score, 0);
-    const score = tot > 0 ? Math.round(cor / tot * 100) : null;
-    fiches.push({ id: i, score });
+    fiches.push({ id: i, score: ficheScore(i, ficheHistory).pct });
   }
   if (sort === 'score') {
     fiches.sort((a, b) => {
