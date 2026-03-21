@@ -2001,6 +2001,20 @@
   .glossaire-card.open .glo-def {
     padding-top: 4px;
   }
+  .glo-separator {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    padding: 6px 4px 4px;
+    border-bottom: 1px solid var(--border);
+    margin-top: 4px;
+    user-select: none;
+  }
+  .glo-separator:first-child {
+    margin-top: 0;
+  }
 
 </style>
 </head>
@@ -2528,8 +2542,16 @@ function renderGlossaire(items, q) {
   const list = document.getElementById('glossaire-list');
   const count = document.getElementById('glossaire-count');
   count.textContent = items.length + ' définition' + (items.length > 1 ? 's' : '');
-  list.innerHTML = items.map(g => `
-    <div class="glossaire-card" onclick="toggleGlossaireCard(this)">
+  const showSeparators = !q && !_gloLetter;
+  let html = '';
+  let currentLetter = '';
+  items.forEach(g => {
+    const letter = g.term[0].toUpperCase();
+    if (showSeparators && letter !== currentLetter) {
+      currentLetter = letter;
+      html += `<div class="glo-separator">${letter}</div>`;
+    }
+    html += `<div class="glossaire-card" onclick="toggleGlossaireCard(this)">
       <div class="glo-term">
         <span>${_gloHighlight(g.term, q)}</span>
         <span class="glo-chevron">▼</span>
@@ -2537,8 +2559,9 @@ function renderGlossaire(items, q) {
       <div class="glo-def-wrap">
         <div class="glo-def">${_gloHighlight(g.def, q)}</div>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  });
+  list.innerHTML = html;
 }
 
 function toggleGlossaireCard(card) {
@@ -2547,7 +2570,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.0';
+const APP_VERSION = '1.4.1';
 
 const FICHES = {
   1: [
