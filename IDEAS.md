@@ -2,6 +2,15 @@
 
 ## À réaliser
 
+- **Copie rapide d'une définition du glossaire** — Une icône de copie sur chaque carte ouverte du glossaire permet de copier le terme et sa définition dans le presse-papier en un tap, sans avoir à sélectionner manuellement le texte.
+
+- **Affichage compact du glossaire** — Un toggle permettant de basculer entre la vue actuelle en cartes expansibles et une vue liste compacte (terme seul, sur une ligne), pour parcourir rapidement les 42 termes sans avoir à les ouvrir.
+
+- **Statistiques par jour de la semaine** — Dans l'écran des statistiques, un petit tableau ou graphique indiquant sur quels jours de la semaine les sessions sont habituellement jouées, pour identifier ses habitudes de travail.
+
+- **Navigation clavier dans l'écran de révision** — Les touches flèches gauche/droite permettent de passer à la fiche précédente/suivante depuis l'écran de révision, sans utiliser les boutons ‹ ›. Distinct des raccourcis clavier pendant le quiz (déjà rejetés).
+
+- **Onglets de statistiques fixes au défilement** — Sur l'écran des statistiques, la barre d'onglets reste visible en haut de l'écran lors du défilement vers le bas, évitant de remonter pour changer d'onglet.
 
 ---
 
