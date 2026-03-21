@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.15';
+const APP_VERSION = '1.4.16';
 
 const FICHES = {
   1: [
@@ -3962,26 +3962,33 @@ function generateStatsPDF() {
     }
   }
 
+  const TABLE_OPTS = {
+    colWidths: [25, 45, 112], rowHeight: 7, headerHeight: 7,
+    headerBg: [0.67, 0.67, 0.67], headerFg: [0, 0, 0],
+    align: ['right', 'right', 'left'],
+  };
   const renderGroup = (fiches) => {
     if (fiches.length === 0) {
       line('Aucune fiche dans cette catégorie.', 9);
     } else {
-      fiches.forEach(({ f, count, label }) => {
+      const rows = fiches.map(({ f, count, label }) => {
         const num = String(f).padStart(2, '0');
-        if (label === null) line(`Fiche ${num} — Jamais étudiée`);
-        else                line(`Fiche ${num} — ${count} session(s) — ${label}`);
+        return label === null
+          ? [`Fiche ${num}`, '—', 'Jamais étudiée']
+          : [`Fiche ${num}`, `${count} session(s)`, label];
       });
+      y = doc.table(margin, y, ['Fiche', 'Sessions', 'Score moyen'], rows, TABLE_OPTS);
     }
   };
 
   y += 2;
   title('Fiches parfaitement connues', 11);
   renderGroup(parfaites);
-  separator();
+  y += 12;
 
   title('Fiches à améliorer', 11);
   renderGroup(ameliorer);
-  separator();
+  y += 12;
 
   title('Fiches à voir ou à revoir intégralement', 11);
   renderGroup(revoir);
