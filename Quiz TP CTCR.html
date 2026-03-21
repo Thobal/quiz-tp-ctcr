@@ -1256,10 +1256,29 @@
     background: var(--surface);
     color: var(--text);
     border: 1px solid var(--border);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+  }
+  #revision-fiche-grid .hm-cell .hm-count {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  #revision-fiche-grid .hm-cell .hm-num {
+    top: 0;
+  }
+  #revision-fiche-grid .hm-cell .hm-rev-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    margin-top: 2px;
   }
   #revision-fiche-grid .hm-cell:hover {
     border-color: var(--accent);
-    color: var(--accent);
     background: var(--surface2);
     transform: scale(1.04);
   }
@@ -2569,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.2';
+const APP_VERSION = '1.4.3';
 
 const FICHES = {
   1: [
@@ -4211,10 +4230,19 @@ function showRevisionScreen() {
   // Build fiche grid
   const grid = document.getElementById('revision-fiche-grid');
   grid.innerHTML = '';
+  const s = loadStats();
+  const ficheHistory = s.ficheHistory || {};
   for (let i = 1; i <= 20; i++) {
+    const hist = ficheHistory[String(i)] || [];
+    const tot = hist.reduce((a, h) => a + h.total, 0);
+    const cor = hist.reduce((a, h) => a + h.score, 0);
+    const score = tot > 0 ? Math.round(cor / tot * 100) : null;
+    const scoreHtml = score !== null
+      ? `<span class="hm-rev-score" style="color:${scoreCouleur(score)}">${score} %</span>`
+      : `<span class="hm-rev-score" style="color:var(--muted)">—</span>`;
     const cell = document.createElement('div');
     cell.className = 'hm-cell';
-    cell.innerHTML = `<span class="hm-count">Fiche</span><span class="hm-num">${i}</span>`;
+    cell.innerHTML = `<span class="hm-count">Fiche</span><span class="hm-num">${i}</span>${scoreHtml}`;
     cell.addEventListener('click', () => showRevisionFiche(i));
     grid.appendChild(cell);
   }
