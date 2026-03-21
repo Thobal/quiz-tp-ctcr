@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.18';
+const APP_VERSION = '1.4.19';
 
 const FICHES = {
   1: [
@@ -3923,7 +3923,7 @@ function generateStatsPDF() {
   title('Quiz TP CTCR — Rapport de statistiques', 16);
   y -= 2;
   line(`Exporté le ${dateStr}`, 9);
-  separator();
+  y += 8;
 
   // ── KPIs ──
   title('Statistiques globales');
@@ -3982,14 +3982,17 @@ function generateStatsPDF() {
 
   y += 2;
   title('Fiches parfaitement connues', 11);
+  y -= 3;
   renderGroup(parfaites);
   y += 12;
 
   title('Fiches à améliorer', 11);
+  y -= 3;
   renderGroup(ameliorer);
   y += 12;
 
   title('Fiches à voir ou à revoir intégralement', 11);
+  y -= 3;
   renderGroup(revoir);
   separator();
 
