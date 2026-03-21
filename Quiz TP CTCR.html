@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.23';
+const APP_VERSION = '1.4.24';
 
 const FICHES = {
   1: [
@@ -3974,7 +3974,7 @@ function generateStatsPDF() {
   };
 
   y += 6;
-  title('Fiches parfaitement connues', 11);
+  title('Fiches connues', 11);
   y -= 3;
   renderGroup(parfaites, 'Score moyen (>= 95 %)');
   y += 8;
