@@ -2588,7 +2588,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.7';
+const APP_VERSION = '1.4.8';
 
 const FICHES = {
   1: [
@@ -3926,6 +3926,8 @@ function generateStatsPDF() {
 
   // ── Progression par fiche ──
   title('Progression par fiche');
+  line('Le score moyen est calculé sur les 5 dernières sessions de chaque fiche.');
+  y += 2;
 
   // Classer les fiches en 3 groupes selon le score moyen
   const parfaites = [], ameliorer = [], revoir = [];
@@ -3937,7 +3939,7 @@ function generateStatsPDF() {
     } else {
       const sum = history.reduce((a, h) => a + Math.round(h.score / h.total * 100), 0);
       const avg = Math.round(sum / history.length);
-      const label = `score moyen ${avg} % (sur les ${history.length} dernière(s) session(s))`;
+      const label = `score moyen ${avg} %`;
       if (avg >= 95)      parfaites.push({ f, count, label });
       else if (avg >= 75) ameliorer.push({ f, count, label });
       else                revoir.push({ f, count, label });
