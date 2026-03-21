@@ -2547,7 +2547,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.3.98';
+const APP_VERSION = '1.3.99';
 
 const FICHES = {
   1: [
@@ -2767,8 +2767,8 @@ const FICHES = {
     { q: "En circulation, le fait de freiner désactive obligatoirement le régulateur de vitesse. Vrai ou Faux ?", r: ["Vrai"], expl: "Le frein de service désactive automatiquement le régulateur de vitesse par mesure de sécurité. Cette fonctionnalité garantit que le conducteur reprend instantanément le contrôle du véhicule dès qu'il freine. Le régulateur ne peut donc jamais s'opposer à une action de freinage du conducteur." }
   ],
   19: [
-    { q: "En cas d'accident, les données du chronotachygraphe numérique peuvent-elles servir de preuve devant un tribunal ?", r: ["Oui"], expl: "Les données numériques du tachygraphe (carte conducteur et mémoire du véhicule) ont une valeur probante reconnue et peuvent être produites comme preuves dans une procédure judiciaire." },
-    { q: "Âgé de 24 ans, vous venez d'obtenir le permis D et la FIMO voyageur. Avez-vous une restriction de distance maximale de ligne régulière sur laquelle vous êtes autorisé à conduire un autocar de 45 places ?", r: ["Non"], expl: "À 24 ans, aucune restriction d'âge ne s'applique. La restriction aux lignes de moins de 50 km concerne uniquement les conducteurs ayant obtenu leur permis avant 21 ans." },
+    { q: "En cas d'accident, les données du chronotachygraphe numérique peuvent-elles servir de preuve devant un tribunal ?", r: ["Oui"], expl: "Les données numériques enregistrées par le chronotachygraphe — qu'elles soient stockées sur la carte conducteur ou dans la mémoire embarquée du véhicule — ont une valeur probante juridiquement reconnue. Elles peuvent être produites et utilisées comme preuves dans toute procédure judiciaire ou administrative, notamment pour reconstituer les conditions de conduite précédant un accident." },
+    { q: "Âgé de 24 ans, vous venez d'obtenir le permis D et la FIMO voyageur. Avez-vous une restriction de distance maximale de ligne régulière sur laquelle vous êtes autorisé à conduire un autocar de 45 places ?", r: ["Non"], expl: "La restriction aux services réguliers dont le parcours ne dépasse pas 50 km ne s'applique que lorsque le permis D a été obtenu avant l'âge de 21 ans. À 24 ans, le permis ayant été obtenu après 21 ans, aucune restriction de distance ne s'impose : le conducteur peut effectuer tout service régulier sans limitation de parcours." },
     { q: "Au bout de combien de jours, au maximum, l'entreprise doit-elle \"télécharger\" les données de votre carte conducteur ?", r: ["28 jours", "28"], expl: "L'entreprise de transport a l'obligation légale de télécharger les données de la carte conducteur au minimum tous les 28 jours calendaires. Ce téléchargement régulier garantit que les données d'activité ne soient pas perdues et assure un archivage conforme à la réglementation. Les données doivent ensuite être conservées pendant au moins 12 mois." },
     { q: "Un conducteur peut-il demander une copie papier des données numériques, liées à son activité, qui sont conservées dans l'entreprise ?", r: ["Oui"], expl: "Le conducteur a le droit d'obtenir une copie de ses données personnelles conservées par l'entreprise. C'est un droit garanti par la réglementation." },
     { q: "Suite au contrôle technique périodique, lorsque le véhicule est refusé sans interdiction de circuler, dans quel délai maximum la contre-visite doit-elle être effectuée pour éviter une visite technique complète ?", r: ["1 mois"], expl: "Si le véhicule est refusé sans interdiction (lettre S), la contre-visite doit être effectuée dans le mois suivant. Passé ce délai, une visite technique complète est à repasser." },
