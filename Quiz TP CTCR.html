@@ -2536,7 +2536,7 @@ function showGlossaireScreen() {
 }
 
 function _gloInitAlpha() {
-  const letters = [...new Set(GLOSSAIRE.map(g => g.term[0].toUpperCase()))].sort();
+  const letters = [...new Set(GLOSSAIRE.map(g => g.term[0].normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase()))].sort();
   document.getElementById('glo-alpha-index').innerHTML = letters.map(l =>
     `<button class="glo-alpha-btn" data-letter="${l}" onclick="toggleGloLetter('${l}')">${l}</button>`
   ).join('');
@@ -2566,7 +2566,7 @@ function filterGlossaire(query) {
   if (q) _gloLetter = '';
   let filtered = GLOSSAIRE;
   if (q) filtered = filtered.filter(g => _gloNorm(g.term).includes(qn) || _gloNorm(g.def).includes(qn));
-  if (_gloLetter) filtered = filtered.filter(g => g.term[0].toUpperCase() === _gloLetter);
+  if (_gloLetter) filtered = filtered.filter(g => g.term[0].normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase() === _gloLetter);
   renderGlossaire(filtered, q);
   document.querySelectorAll('.glo-alpha-btn').forEach(btn => {
     const l = btn.dataset.letter;
@@ -2603,7 +2603,7 @@ function renderGlossaire(items, q) {
   let html = '';
   let currentLetter = '';
   items.forEach(g => {
-    const letter = g.term[0].toUpperCase();
+    const letter = g.term[0].normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
     if (showSeparators && letter !== currentLetter) {
       currentLetter = letter;
       html += `<div class="glo-separator">${letter}</div>`;
@@ -2627,7 +2627,7 @@ function toggleGlossaireCard(card) {
   if (!isOpen) card.classList.add('open');
 }
 
-const APP_VERSION = '1.4.41';
+const APP_VERSION = '1.4.42';
 
 const FICHES = {
   1: [
